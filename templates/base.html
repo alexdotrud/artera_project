@@ -50,9 +50,8 @@
     <link rel="manifest" href="{% static 'images/favicon_io/site.webmanifest' %}">
     {% endblock %}
 
-    {% block extra_js %}{% endblock %}
 
-    <title>Artera {% block extra_title %}{% endblock %}</title>
+    <title>Artera</title>
 </head>
 
 <body>
@@ -69,7 +68,7 @@
 
             <!-- Search -->
             <div class="col-12 col-lg-4 my-auto py-1">
-                <form method="get" action="{% url 'gallery' %}">
+                <form method="get" action="">
                     <div class="input-group">
                         <input class="form-control border rounded-0" type="text" name="q"
                             placeholder="Search prints...">
@@ -96,26 +95,21 @@
                         <div class="dropdown-menu dropdown-menu-right border-0 shadow-sm"
                             aria-labelledby="user-options">
                             {% if request.user.is_authenticated %}
-                            <a href="{% url 'account' %}" class="dropdown-item">My Profile</a>
-                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            <a href="" class="dropdown-item">My Profile</a>
+                            <a href="" class="dropdown-item">Logout</a>
                             {% else %}
-                            <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                            <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            <a href="" class="dropdown-item">Register</a>
+                            <a href="" class="dropdown-item">Login</a>
                             {% endif %}
                         </div>
                     </li>
 
                     <li class="list-inline-item">
                         <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-dark{% endif %} nav-link p-0"
-                            href="{% url 'view_bag' %}">
+                            href="">
                             <div class="text-center">
                                 <div><i class="fas fa-shopping-bag fa-lg"></i></div>
                                 <p class="my-0">
-                                    {% if grand_total %}
-                                    SEK {{ grand_total|floatformat:2 }}
-                                    {% else %}
-                                    SEK 0.00
-                                    {% endif %}
                                 </p>
                             </div>
                         </a>
@@ -135,9 +129,7 @@
                 <div class="collapse navbar-collapse" id="main-nav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'gallery' %}">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">Shop</a></li>
                     </ul>
                 </div>
             </nav>
@@ -160,7 +152,8 @@
 
     <!-- Main content -->
     <main class="container mt-5 pt-5">
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
 
     <!-- Footer -->
