@@ -23,3 +23,33 @@
     --warning-color: #E5B73B;
     --error-color: #C44536;
 }
+
+/* Base Styles */
+body {
+    font-family: var(--secondary-font);
+    color: var(--secondary-color);
+    background-color: var(--neutral-bg);
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--primary-font);
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+}
