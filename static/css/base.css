@@ -1,8 +1,7 @@
 /* Color / Font Variables*/
 :root {
     /* Fonts */
-    --primary-font: "Instrument Serif", serif;
-    --secondary-font: "Lato", sans-serif;
+    --primary-font: "Cormorant", serif;
 
     /* Core Brand Colors */
     --primary-color: #A23D3C;
@@ -15,7 +14,7 @@
     /* Deep green accent */
     --neutral-bg: #F9FAFA;
     /* Site background */
-    --neutral-dark: #222;
+    --neutral-dark: #494a49;
     /* For text or footer contrast */
 
     /* Utility Colors */
@@ -30,6 +29,7 @@
 /* Basic Styles */
 body {
     font-family: var(--secondary-font);
+    font-size: 1.2rem;
     color: var(--secondary-color);
     background-color: var(--neutral-bg);
     margin: 0;
@@ -42,7 +42,20 @@ main {
 }
 
 header {
-    background-color: var(--neutral-bg)
+    background-color: var(--neutral-bg);
+    max-height: 80px;
+}
+
+section {
+    margin: 3rem 0;
+}
+
+footer {
+    background-color: var(--neutral-dark);
+    color: var(--highlight-color);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
 }
 
 h1,
@@ -66,11 +79,6 @@ a:hover {
     text-decoration: underline;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 /* Navigation Bar Styles */
 .logo {
@@ -99,7 +107,7 @@ footer {
 }
 
 .nav-right p {
-    font-size: 0.85rem;
+    font-size: 1rem;
     margin: 0;
     line-height: 1;
 }
@@ -110,12 +118,18 @@ ul {
     list-style: none;
 }
 
+section {
+    padding: 2rem 0;
+    margin: 2rem 0;
+}
+
 /* Home Page Styles */
 .hero-section {
+    padding-top: 0;
     display: flex;
     flex-wrap: wrap;
+    height: 100vh;
     width: 100%;
-    height: 80vh;
 }
 
 .hero-image {
@@ -128,6 +142,59 @@ ul {
     flex: 1 1 50%;
     background-color: #fff;
     padding: 2rem;
+}
+
+/* Category section styles */
+.categories-text {
+    text-align: right;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 25rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.75rem;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-family: var(--primary-font);
+    color: var(--primary-color);
+    font-size: 1.05rem;
+}
+
+
+/* Bestsellers Section */
+.bestsellers-section .card {
+    border-radius: 12px;
+    transition: transform 18s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+}
+
+.bestsellers-section .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+}
+
+.bestsellers-section .card-title {
+    font-family: var(--primary-font, "Instrument Serif", serif);
+    color: var(--primary-color, #442818);
+}
+
+.bestsellers-section .card-img-top {
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 @media (max-width: 768px) {

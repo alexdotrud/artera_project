@@ -39,7 +39,8 @@
     <!--Link to Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&family=DM+Serif+Text:ital@0;1&display=swap"
+        rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_io/apple-touch-icon.png' %}">
@@ -84,8 +85,8 @@
                 <ul
                     class="col-12 col-md-3 d-none d-md-flex d-flex justify-content-center justify-content-md-end align-items-flex-end nav-right">
                     <li class="list-inline-item dropdown">
-                        <a class="nav-link text-dark d-flex align-items-center gap-1 dropdown-toggle" href="#"
-                            id="user-options" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link d-flex align-items-center gap-1 dropdown-toggle" href="#" id="user-options"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="text-center">
                                 <div><i class="fas fa-user fa-lg"></i></div>
                                 <p>My Account</p>
@@ -195,10 +196,10 @@
         {% endblock %}
     </main>
     <footer class="footer mt-5 py-4">
-        <p class="mb-1 text-muted">
+        <p class="mb-1">
             © {{ now|date:"Y" }} Artera — All rights reserved.
         </p>
-        <p class="small text-muted mb-0">
+        <p class="small mb-0">
             Project made by <strong>Aleksandra Rudenko</strong> |
             <a href="https://github.com/alexdotrud" target="_blank" rel="noopener noreferrer"></a> |
             <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>

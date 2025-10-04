@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Artera{% endblock %}
 {% block extra_title %}- Home{% endblock %}
 
 {% block content %}
@@ -16,6 +19,172 @@
                 Explore fresh arrivals and timeless favorites. Download instantly and print with ease.
             </p>
             <a href="#" class="btn btn-dark">Explore Collection</a>
+        </div>
+    </div>
+</section>
+
+<!-- Shop by Categories -->
+<section class="container categories">
+    <div class="d-flex justify-content-between align-items-flex-end mb-4">
+        <h2 class="fw-bold categories-text">Shop by Categories</h2>
+    </div>
+
+    <div class="row g-4">
+        <!-- Category Card 1 -->
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="{% static 'images/abstract.jpg'%}" class="card-img-top" alt="Abstract art">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">Abstract</h5>
+                    <a href="#" class="btn btn-dark">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Card 2 -->
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="{% static 'images/minimalism.jpg'%}" class="card-img-top" alt="Minimal art">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">Minimal</h5>
+                    <a href="#" class="btn btn-dark">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Card 3 -->
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="{% static 'images/nature.jpg'%}" class="card-img-top" alt="Nature art">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">Nature</h5>
+                    <a href="#" class="btn btn-dark">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Card 4 -->
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="{% static 'images/typography.jpg'%}" class="card-img-top" alt="Typography art">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">Typography</h5>
+                    <a href="#" class="btn btn-dark">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About / Our Story -->
+<section class="about-section">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <!-- Image -->
+            <div class="col-12 col-md-6">
+                <div class="about-image ratio ratio-4x3">
+                    <img src="{% static 'images/about-us.jpg' %}" class="img-fluid rounded-3 object-fit-cover"
+                        alt="About Artera">
+                </div>
+            </div>
+
+            <!-- Text -->
+            <div class="col-12 col-md-6">
+                <h2 class="fw-bold about-title mb-3">About Artera</h2>
+                <p class="mb-3">
+                    Artera curates minimalist, modern art prints designed to elevate your space.
+                    Each piece is crafted with clean lines, balanced color, and print-ready quality—so you can download
+                    and display with ease.
+                </p>
+                <p class="mb-4">
+                    We keep it simple: fewer, better artworks—thoughtfully produced and easy to love.
+                </p>
+                <a href="#" class="btn btn-dark">Explore Prints</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bestsellers -->
+<section class="bestsellers-section py-5">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="mb-0 fw-bold">Bestsellers</h2>
+        </div>
+
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/prints/print-1.jpg' %}" class="card-img-top" alt="Print 1">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">Muted Horizons</h5>
+                        <p class="text-muted small mb-3">Abstract • Digital Print</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold">€12</span>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                <button class="btn btn-sm btn-dark">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/prints/print-2.jpg' %}" class="card-img-top" alt="Print 2">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">Serif Shapes</h5>
+                        <p class="text-muted small mb-3">Typography • Digital Print</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold">€10</span>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                <button class="btn btn-sm btn-dark">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/prints/print-3.jpg' %}" class="card-img-top" alt="Print 3">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">Stone Garden</h5>
+                        <p class="text-muted small mb-3">Minimal • Digital Print</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold">€8</span>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                <button class="btn btn-sm btn-dark">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/prints/print-4.jpg' %}" class="card-img-top" alt="Print 4">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">Calm Waves</h5>
+                        <p class="text-muted small mb-3">Nature • Digital Print</p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold">€9</span>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-dark">View</a>
+                                <button class="btn btn-sm btn-dark">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
