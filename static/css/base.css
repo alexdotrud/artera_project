@@ -24,7 +24,7 @@
     --error-color: #C44536;
 }
 
-/* Base Styles */
+/* Basic Styles */
 body {
     font-family: var(--secondary-font);
     color: var(--secondary-color);
@@ -52,4 +52,37 @@ a {
 a:hover {
     color: var(--accent-dark);
     text-decoration: underline;
+}
+
+/* Navigation Bar Styles */
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+    position: sticky;
+}
+
+.center-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    min-width: 220px;
+}
+
+/* Base Page Styles */
+
+.logo {
+    height: 4rem;
+    width: auto;
+    object-fit: contain;
+    display: block;
 }

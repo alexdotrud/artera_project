@@ -65,107 +65,96 @@
                 </a>
             </div>
 
-            <!-- Search -->
-            <div class="col-12 col-lg-4 my-auto py-1">
-                <form method="get" action="">
+            <!-- Center: Nav + Search -->
+            <div class="center-nav">
+                <ul class="list-inline mb-0 d-flex">
+                    <li class="list-inline-item mx-3">
+                        <a href="{% url 'home' %}" class="nav-link p-0">Home</a>
+                    </li>
+                    <li class="list-inline-item mx-3">
+                        <a href="" class="nav-link p-0">Shop</a>
+                    </li>
+                </ul>
+                <!-- Search -->
+                <form method="get" action="" class="search-form d-flex align-items-center">
                     <div class="input-group">
-                        <input class="form-control border rounded-0" type="text" name="q"
-                            placeholder="Search prints...">
-                        <div class="input-group-append">
-                            <button class="btn btn-dark rounded-0" type="submit" aria-label="Search">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <input type="text" class="form-control border rounded-0" name="q" placeholder="Search...">
+                        <button class="btn btn-dark rounded-0" type="submit" aria-label="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </form>
             </div>
+        </div>
 
-            <!-- Account + Bag -->
-            <div class="col-12 col-lg-4 my-auto py-1">
-                <ul class="list-inline text-center text-lg-right m-0">
-                    <li class="list-inline-item dropdown">
-                        <a class="text-dark nav-link p-0" href="#" id="user-options" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <div class="text-center">
-                                <div><i class="fas fa-user fa-lg"></i></div>
-                                <p class="my-0">My Account</p>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right border-0 shadow-sm"
-                            aria-labelledby="user-options">
-                            {% if request.user.is_authenticated %}
-                            <a href="" class="dropdown-item">My Profile</a>
-                            <a href="" class="dropdown-item">Logout</a>
-                            {% else %}
-                            <a href="" class="dropdown-item">Register</a>
-                            <a href="" class="dropdown-item">Login</a>
-                            {% endif %}
+        <!-- Account + Bag -->
+        <div class="col-12 col-lg-4 my-auto py-1">
+            <ul class="list-inline text-center text-lg-right m-0">
+                <li class="list-inline-item dropdown">
+                    <a class="text-dark nav-link p-0" href="#" id="user-options" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="text-center">
+                            <div><i class="fas fa-user fa-lg"></i></div>
+                            <p class="my-0">My Account</p>
                         </div>
-                    </li>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right border-0 shadow-sm" aria-labelledby="user-options">
+                        {% if request.user.is_authenticated %}
+                        <a href="" class="dropdown-item">My Profile</a>
+                        <a href="" class="dropdown-item">Logout</a>
+                        {% else %}
+                        <a href="" class="dropdown-item">Register</a>
+                        <a href="" class="dropdown-item">Login</a>
+                        {% endif %}
+                    </div>
+                </li>
 
-                    <li class="list-inline-item">
-                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-dark{% endif %} nav-link p-0"
-                            href="">
-                            <div class="text-center">
-                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                                <p class="my-0">
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                <li class="list-inline-item">
+                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-dark{% endif %} nav-link p-0"
+                        href="">
+                        <div class="text-center">
+                            <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                            <p class="my-0">
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
         </div>
 
-        <!-- Main Nav -->
-        <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light w-100">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
-                    aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+        <!-- Messages -->
+        {% if messages %}
+        <div class="container mt-5 pt-5">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show my-2" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
-
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Shop</a></li>
-                    </ul>
-                </div>
-            </nav>
+            </div>
+            {% endfor %}
         </div>
-    </header>
+        {% endif %}
 
-    <!-- Messages -->
-    {% if messages %}
-    <div class="container mt-5 pt-5">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show my-2" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+        <!-- Main content -->
+        <main class="container mt-5 pt-5">
+            {% block content %}
+            {% endblock %}
+        </main>
 
-    <!-- Main content -->
-    <main class="container mt-5 pt-5">
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer mt-5 py-4 bg-white border-top text-center">
-        <p class="mb-1 text-muted">
-            © {{ now|date:"Y" }} Artera — All rights reserved.
-        </p>
-        <p class="small text-muted mb-0">
-            Project made by <strong>Aleksandra Rudenko</strong> |
-            <a href="https://github.com/alexdotrud" target="_blank" rel="noopener noreferrer"></a> |
-            <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
-        </p>
-    </footer>
+        <!-- Footer -->
+        <footer class="footer mt-5 py-4 bg-white border-top text-center">
+            <p class="mb-1 text-muted">
+                © {{ now|date:"Y" }} Artera — All rights reserved.
+            </p>
+            <p class="small text-muted mb-0">
+                Project made by <strong>Aleksandra Rudenko</strong> |
+                <a href="https://github.com/alexdotrud" target="_blank" rel="noopener noreferrer"></a> |
+                <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
+            </p>
+        </footer>
 </body>
 
 </html>
