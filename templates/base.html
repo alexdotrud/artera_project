@@ -54,17 +54,11 @@
 
 <body>
     <!-- Header -->
-    <header class="container-fluid fixed-top bg-white border-bottom">
+    <header class="container-fluid fixed-top">
         <div class="container">
             <div id="topnav" class="row align-items-center py-2">
-                <!-- Logo (unchanged) -->
-                <div class="col-12 col-md-3 text-center text-md-start mb-2 mb-md-0">
-                    <a href="{% url 'home' %}" class="nav-link p-0">
-                        <img src="media/logo.png" alt="Artera logo" class="logo" aria-label="Artera logo">
-                    </a>
-                </div>
                 <!-- Centered navigation links and search form -->
-                <ul class="col-12 col-md-6 d-none d-md-flex justify-content-center align-items-center center-nav">
+                <ul class="col-12 col-md-6 d-none d-md-flex justify-content-start align-items-center center-nav">
                     <li class="list-inline-item mx-3">
                         <a href="{% url 'home' %}" class="nav-link p-0">Home</a>
                     </li>
@@ -80,6 +74,12 @@
                         </div>
                     </form>
                 </ul>
+                <!-- Logo (unchanged) -->
+                <div class="col-12 col-md-3 text-center text-md-start mb-2 mb-md-0">
+                    <a href="{% url 'home' %}" class="nav-link p-0">
+                        <img src="static/images/logo.png" alt="Artera logo" class="logo" aria-label="Artera logo">
+                    </a>
+                </div>
                 <!-- Right-aligned user account and shopping bag icons -->
                 <ul
                     class="col-12 col-md-3 d-none d-md-flex d-flex justify-content-center justify-content-md-end align-items-flex-end nav-right">
@@ -116,7 +116,7 @@
                 </ul>
             </div>
         </div>
-        <!-- Mobile controls: one line under logo -->
+        <!-- Mobile navgation-->
         <div class="d-flex d-md-none w-100 justify-content-between align-items-center px-3 mobile-row">
             <!-- Left: Menu dropdown -->
             <div class="dropdown">
@@ -190,11 +190,11 @@
     {% endif %}
 
     <!-- Main content -->
-    <main class="container mt-5 pt-5">
+    <main>
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="footer mt-5 py-4 bg-white border-top text-center">
+    <footer class="footer mt-5 py-4">
         <p class="mb-1 text-muted">
             © {{ now|date:"Y" }} Artera — All rights reserved.
         </p>
@@ -204,5 +204,6 @@
             <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
         </p>
     </footer>
+</body>
 
 </html>
