@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block extra_title %}- Home{% endblock %}
+
+{% block content %}
+
+<!-- Page Heading / Brand -->
+<section class="container mb-4">
+    <h1 class="display-5 text-center">Artera</h1>
+</section>
+
+<!-- Hero section -->
+<section class="container mb-5">
+    <div class="row g-3">
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <!-- Placeholder image area -->
+                    <div class="w-100 bg-light rounded" style="height: 260px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h2 class="h4 mb-3">Bring a touch of modern art to your space</h2>
+                    <p class="text-muted mb-4">
+                        Explore fresh arrivals and timeless favorites. Download instantly and print with ease.
+                    </p>
+                    <div>
+                        <a href="{% url 'gallery' %}" class="btn btn-primary">Explore Gallery</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
