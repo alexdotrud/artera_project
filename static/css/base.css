@@ -1,0 +1,25 @@
+/* Color / Font Variables*/
+:root {
+    /* Fonts */
+    --primary-font: "Instrument Serif", serif;
+    --secondary-font: "Lato", sans-serif;
+
+    /* Core Brand Colors */
+    --primary-color: #A23D3C;
+    /* Brick red */
+    --secondary-color: #4A3F3D;
+    /* Dark gray */
+    --accent-color: #C2D2C2;
+    /* Soft eucalyptus highlight */
+    --accent-dark: #2D4739;
+    /* Deep green accent */
+    --neutral-bg: #F5F4F2;
+    /* Site background */
+    --neutral-dark: #222;
+    /* For text or footer contrast */
+
+    /* Utility Colors */
+    --success-color: #3B7A57;
+    --warning-color: #E5B73B;
+    --error-color: #C44536;
+}
