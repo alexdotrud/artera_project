@@ -157,8 +157,11 @@ section {
 }
 
 .card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-radius: 0.75rem;
+    border-radius: 0 !important;
+}
+
+.card img {
+    border-radius: 0 !important;
 }
 
 .card:hover {
@@ -171,7 +174,6 @@ section {
     color: var(--primary-color);
     font-size: 1.05rem;
 }
-
 
 /* Bestsellers Section */
 .bestsellers-section .card {
