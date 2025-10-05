@@ -188,5 +188,44 @@
     </div>
 </section>
 
+<!-- Artwork request-->
+<section class="request-section">
+    <div class="container">
+        <div class="row g-4 align-items-center justify-content-center about">
+            <!-- Image -->
+            <div class="col-12 col-md-5">
+                <div class="about-image ratio ratio-4x3">
+                    <img src="{% static '' %}" class="about-img" alt="Custom Artwork Example">
+                </div>
+            </div>
 
+            <!-- Text -->
+            <div class="col-12 col-md-5">
+                <h2 class="fw-bold request-title mb-3">Request a Custom Artwork</h2>
+                <p class="mb-3">
+                    Looking for something truly unique? Our artists can create a one-of-a-kind piece
+                    designed around your ideas, space, or personal story. Whether you’re after a
+                    minimal print, a bold statement piece, or a thoughtful gift — we’ll work with you
+                    step by step to make it happen.
+                </p>
+                <p class="mb-4">
+                    {% if not request.user.is_authenticated %}
+                    To begin your custom artwork journey, please
+                    <a href="" class="text-dark fw-semibold text-decoration-underline" aria-label="login-link">log
+                        in</a>
+                    or
+                    <a href="" class="text-dark fw-semibold text-decoration-underline"
+                        aria-label="register-link">register</a>.
+                    {% else %}
+                    <h2 class="section-title mb-3">Ready to Create Your Custom Artwork?</h2>
+                    <p class="lead mb-4">
+                        You’re all set! Start your request below and collaborate directly with our team.
+                    </p>
+                    <a href="" class="btn btn-dark mb-2" aria-label="request-form-link">Make a Custom Request</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
