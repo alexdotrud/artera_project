@@ -58,14 +58,30 @@
     <header class="fixed-top bg-white border-bottom">
         <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container position-relative">
-                <!-- Mobile menu button -->
                 <button class="navbar-toggler position-absolute start-0 d-md-none" type="button"
-                    data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="mobileNav"
-                    aria-label="Toggle navigation">
+                    data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!-- Logo -->
-                <a class="navbar-brand mx-auto d-flex align-items-center" href="{% url 'home' %}">
+                <!-- Mobile menu button -->
+                <div class="collapse bg-white border-top d-md-none" id="mobileMenu">
+                    <ul class="navbar-nav p-3">
+                        <li><a class="nav-link" href="">Home</a></li>
+                        <li><a class="nav-link" href="">Shop</a></li>
+                        <li><a class="nav-link" href="">Collaborate</a></li>
+                    </ul>
+
+                    <form class="d-flex px-3 mb-3" method="get" action="">
+                        <div class="input-group">
+                            <input class="form-control" type="search" name="q" placeholder="Search..."
+                                value="{{ request.GET.q|default:'' }}">
+                            <button class="btn btn-outline-secondary" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Logo (always centered) -->
+                <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="{% url 'home' %}">
                     <img src="{% static 'images/logo.png' %}" alt="Artera logo" style="height:34px;">
                 </a>
                 <!-- Mobile accounts Menu-->
@@ -102,7 +118,7 @@
                     </a>
                 </div>
                 <!-- Desktop Menu -->
-                <div class="collapse navbar-collapse">
+                <div class="collapse navbar-collapse d-none d-md-flex">
                     <!-- Left side menu -->
                     <ul class="navbar-nav me-auto align-items-center">
                         <li class="nav-item"><a class="nav-link" href="">Home</a></li>
@@ -119,7 +135,6 @@
                             </form>
                         </li>
                     </ul>
-
                     <!-- Account and Bag -->
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item dropdown">
@@ -147,7 +162,7 @@
                         </li>
                         <li class="nav-item ms-2">
                             <a class="nav-link position-relative" href="">
-                                <i class="fas fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-bag"></i> Bag
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                                     {{ cart_count|default:0 }}
