@@ -197,22 +197,13 @@ section {
 
 /* About Section */
 .about-section {
-    background: var(--surface);
+    background: rgba(71, 29, 29, 0.196);
     text-align: right;
 }
 
 .about-title {
     font-size: 1.8rem;
 }
-
-.about-section p {
-    color: var(--muted);
-}
-
-.about {
-    gap: 2rem;
-}
-
 
 .about-image .object-fit-cover {
     object-fit: cover;
