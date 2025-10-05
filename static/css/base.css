@@ -6,7 +6,7 @@
     /* Core Brand Colors */
     --primary-color: #442818;
     /* deep brown */
-    --secondary-color: #600909;
+    --secondary-color: #760909;
     /* warm tan */
     --accent-1: #C2D2C2;
     /* eucalyptus */
@@ -45,13 +45,6 @@ section {
     padding: 2rem 0;
 }
 
-footer {
-    background-color: var(--muted);
-    color: var(--surface);
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 2rem;
-}
 
 h1,
 h2,
@@ -198,22 +191,28 @@ header .position-absolute.end-0 {
 }
 
 /* About Section */
-.about-section {
+.about-section,
+.request-section {
     background: rgba(71, 29, 29, 0.196);
     text-align: right;
+    gap: 0.5rem;
 }
 
-.about-title {
+.about-title,
+.request-title {
     font-size: 1.8rem;
 }
 
-.about-image .object-fit-cover {
+.about-image .object-fit-cover,
+.request-image .object-fit-cover {
     object-fit: cover;
     border-radius: var(--radius);
 }
 
-.about-section .btn-dark {
-    margin-top: .25rem;
+.about-section img,
+.request-section img {
+    border: 1.5px solid var(--muted);
+    box-shadow: 0 10px 20px var(--ink);
 }
 
 /* Bestsellers Section */
@@ -253,6 +252,9 @@ header .position-absolute.end-0 {
 .footer {
     background: var(--surface);
     border-top: 1px solid var(--border);
+    color: var(--surface);
+    text-align: center;
+    padding: 1rem 0;
 }
 
 .footer p,
