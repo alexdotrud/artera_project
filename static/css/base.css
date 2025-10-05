@@ -101,9 +101,7 @@ header .navbar-brand {
 
 header .position-absolute.end-0 {
     top: 50%;
-    transform: translateY(-50%);
     right: 10px;
-    z-index: 1051;
 }
 
 #mobileMenu.collapse {
@@ -111,23 +109,18 @@ header .position-absolute.end-0 {
     top: 64px;
     /* same as header height */
     left: 0;
-    right: 0;
-    background: #fff;
-    max-height: calc(100vh - 64px);
+    right: 20%;
+    background: var(--bg-color);
     overflow-y: auto;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
     padding-bottom: 2rem;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: translateY(-5%);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1040;
+    min-height: 320px;
 }
 
-#mobileMenu.show {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
+#mobileMenu .btn-link {
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 500;
 }
 
 /* Home Page Styles */
@@ -143,7 +136,7 @@ header .position-absolute.end-0 {
 .hero-image {
     flex: 1 1 50%;
     background: url("../images/hero-image.jpg") center center / cover no-repeat;
-    min-height: 300px;
+    min-height: 70vh;
 }
 
 .hero-right-text {
