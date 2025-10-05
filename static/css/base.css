@@ -35,10 +35,14 @@ body {
     font-family: var(--primary-font);
     background: var(--bg-color);
     color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
     margin-top: 50px;
+    flex: 1;
 }
 
 section {
@@ -159,11 +163,6 @@ header .position-absolute.end-0 {
     border-radius: 0 !important;
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-}
-
 .card-title {
     font-family: var(--primary-font);
     color: var(--primary-color);
@@ -247,6 +246,44 @@ header .position-absolute.end-0 {
     color: var(--primary-color);
 }
 
+/* Login/ Logout/ Signup */
+.auth-cont {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-cont .row {
+    width: 100%;
+    justify-content: center;
+}
+
+.auth input,
+.auth select,
+.auth textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.auth .card {
+    height: fit-content;
+}
+
+.auth .errorlist,
+.auth .errorlist li {
+    color: #b3261e;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+    list-style: none;
+    padding-left: 0;
+}
+
 
 /* Footer Styles */
 .footer {
@@ -327,11 +364,6 @@ i:hover {
         border: 1px solid var(--border);
         border-radius: var(--radius);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow-md);
     }
 
     .card-img-top {

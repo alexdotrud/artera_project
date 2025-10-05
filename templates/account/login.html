@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Log In" %}{% endblock %}
+
+{% block content %}
+<div class="container auth-cont">
+  <div class="row justify-content-center auth">
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <h1 class="h4 mb-3 text-center">Welcome!</h1>
+
+          <p class="text-center mb-4">
+            Log in to access your <strong>library, orders, and custom artwork requests.</strong>
+          </p>
+
+          <form method="post" action="{% url 'account_login' %}" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+              <label class="form-label">{% trans "Email or Username" %}</label>
+              {{ form.login }}
+              {{ form.login.errors }}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{% trans "Password" %}</label>
+              {{ form.password }}
+              {{ form.password.errors }}
+            </div>
+            <button class="btn btn-dark w-100" type="submit">{% trans "Log In" %}</button>
+          </form>
+
+          <p class="text-center mt-4 mb-0">
+            {% blocktrans %}Don’t have an account? <a href="{{ signup_url }}" class="text-decoration-underline">Register
+              here</a>.{% endblocktrans %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
