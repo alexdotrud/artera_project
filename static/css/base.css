@@ -72,10 +72,66 @@ p {
 header {
     background-color: var(--bg-color);
     padding: 0.25rem 0.5rem;
+    min-height: 65px;
+    border-bottom: 1px solid #eaeaea;
 }
 
+header .navbar {
+    min-height: 64px;
+    position: relative;
+}
+
+header .navbar-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    z-index: 1040;
+}
+
+.navbar-toggler {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1051;
+    border: none;
+}
+
+header .position-absolute.end-0 {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 1051;
+}
+
+#mobileMenu.collapse {
+    position: fixed;
+    top: 64px;
+    /* same as header height */
+    left: 0;
+    right: 0;
+    background: #fff;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    padding-bottom: 2rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(-5%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1040;
+}
+
+#mobileMenu.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
 
 /* Home Page Styles */
+
 .hero-section {
     padding-top: 0;
     display: flex;
