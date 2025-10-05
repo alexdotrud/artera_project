@@ -73,54 +73,6 @@ header.container-fluid {
     background-color: var(--bg-color);
 }
 
-.logo {
-    width: 10rem;
-}
-
-.center-nav {
-    margin-bottom: 0;
-}
-
-.nav-right {
-    align-items: center;
-    margin-bottom: 0;
-    gap: 1rem;
-}
-
-.nav-right i {
-    margin-right: 0.4rem;
-    font-size: 1.3rem;
-}
-
-.nav-right i:hover {
-    display: focus;
-}
-
-.nav-right p {
-    font-size: 1rem;
-    margin: 0;
-    line-height: 1;
-}
-
-header.container-fluid {
-    box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
-}
-
-header li:hover {
-    color: var(--secondary-color);
-    display: focus;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-section {
-    padding: 2rem 0;
-    margin: 2rem 0;
-}
 
 /* Home Page Styles */
 .hero-section {
@@ -314,38 +266,6 @@ button:hover i,
 i:hover {
     color: var(--secondary-color);
     display: focus;
-}
-
-
-@media (max-width: 768px) {
-
-    /* Mobile Menu Styles */
-    .mobile-row {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-    }
-
-    #mobileMenu.btn {
-        border-radius: 6px;
-        padding: 4px 10px;
-        font-size: 1rem;
-    }
-
-    .nav-right i {
-        font-size: 1.25rem;
-    }
-
-    .dropdown-menu {
-        min-width: 220px;
-        max-width: calc(100vw - 2rem);
-        border: 1px solid #ddd;
-        border-radius: 0;
-        margin-top: 8px;
-        text-align: center;
-        font-size: .95rem;
-    }
 }
 
 @media (min-width: 768px) {
