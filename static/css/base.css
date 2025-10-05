@@ -106,7 +106,7 @@ header .position-absolute.end-0 {
 
 #mobileMenu.collapse {
     position: fixed;
-    top: 64px;
+    top: 70px;
     /* same as header height */
     left: 0;
     right: 20%;
@@ -115,6 +115,13 @@ header .position-absolute.end-0 {
     box-shadow: var(--shadow-md);
     padding-bottom: 2rem;
     min-height: 320px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1040;
+}
+
+#mobileMenu.active {
+    transform: translateX(0);
 }
 
 #mobileMenu .btn-link {
