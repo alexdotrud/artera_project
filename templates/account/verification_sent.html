@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head_title %}Verify your email{% endblock %}
+
+{% block content %}
+<div class="container auth-cont">
+    <div class="row justify-content-center auth">
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5 text-center">
+                    <h1 class="h4 mb-3">Check your inbox ✉️</h1>
+                    <p class="text-muted mb-4">
+                        We’ve sent a confirmation link to your email. Click it to activate your account.
+                        If you don’t see it, check your spam folder.
+                    </p>
+                    <a href="{% url 'home' %}" class="btn btn-dark w-100">Return Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

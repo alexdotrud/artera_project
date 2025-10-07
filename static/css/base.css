@@ -246,6 +246,53 @@ header .position-absolute.end-0 {
     color: var(--primary-color);
 }
 
+/* Messages alert */
+.alert {
+    border: none;
+    border-left: 4px solid transparent;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    color: #333;
+}
+
+.alert-success {
+    border-left-color: #28a745;
+    color: #1d6831;
+}
+
+.alert-info {
+    border-left-color: #0d6efd;
+    color: #063a8b;
+}
+
+.alert-warning {
+    border-left-color: #ffc107;
+    color: #8a6d1d;
+}
+
+.alert-danger {
+    border-left-color: #dc3545;
+    color: #842029;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.5);
+    float: right;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;
