@@ -182,13 +182,11 @@
 
     <!-- Messages -->
     {% if messages %}
-    <div class="container mt-5 pt-5">
+    <div class="message-container position-fixed start-50 translate-middle-x mt-3" style="z-index: 1055;">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show my-2" role="alert">
+        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow" role="alert">
             {{ message }}
-            <button type="button" class="close-btn" data-bs-dismiss="alert" aria-label="Close">
-                &times;
-            </button>
+            <button type="button" class="close-btn" data-bs-dismiss="alert" aria-label="Close">&times;</button>
         </div>
         {% endfor %}
     </div>
