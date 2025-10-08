@@ -1,6 +1,18 @@
 from django.db import models
 from decimal import Decimal
 
+SIZE_CHOICES = [
+    ("S", "640x959"),
+    ("M", "1280x1917"),
+    ("L", "1920x2876"),
+]
+
+SIZE_SURCHARGE = {
+    "S": Decimal("0"),
+    "M": Decimal("5"),
+    "L": Decimal("10"),
+}
+
 class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
@@ -13,18 +25,7 @@ class Category(models.Model):
 
     def get_friendly_name(self):
         return self.friendly_name
-
-SIZE_CHOICES = [
-    ("S", "Small"),
-    ("M", "Medium"),
-    ("L", "Large"),
-]
-
-SIZE_SURCHARGE = {
-    "S": Decimal("0"),
-    "M": Decimal("5"),
-    "L": Decimal("10"),  # total +10 vs Small
-}
+    
 
 class Artwork(models.Model):
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
@@ -44,5 +45,10 @@ class Artwork(models.Model):
         """Used on listing cards: the cheapest visible price."""
         return self.price
 
-    def __str__(self):
-        return self.name
+    def size_options(self):
+        """Return list of dicts for templates if has_sizes."""
+        if not self.has_sizes:
+            return []
+        return [{"code": c, "label": l, "price": self.price_for(c)} for c, l in SIZE_CHOICES]
+
+    def __str__(self): return self.name

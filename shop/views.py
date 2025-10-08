@@ -55,6 +55,8 @@ def all_artworks(request):
 
 
 def artwork_detail(request, artwork_id):
-    """Show a single artwork by PK."""
     artwork = get_object_or_404(Artwork, pk=artwork_id)
-    return render(request, "", {"artwork": artwork})
+    return render(request, "shop/detail.html", {
+        "artwork": artwork,
+        "size_prices": artwork.size_options(),
+    })
