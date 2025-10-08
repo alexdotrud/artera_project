@@ -70,8 +70,8 @@
                         ✕
                     </button>
                     <ul class="navbar-nav p-3">
-                        <li><a class="nav-link" href="">Home</a></li>
-                        <li><a class="nav-link" href="">Shop</a></li>
+                        <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
                         <li><a class="nav-link" href="">Collaborate</a></li>
                     </ul>
 
@@ -125,8 +125,8 @@
                 <div class="collapse navbar-collapse d-none d-md-flex">
                     <!-- Left side menu -->
                     <ul class="navbar-nav me-auto align-items-center">
-                        <li class="nav-item"><a class="nav-link" href="">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Shop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Collaborate</a></li>
                         <li class="nav-item">
                             <form class="d-flex ms-3" method="get" action="search">

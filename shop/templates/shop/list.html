@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Artworks</h1>
+
+    <!-- Search + sort bar -->
+    <form class="d-flex justify-content-center mb-4" method="get">
+        <input class="form-control w-50 me-2" type="search" name="q" value="{{ search_term|default:'' }}"
+            placeholder="Search artworks...">
+        <button class="btn btn-dark" type="submit">Search</button>
+    </form>
+
+    {% if artworks %}
+    <div class="row g-4">
+        {% for artwork in artworks %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <a href="{% url 'shop:detail' artwork.id %}">
+                    {% if artwork.image %}
+                    <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.name }}">
+                    {% elif artwork.image_url %}
+                    <img src="{{ artwork.image_url }}" class="card-img-top" alt="{{ artwork.name }}">
+                    {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center">
+                        <span> No Image </span>
+                    </div>
+                    {% endif %}
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">{{ artwork.name }}</h5>
+                    <p class="card-text small mb-2">{{ artwork.category.friendly_name }}</p>
+                    <p class="fw-bold">{{ artwork.price }} €</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">No artworks found.</p>
+    {% endif %}
+</div>
+{% endblock %}

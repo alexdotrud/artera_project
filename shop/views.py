@@ -36,7 +36,7 @@ def all_artworks(request):
     # Search
     if "q" in request.GET and not query:
         messages.error(request, "You didn't enter any search criteria!")
-        return redirect(reverse("shop:list"))  # adjust to your URL name
+        return redirect(reverse("shop:all_artworks")) 
 
     if query:
         artworks = artworks.filter(
@@ -57,4 +57,4 @@ def all_artworks(request):
 def artwork_detail(request, artwork_id):
     """Show a single artwork by PK."""
     artwork = get_object_or_404(Artwork, pk=artwork_id)
-    return render(request, "shop/detail.html", {"artwork": artwork})
+    return render(request, "", {"artwork": artwork})

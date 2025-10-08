@@ -9,7 +9,6 @@ class ArtworkAdmin(admin.ModelAdmin):
         'name',
         'category',
         'price',
-        'rating',
         'image',
     )
 
