@@ -11,11 +11,9 @@ from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 def all_artworks(request):
     artworks = Artwork.objects.all().select_related("category")
-
-    # Hide anything older than 3 years
-    three_years_ago = timezone.now() - timedelta(days=3 * 365)
-    # Requires Artwork.created_at (DateTimeField(auto_now_add=True))
-    artworks = artworks.filter(created_at__gte=three_years_ago)
+  # Temporarily disabled age filter until migration is fixed
+# three_years_ago = timezone.now() - timedelta(days=3 * 365)
+# artworks = artworks.filter(created_at__gte=three_years_ago)
 
     query = request.GET.get("q", "").strip()
     sort = request.GET.get("sort")
@@ -63,11 +61,13 @@ def all_artworks(request):
 
 
 def artwork_detail(request, artwork_id):
-    three_years_ago = timezone.now() - timedelta(days=3 * 365)
-    artwork = get_object_or_404(
-        Artwork.objects.filter(created_at__gte=three_years_ago),
-        pk=artwork_id
-    )
+    """ A view to show individual artwork details """
+    artwork = get_object_or_404(Artwork, pk=artwork_id)
+#three_years_ago = timezone.now() - timedelta(days=3 * 365)
+   # artwork = get_object_or_404(
+   #     Artwork.objects.filter(created_at__gte=three_years_ago),
+    #    pk=artwork_id
+#)
 
 
     # Size options
