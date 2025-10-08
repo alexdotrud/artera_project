@@ -13,6 +13,9 @@ SIZE_SURCHARGE = {
     "L": Decimal("10"),
 }
 
+def calc_size_price(base_price: Decimal, size_code: str) -> Decimal:
+    return (base_price + SIZE_SURCHARGE[size_code]).quantize(Decimal("0.01"))
+
 class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
@@ -32,23 +35,15 @@ class Artwork(models.Model):
     sku = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    price = models.DecimalField(max_digits=8, decimal_places=2, help_text="Base price (fallback)")
+    price = models.DecimalField(max_digits=8, decimal_places=2)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
 
     def __str__(self):
         return self.name
     
-class ArtworkVariant(models.Model):
-    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, related_name="variants")
-    size = models.CharField(max_length=1, choices=SIZE_CHOICES)
-    width_px = models.PositiveIntegerField()
-    height_px = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-
-    class Meta:
-        unique_together = ("artwork", "size")
-        ordering = ["size"]
-
-    def __str__(self):
-        return f"{self.artwork.name} — {self.get_size_display()} ({self.width_px}×{self.height_px})"

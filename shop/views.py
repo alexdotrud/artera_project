@@ -2,13 +2,21 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
+from decimal import Decimal
+from django.utils import timezone
+from datetime import timedelta
 
-from .models import Artwork, Category
+from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 
 def all_artworks(request):
-    """Show all artworks with sorting, filtering, and search."""
-    artworks = Artwork.objects.all()
+    artworks = Artwork.objects.all().select_related("category")
+
+    # Hide anything older than 3 years
+    three_years_ago = timezone.now() - timedelta(days=3 * 365)
+    # Requires Artwork.created_at (DateTimeField(auto_now_add=True))
+    artworks = artworks.filter(created_at__gte=three_years_ago)
+
     query = request.GET.get("q", "").strip()
     sort = request.GET.get("sort")
     direction = request.GET.get("direction")
@@ -56,7 +64,24 @@ def all_artworks(request):
 
 def artwork_detail(request, artwork_id):
     artwork = get_object_or_404(Artwork, pk=artwork_id)
+
+    # Size options
+    size_options = []
+    for code, label in SIZE_CHOICES:
+        price = (artwork.price + SIZE_SURCHARGE[code]).quantize(Decimal("0.01"))
+        size_options.append({
+            "code": code,       # 'S' | 'M' | 'L'
+            "label": label,     # '640x959'
+            "price": price,     # Decimal
+        })
+
+    # Default selection
+    default_code = "M" if dict(SIZE_CHOICES).get("M") else SIZE_CHOICES[0][0]
+    default_price = next(opt["price"] for opt in size_options if opt["code"] == default_code)
+
     return render(request, "shop/detail.html", {
         "artwork": artwork,
-        "size_prices": artwork.size_options(),
+        "size_options": size_options,
+        "default_size": default_code,
+        "default_price": default_price,
     })
