@@ -65,16 +65,10 @@
                                 {% for opt in size_options %}
                                 <option value="{{ opt.code }}" data-price="{{ opt.price }}"
                                     {% if opt.code == default_size %}selected{% endif %}>
-                                    {{ opt.label }} — ${{ opt.price }}
+                                    {{ opt.code }} ({{ opt.label }}) — ${{ opt.price }}
                                 </option>
                                 {% endfor %}
                             </select>
-                            <small class="text-muted d-block mt-1">
-                                Available sizes:
-                                {% for opt in size_options %}
-                                {{ opt.code }} ({{ opt.label }}){% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </small>
                         </div>
 
                         <!-- Quantity -->
