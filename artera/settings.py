@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'claudinary',
+    'claudinary_storage',
     'home',
     'profiles'
+    'shop'
 ]
 
 MIDDLEWARE = [
@@ -100,9 +103,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 WSGI_APPLICATION = 'artera.wsgi.application'
 
-ACCOUNT_FORMS = {
-    "signup": "profiles.forms.ProfileSignupForm",
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
