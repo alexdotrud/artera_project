@@ -32,23 +32,23 @@ class Artwork(models.Model):
     sku = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    has_sizes = models.BooleanField(default=False, null=True, blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2) 
+    price = models.DecimalField(max_digits=8, decimal_places=2, help_text="Base price (fallback)")
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
 
-    def price_for(self, size_code: str) -> Decimal:
-        """Return base (Small) price."""
-        return self.price + SIZE_SURCHARGE.get(size_code, Decimal("0"))
+    def __str__(self):
+        return self.name
+    
+class ArtworkVariant(models.Model):
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, related_name="variants")
+    size = models.CharField(max_length=1, choices=SIZE_CHOICES)
+    width_px = models.PositiveIntegerField()
+    height_px = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
-    def min_price(self) -> Decimal:
-        """Used on listing cards: the cheapest visible price."""
-        return self.price
+    class Meta:
+        unique_together = ("artwork", "size")
+        ordering = ["size"]
 
-    def size_options(self):
-        """Return list of dicts for templates if has_sizes."""
-        if not self.has_sizes:
-            return []
-        return [{"code": c, "label": l, "price": self.price_for(c)} for c, l in SIZE_CHOICES]
-
-    def __str__(self): return self.name
+    def __str__(self):
+        return f"{self.artwork.name} — {self.get_size_display()} ({self.width_px}×{self.height_px})"
