@@ -100,6 +100,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 WSGI_APPLICATION = 'artera.wsgi.application'
 
+ACCOUNT_FORMS = {
+    "signup": "profiles.forms.ProfileSignupForm",
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

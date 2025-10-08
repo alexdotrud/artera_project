@@ -23,30 +23,72 @@
             {{ form.non_field_errors }}
             <div class="mb-3">
               <label class="form-label">{% trans "Email" %}</label>
-              {{ form.email|add_class:"form-control" }}
-              {{ form.email.errors }}
+              {{ form.email }} {{ form.email.errors }}
             </div>
             <div class="mb-3">
               <label class="form-label">{% trans "Username" %}</label>
-              {{ form.username|add_class:"form-control" }}
-              {{ form.username.errors }}
+              {{ form.username }} {{ form.username.errors }}
             </div>
             <div class="mb-3">
               <label class="form-label">{% trans "Password" %}</label>
-              {{ form.password1|add_class:"form-control" }}
-              {{ form.password1.errors }}
+              {{ form.password1 }} {{ form.password1.errors }}
             </div>
             <div class="mb-4">
               <label class="form-label">{% trans "Confirm Password" %}</label>
-              {{ form.password2|add_class:"form-control" }}
-              {{ form.password2.errors }}
+              {{ form.password2 }} {{ form.password2.errors }}
             </div>
+
+            <!--For Registred Users to edit-->
+            {% if form.full_name %}
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              {{ form.full_name }} {{ form.full_name.errors }}
+            </div>
+            {% endif %}
+            {% if form.phone_number %}
+            <div class="mb-3">
+              <label class="form-label">Phone number</label>
+              {{ form.phone_number }} {{ form.phone_number.errors }}
+            </div>
+            {% endif %}
+            {% if form.address_line_delivery %}
+            <div class="mb-3">
+              <label class="form-label">Delivery address</label>
+              {{ form.address_line_delivery }} {{ form.address_line_delivery.errors }}
+            </div>
+            {% endif %}
+            {% if form.address_line_living %}
+            <div class="mb-3">
+              <label class="form-label">Living address</label>
+              {{ form.address_line_living }} {{ form.address_line_living.errors }}
+            </div>
+            {% endif %}
+            {% if form.city %}
+            <div class="mb-3">
+              <label class="form-label">City</label>
+              {{ form.city }} {{ form.city.errors }}
+            </div>
+            {% endif %}
+            {% if form.postal_code %}
+            <div class="mb-3">
+              <label class="form-label">Postal code</label>
+              {{ form.postal_code }} {{ form.postal_code.errors }}
+            </div>
+            {% endif %}
+            {% if form.country %}
+            <div class="mb-4">
+              <label class="form-label">Country</label>
+              {{ form.country }} {{ form.country.errors }}
+            </div>
+            {% endif %}
+
             <button class="btn btn-dark w-100" type="submit">{% trans "Sign Up" %}</button>
           </form>
-
+          {% if request.user.is_anonymous %}
           <p class="text-center mt-4 mb-0">
             {% blocktrans %}Already have an account? <a href="{{ login_url }}">Log in here</a>.{% endblocktrans %}
           </p>
+          {% endif %}
         </div>
       </div>
     </div>
