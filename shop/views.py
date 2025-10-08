@@ -44,7 +44,7 @@ def all_artworks(request):
     # Search
     if "q" in request.GET and not query:
         messages.error(request, "You didn't enter any search criteria!")
-        return redirect(reverse("shop:all_artworks")) 
+        return redirect(reverse("all_artworks")) 
 
     if query:
         artworks = artworks.filter(
@@ -63,7 +63,12 @@ def all_artworks(request):
 
 
 def artwork_detail(request, artwork_id):
-    artwork = get_object_or_404(Artwork, pk=artwork_id)
+    three_years_ago = timezone.now() - timedelta(days=3 * 365)
+    artwork = get_object_or_404(
+        Artwork.objects.filter(created_at__gte=three_years_ago),
+        pk=artwork_id
+    )
+
 
     # Size options
     size_options = []

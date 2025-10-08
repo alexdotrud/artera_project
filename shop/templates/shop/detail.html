@@ -1,20 +1,126 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-    <div class="row align-items-center">
-        <div class="col-md-6">
-            {% if artwork.image %}
-            <img src="{{ artwork.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ artwork.name }}">
-            {% elif artwork.image_url %}
-            <img src="{{ artwork.image_url }}" class="img-fluid rounded shadow-sm" alt="{{ artwork.name }}">
-            {% endif %}
+<div class="overlay"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Image -->
+        <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
+            <div class="image-container my-5">
+                {% if artwork.image %}
+                <a href="{{ artwork.image.url }}" target="_blank">
+                    <img class="card-img-top img-fluid" src="{{ artwork.image.url }}" alt="{{ artwork.name }}">
+                </a>
+                {% elif artwork.image_url %}
+                <a href="{{ artwork.image_url }}" target="_blank">
+                    <img class="card-img-top img-fluid" src="{{ artwork.image_url }}" alt="{{ artwork.name }}">
+                </a>
+                {% else %}
+                <a href="#">
+                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ artwork.name }}">
+                </a>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-md-6 mt-4 mt-md-0">
-            <h1 class="mb-3">{{ artwork.name }}</h1>
-            <p class="text-muted">{{ artwork.category.friendly_name }}</p>
-            <p class="lead mb-3">{{ artwork.description }}</p>
-            <p class="fw-bold fs-4 mb-4">{{ artwork.price }} €</p>
-            <button class="btn btn-dark px-4">Add to Bag</button>
+
+        <!-- Details -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="product-details-container mb-5 mt-md-5">
+                <p class="mb-0">{{ artwork.name }}</p>
+
+                <!-- Live price -->
+                <p class="lead mb-0 text-left font-weight-bold" id="priceDisplay">
+                    ${{ default_price }}
+                </p>
+
+                {% if artwork.category %}
+                <p class="small mt-1 mb-0">
+                    <a class="text-muted" href="{% url 'shop:all_artworks' %}?category={{ artwork.category.name }}">
+                        <i
+                            class="fas fa-tag mr-1"></i>{{ artwork.category.friendly_name|default:artwork.category.name }}
+                    </a>
+                </p>
+                {% endif %}
+
+                <p class="mt-3">{{ artwork.description }}</p>
+
+                <form class="form" action="{% url 'add_to_bag' artwork.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+
+                        <!-- Size select -->
+                        <div class="col-12">
+                            <p><strong>Size:</strong></p>
+                            <select class="form-control rounded-0 w-50" name="product_size" id="id_product_size">
+                                {% for opt in size_options %}
+                                <option value="{{ opt.code }}" data-price="{{ opt.price }}"
+                                    {% if opt.code == default_size %}selected{% endif %}>
+                                    {{ opt.label }} — ${{ opt.price }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <small class="text-muted d-block mt-1">
+                                Available sizes:
+                                {% for opt in size_options %}
+                                {{ opt.code }} ({{ opt.label }}){% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </small>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="col-12">
+                            <p class="mt-3"><strong>Quantity:</strong></p>
+                            <div class="form-group w-50">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="decrement-qty btn btn-black rounded-0"
+                                            data-item_id="{{ artwork.id }}" id="decrement-qty_{{ artwork.id }}">
+                                            <span class="icon"><i class="fas fa-minus"></i></span>
+                                        </button>
+                                    </div>
+                                    <input class="form-control qty_input" type="number" name="quantity" value="1"
+                                        min="1" max="99" data-item_id="{{ artwork.id }}" id="id_qty_{{ artwork.id }}">
+                                    <div class="input-group-append">
+                                        <button class="increment-qty btn btn-black rounded-0"
+                                            data-item_id="{{ artwork.id }}" id="increment-qty_{{ artwork.id }}">
+                                            <span class="icon"><i class="fas fa-plus"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-2">
+                            <a href="{% url 'shop:all_artworks' %}" class="btn btn-outline-black rounded-0 mt-5">
+                                <span class="icon"><i class="fas fa-chevron-left"></i></span>
+                                <span class="text-uppercase">Keep Shopping</span>
+                            </a>
+                            <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
+                        </div>
+
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                    </div>
+                </form>
+
+                <!-- Size list with prices -->
+                <div class="mt-4">
+                    <p class="mb-1"><strong>Available sizes & prices:</strong></p>
+                    <ul class="list-unstyled mb-0">
+                        {% for opt in size_options %}
+                        <li>• {{ opt.code }} — {{ opt.label }} — ${{ opt.price }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

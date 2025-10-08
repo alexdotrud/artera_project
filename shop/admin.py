@@ -5,8 +5,8 @@ from .models import Artwork, Category
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "sku", "price", "has_sizes")
-    list_filter = ("category", "size")
+    list_display = ("name", "category", "sku", "price",)
+    list_filter = ("category",)
     search_fields = ("name", "sku", "description")
     autocomplete_fields = ("category",)
 
@@ -17,3 +17,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
     search_fields = ("name", "friendly_name")
+
+@admin.display(description="Sizes")
+def sizes(self, obj):
+    return "S, M, L"
