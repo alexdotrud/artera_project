@@ -10,28 +10,33 @@ from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 
 def all_artworks(request):
-    artworks = Artwork.objects.all().select_related("category")
   # Temporarily disabled age filter until migration is fixed
 # three_years_ago = timezone.now() - timedelta(days=3 * 365)
 # artworks = artworks.filter(created_at__gte=three_years_ago)
 
-    query = request.GET.get("q", "").strip()
-    sort = request.GET.get("sort")
-    direction = request.GET.get("direction")
-    category_param = request.GET.get("category")
-    current_categories = None
+    artworks = Artwork.objects.all().select_related("category")
 
-    # Sorting
-    if sort:
-        sortkey = sort
-        if sort == "name":
-            artworks = artworks.annotate(lower_name=Lower("name"))
-            sortkey = "lower_name"
-        elif sort == "category":
-            sortkey = "category__name"
-        if direction == "desc":
-            sortkey = f"-{sortkey}"
-        artworks = artworks.order_by(sortkey)
+    query = None
+    current_categories = None
+    sort = None
+    direction = None
+
+    if request.GET:
+        # Sorting
+        if 'sort' in request.GET:
+            sortkey = request.GET['sort']
+            sort = sortkey
+            if sortkey == 'name':
+                artworks = artworks.annotate(lower_name=Lower('name'))
+                sortkey = 'lower_name'
+            if sortkey == 'category':
+                sortkey = 'category__name'
+
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            artworks = artworks.order_by(sortkey)
 
     # Category filter
     if category_param:
@@ -56,6 +61,7 @@ def all_artworks(request):
         "search_term": query,
         "current_categories": current_categories,
         "current_sorting": current_sorting,
+        "SIZE_SURCHARGE": SIZE_SURCHARGE,
     }
     return render(request, "shop/list.html", context)
 

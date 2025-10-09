@@ -40,15 +40,11 @@
                 </a>
                 <div class="card-body text-center">
                     <h5 class="card-title mb-2">{{ artwork.name }}</h5>
-                    <p class="card-text small mb-2">
+                    <p class="card-text mb-2">
                         {{ artwork.category.friendly_name|default:artwork.category.name }}
                     </p>
                     <div class="fw-semibold">
-                        {% if artwork.has_sizes %}
-                        From {{ artwork.min_price }} €
-                        {% else %}
-                        {{ artwork.price }} €
-                        {% endif %}
+                        <p class="fw-bold mb-3">${{ artwork.price|add:SIZE_SURCHARGE.S }}</p>
                     </div>
                 </div>
             </div>
