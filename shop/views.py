@@ -9,13 +9,15 @@ from datetime import timedelta
 from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 
-def all_artworks(request):
+def all_artworks(request, category_id=None):
+
+    artworks = Artwork.objects.all().select_related("category")
+    categories = Category.objects.all().order_by("name")
+    if category_id:
+        artworks = artworks.filter(category_id=category_id)
   # Temporarily disabled age filter until migration is fixed
 # three_years_ago = timezone.now() - timedelta(days=3 * 365)
 # artworks = artworks.filter(created_at__gte=three_years_ago)
-
-    artworks = Artwork.objects.all().select_related("category")
-
     query = None
     current_categories = None
     sort = None
@@ -61,6 +63,7 @@ def all_artworks(request):
         'current_categories': current_categories,
         'current_sorting': current_sorting,
         'SIZE_SURCHARGE': SIZE_SURCHARGE,
+        'categories': categories,
     }
     return render(request, 'shop/list.html', context)
 

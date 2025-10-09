@@ -5,15 +5,16 @@
 
     <div class="text-center mb-4">
         <strong>Shop by Categories:</strong>
-        <a href="{% url 'all_artworks' %}?category=Abstract"
-            class="text-muted text-decoration-underline px-3 py-2">Abstract</a>
-        <a href="{% url 'all_artworks' %}?category=Minimalism"
-            class="text-muted text-decoration-underline px-3 py-2">Minimalism</a>
-        <a href="{% url 'all_artworks' %}?category=Nature"
-            class="text-muted text-decoration-underline px-3 py-2">Nature</a>
-        <a href="{% url 'all_artworks' %}?category=Typography"
-            class="text-muted text-decoration-underline px-3 py-2">Typography</a>
+        {% for cat in categories %}
+        <a href="{% url 'by_category' cat.id %}" class="ms-2 text-dark">
+            {{ cat.friendly_name}}
+        </a>
+        {% endfor %}
+        <a href="{% url 'all_artworks' %}" class="ms-2 text-dark">
+            See All
+        </a>
     </div>
+
     <!-- Search + sort bar -->
     <form class="d-flex justify-content-center mb-4" method="get">
         <input class="form-control w-50 me-2" type="search" name="q" value="{{ search_term|default:'' }}"
