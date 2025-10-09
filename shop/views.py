@@ -38,32 +38,31 @@ def all_artworks(request):
                     sortkey = f'-{sortkey}'
             artworks = artworks.order_by(sortkey)
 
-    # Category filter
-    if category_param:
-        names = [c.strip() for c in category_param.split(",") if c.strip()]
-        artworks = artworks.filter(category__name__in=names)
-        current_categories = Category.objects.filter(name__in=names)
+        if 'category' in request.GET:
+            names = [c.strip() for c in request.GET['category'].split(',') if c.strip()]
+            artworks = artworks.filter(category__name__in=names)
+            current_categories = Category.objects.filter(name__in=names)
 
-    # Search
-    if "q" in request.GET and not query:
-        messages.error(request, "You didn't enter any search criteria!")
-        return redirect(reverse("all_artworks")) 
-
-    if query:
-        artworks = artworks.filter(
-            Q(name__icontains=query) | Q(description__icontains=query)
-        )
-
+        # Search
+        if 'q' in request.GET:
+            query = request.GET['q'].strip()
+            if not query:
+                messages.error(request, "You didn't enter any search criteria!")
+                # adjust if you don't namespace:
+                return redirect(reverse('shop:all_artworks'))
+            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            artworks = artworks.filter(queries)
+    
     current_sorting = f"{sort or ''}_{direction or ''}"
 
     context = {
-        "artworks": artworks,
-        "search_term": query,
-        "current_categories": current_categories,
-        "current_sorting": current_sorting,
-        "SIZE_SURCHARGE": SIZE_SURCHARGE,
+        'artworks': artworks,
+        'search_term': query,
+        'current_categories': current_categories,
+        'current_sorting': current_sorting,
+        'SIZE_SURCHARGE': SIZE_SURCHARGE,
     }
-    return render(request, "shop/list.html", context)
+    return render(request, 'shop/list.html', context)
 
 
 def artwork_detail(request, artwork_id):
