@@ -16,9 +16,10 @@ def search(request):
         Q(title__icontains=q) |
         Q(description__icontains=q) |
         Q(content__icontains=q) |
+        Q(extra_text__icontains=q) |
         Q(categories__name__icontains=q) |
         Q(categories__friendly_name__icontains=q)
-).distinct()
+    ).distinct()
 
     return render(request, "home/search_results.html", {
         "q": q,
