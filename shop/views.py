@@ -81,7 +81,7 @@ def artwork_detail(request, artwork_id):
         })
 
     # Default selection
-    default_code = "M" if dict(SIZE_CHOICES).get("M") else SIZE_CHOICES[0][0]
+    default_code = "S" if dict(SIZE_CHOICES).get("S") else SIZE_CHOICES[0][0]
     default_price = next(opt["price"] for opt in size_options if opt["code"] == default_code)
 
     return render(request, "shop/detail.html", {
