@@ -71,6 +71,7 @@ def all_artworks(request, category_id=None):
 def artwork_detail(request, artwork_id):
     """ A view to show individual artwork details """
     artwork = get_object_or_404(Artwork, pk=artwork_id)
+    categories = Category.objects.all().order_by("name")
 #three_years_ago = timezone.now() - timedelta(days=3 * 365)
    # artwork = get_object_or_404(
    #     Artwork.objects.filter(created_at__gte=three_years_ago),
@@ -97,4 +98,5 @@ def artwork_detail(request, artwork_id):
         "size_options": size_options,
         "default_size": default_code,
         "default_price": default_price,
+        "categories": categories,
     })

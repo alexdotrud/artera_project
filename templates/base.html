@@ -75,7 +75,7 @@
                         <li><a class="nav-link" href="">Collaborate</a></li>
                     </ul>
 
-                    <form class="d-flex px-3 mb-3" method="get" action="">
+                    <form class="d-flex px-3 mb-3" method="get" action="{% url 'all_artworks' %}">
                         <div class="input-group">
                             <input class="form-control" type="search" name="q" placeholder="Search..."
                                 value="{{ request.GET.q|default:'' }}">
@@ -129,7 +129,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'all_artworks' %}">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Collaborate</a></li>
                         <li class="nav-item">
-                            <form class="d-flex ms-3" method="get" action="search">
+                            <form class="d-flex ms-3" method="get" action="{% url 'all_artworks' %}">
                                 <div class="input-group">
                                     <input type="text" name="q" value="{{ request.GET.q|default:'' }}"
                                         class="form-control" placeholder="Search...">
