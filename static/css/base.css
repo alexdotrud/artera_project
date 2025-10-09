@@ -302,18 +302,20 @@ header .position-absolute.end-0 {
     border: none;
     background: transparent;
     box-shadow: none;
-    text-align: center;
-    display: inline-block;
+    max-width: fit-content;
+    max-height: fit-content;
 }
 
 .shop-cont .card-img-top {
-    display: block;
     width: auto;
     max-width: 100%;
-    height: auto;
+    height: 100%;
+    max-height: 600px;
+    max-width: 400px;
     object-fit: contain;
     background-color: #f8f8f8;
     border-radius: 4px;
+    display: block;
 }
 
 
