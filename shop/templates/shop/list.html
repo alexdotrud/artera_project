@@ -1,8 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5">
+<div class="container py-5 shop-cont">
     <h1 class="mb-4 text-center">Artworks</h1>
 
+    <div class="text-center mb-4">
+        <strong>Shop by Categories:</strong>
+        <a href="{% url 'all_artworks' %}?category=Abstract"
+            class="text-muted text-decoration-underline px-3 py-2">Abstract</a>
+        <a href="{% url 'all_artworks' %}?category=Minimalist"
+            class="text-muted text-decoration-underline px-3 py-2">Minimalist</a>
+        <a href="{% url 'all_artworks' %}?category=Nature"
+            class="text-muted text-decoration-underline px-3 py-2">Nature</a>
+        <a href="{% url 'all_artworks' %}?category=Typography"
+            class="text-muted text-decoration-underline px-3 py-2">Typography</a>
+    </div>
     <!-- Search + sort bar -->
     <form class="d-flex justify-content-center mb-4" method="get">
         <input class="form-control w-50 me-2" type="search" name="q" value="{{ search_term|default:'' }}"
@@ -15,7 +26,7 @@
     <div class="row g-4">
         {% for artwork in artworks %}
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm">
                 <a href="{% url 'detail' artwork.id %}">
                     {% if artwork.image %}
                     <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.name }}">

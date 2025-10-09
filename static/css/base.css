@@ -297,6 +297,26 @@ header .position-absolute.end-0 {
     color: #000;
 }
 
+/* Shop Page Styles */
+.shop-cont .card {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+    display: inline-block;
+}
+
+.shop-cont .card-img-top {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+}
+
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;
