@@ -1,20 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container d-flex flex-column align-items-center justify-content-center vh-100">
-    <h3 class=" mb-3">Search results for “{{ q }}”</h3>
+<div class="container py-5 shop-cont">
+    <h1 class="mb-4 text-center">Search Results for "{{ q }}"</h1>
 
     {% if results %}
-    <ul class="list-group">
-        {% for r in results %}
-        <li class="list-group-item">
-            <a href="{{ r.url }}" class="fw-bold text-decoration-none">{{ r.title }}</a><br>
-            <small class="text-muted">{{ r.content|truncatewords:20 }}</small>
-        </li>
+    <div class="row g-4">
+        {% for artwork in results %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+            <div class="card">
+                <a href="{% url 'detail' artwork.id %}">
+                    {% if artwork.image %}
+                    <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.name }}">
+                    {% elif artwork.image_url %}
+                    <img src="{{ artwork.image_url }}" class="card-img-top" alt="{{ artwork.name }}">
+                    {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height:240px;">
+                        <span class="text-muted">No Image</span>
+                    </div>
+                    {% endif %}
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">{{ artwork.name }}</h5>
+                    <p class="card-text mb-2">
+                        {{ artwork.description|truncatewords:15 }}
+                    </p>
+                    <p class="card-text mb-2">
+                        {{ artwork.category.friendly_name|default:artwork.category.name }}
+                    </p>
+                    <div class="fw-semibold">
+                        <p class="fw-bold mb-3">${{ artwork.price|add:SIZE_SURCHARGE.S }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No artworks match your search.</p>
         {% endfor %}
-    </ul>
+    </div>
+
     {% else %}
-    <p class="text-muted">No results found.</p>
+    <p class="text-center">No artworks found.</p>
     {% endif %}
 </div>
 {% endblock %}

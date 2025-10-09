@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.homepege, name='home'),
-    path("search/", views.search, name="search"),
+    path('artwork-search/', views.artwork_search, name='artwork_search'),
 ]
