@@ -13,8 +13,12 @@ def search(request):
         return redirect("/")
 
     results = SearchDocument.objects.filter(
-        Q(title__icontains=q) | Q(content__icontains=q)
-    )
+        Q(title__icontains=q) |
+        Q(description__icontains=q) |
+        Q(content__icontains=q) |
+        Q(categories__name__icontains=q) |
+        Q(categories__friendly_name__icontains=q)
+).distinct()
 
     return render(request, "home/search_results.html", {
         "q": q,
