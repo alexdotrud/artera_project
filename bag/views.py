@@ -89,21 +89,25 @@ def remove_from_bag(request, item_id):
     """ Remove the item from the shopping bag """
 
     artwork = get_object_or_404(Artwork, pk=item_id)
+    bag = request.session.get('bag', {})
+    key = str(item_id)
+    size = request.POST.get('product_size')
 
     try:
-        size = None
-        if 'product_size' in request.POST:
-            size = request.POST['product_size']
-        bag = request.session.get('bag', {})
-
         if size:
-            del bag[item_id]['items_by_size'][size]
-            if not bag[item_id]['items_by_size']:
-                bag.pop(item_id)
-            messages.success(request, f'Removed size {size.upper()} {artwork.name} from your bag')
+            if key in bag and 'items_by_size' in bag[key] and size in bag[key]['items_by_size']:
+                del bag[key]['items_by_size'][size]
+                if not bag[key]['items_by_size']:
+                    bag.pop(key, None)
+                messages.success(request, f'Removed {artwork.name} ({size.upper()}) from your bag')
+            else:
+                messages.error(request, 'Item/size not found in your bag.')
         else:
-            bag.pop(item_id)
-            messages.success(request, f'Removed {artwork.name} from your bag')
+            if key in bag:
+                bag.pop(key, None)
+                messages.success(request, f'Removed {artwork.name} from your bag')
+            else:
+                messages.error(request, 'Item not found in your bag.')
 
         request.session['bag'] = bag
         return HttpResponse(status=200)

@@ -134,14 +134,16 @@
         e.preventDefault();
         var csrfToken = "{{ csrf_token }}";
         var itemId = $(this).attr('id').split('remove_')[1];
-        var size = $(this).data('product_size'); // may be undefined
-        var url = "/bag/remove/" + itemId + "/";
+        var size = $(this).data('product_size');
+        var url = `/bag/remove/${itemId}/`;
         var data = {
-            'csrfmiddlewaretoken': csrfToken
+            'csrfmiddlewaretoken': csrfToken,
+            'product_size': size
         };
-        if (typeof size !== 'undefined' && size !== null && size !== '') {
-            data['product_size'] = size;
-        }
+        $.post(url, data)
+            .done(function () {
+                location.reload();
+            });
     })
 </script>
 {% endblock %}
