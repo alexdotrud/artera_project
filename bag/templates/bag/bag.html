@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
 <div class="container mb-4 bag">
     <div class="row">
@@ -66,15 +65,15 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="product_size" value="{{ it.size }}">
                                     <div class="input-group input-group-sm justify-content-center">
-                                        <button type="button" class="btn btn-sm btn-dark decrement-qty"
-                                            data-item_id="{{ it.artwork.id }}" data-size="{{ it.size }}">−</button>
+                                        <button type="button" class="btn btn-sm btn-dark decrement"
+                                            data-item_id="{{ it.artwork.id }}">−</button>
 
                                         <input class="form-control form-control-sm qty_input text-center" type="number"
                                             name="quantity" value="{{ it.quantity }}" min="1" max="99"
-                                            id="id_qty_{{ it.artwork.id }}_{{ it.size }}">
+                                            id="id_qty_{{ it.artwork.id }}">
 
-                                        <button type="button" class="btn btn-sm btn-dark increment-qty"
-                                            data-item_id="{{ it.artwork.id }}" data-size="{{ it.size }}">+</button>
+                                        <button type="button" class="btn btn-sm btn-dark increment"
+                                            data-item_id="{{ it.artwork.id }}">+</button>
                                     </div>
 
                                     <button type="submit" class="btn btn-link p-0 mt-1">Update</button>

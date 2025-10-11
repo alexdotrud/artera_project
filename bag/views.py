@@ -1,126 +1,111 @@
-from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponse
-from django.urls import reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
 
 from shop.models import Artwork
 
 def view_bag(request):
-    """Render the bag contents page."""
-    return render(request, "bag/bag.html")
+    """ Render the bag contents page """
+    return render(request, 'bag/bag.html')
 
-def require_size(request):
-    size_raw = request.POST.get("product_size")
-    if not size_raw or not str(size_raw).strip():
-        return None
-    return str(size_raw).strip().upper()
 
 def add_to_bag(request, item_id):
-    """
-    Add a quantity of the specified artwork to the shopping bag.
-    """
+    """ Add a quantity of the specified artwork to the shopping bag """
+
     artwork = get_object_or_404(Artwork, pk=item_id)
 
-    try:
-        quantity = int(request.POST.get("quantity", 1))
-    except (TypeError, ValueError):
-        quantity = 1
-    quantity = max(1, min(quantity, 99))
-
-    size = require_size(request)
-    bag = request.session.get("bag", {})
-    key = str(item_id)
-
-    if not size:
-        messages.error(request, "Please select a size before adding to bag.")
-        return reverse("bag:view_bag")
-
-    if key in bag:
-        # ensure structure exists
-        if "items_by_size" not in bag[key]:
-            bag[key] = {"items_by_size": {}}
-
-        if size in bag[key]["items_by_size"]:
-            bag[key]["items_by_size"][size] += quantity
-            messages.success(
-                request,
-                f'Updated size {size} {artwork.name} quantity to {bag[key]["items_by_size"][size]}'
-            )
-        else:
-            bag[key]["items_by_size"][size] = quantity
-            messages.success(request, f"Added size {size} {artwork.name} to your bag")
-    else:
-        bag[key] = {"items_by_size": {size: quantity}}
-        messages.success(request, f"Added size {size} {artwork.name} to your bag")
-
-    request.session["bag"] = bag
-    return redirect(reverse('view_bag'))
-
-def adjust_bag(request, item_id):
-    """
-    Adjust the quantity of the specified line.
-    If quantity <= 0, remove it.
-    """
-    artwork = get_object_or_404(Artwork, pk=item_id)
-
-    try:
-        quantity = int(request.POST.get("quantity", 0))
-    except (TypeError, ValueError):
-        quantity = 0
-    quantity = max(0, min(quantity, 99))
-
-    quantity = int(request.POST.get("quantity"))
-    size = (request.POST.get("product_size") or "").strip().upper()
-    bag = request.session.get("bag", {})
+    quantity = int(request.POST.get('quantity'))
+    redirect_url = request.POST.get('redirect_url')
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']
+    bag = request.session.get('bag', {})
 
     if size:
-        # sized items
-        if item_id in bag and "items_by_size" in bag[item_id]:
-            if quantity > 0:
-                bag[item_id]["items_by_size"][size] = quantity
+        if item_id in list(bag.keys()):
+            if size in bag[item_id]['items_by_size'].keys():
+                bag[item_id]['items_by_size'][size] += quantity
                 messages.success(
                     request,
-                    f'Updated size {size.upper()} {artwork.name} quantity to {bag[item_id]["items_by_size"][size]}',
+                    f'Updated size {size.upper()} {artwork.name} quantity to '
+                    f'{bag[item_id]["items_by_size"][size]}'
                 )
             else:
-                # remove this size
-                try:
-                    del bag[item_id]["items_by_size"][size]
-                except KeyError:
-                    pass
-                if not bag[item_id]["items_by_size"]:
-                    bag.pop(item_id, None)
-                messages.success(request, f"Removed size {size.upper()} {artwork.name} from your bag")
+                bag[item_id]['items_by_size'][size] = quantity
+                messages.success(request, f'Added size {size.upper()} {artwork.name} to your bag')
+        else:
+            bag[item_id] = {'items_by_size': {size: quantity}}
+            messages.success(request, f'Added size {size.upper()} {artwork.name} to your bag')
+    else:
+        if item_id in list(bag.keys()):
+            bag[item_id] += quantity
+            messages.success(request, f'Updated {artwork.name} quantity to {bag[item_id]}')
+        else:
+            bag[item_id] = quantity
+            messages.success(request, f'Added {artwork.name} to your bag')
 
-        if item_id in bag:
-            if quantity > 0:
-                bag[item_id] = quantity
-                messages.success(request, f"Updated {artwork.name} quantity to {bag[item_id]}")
-            else:
-                bag.pop(item_id, None)
-                messages.success(request, f"Removed {artwork.name} from your bag")
+    request.session['bag'] = bag
+    return redirect(redirect_url)
 
-    request.session["bag"] = bag
-    return redirect(reverse("view_bag"))
+
+def adjust_bag(request, item_id):
+    """ Adjust the quantity of the specified artwork to the specified amount """
+
+    artwork = get_object_or_404(Artwork, pk=item_id)
+
+    quantity = int(request.POST.get('quantity'))
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']
+    bag = request.session.get('bag', {})
+
+    if size:
+        if quantity > 0:
+            bag[item_id]['items_by_size'][size] = quantity
+            messages.success(
+                request,
+                f'Updated size {size.upper()} {artwork.name} quantity to '
+                f'{bag[item_id]["items_by_size"][size]}'
+            )
+        else:
+            del bag[item_id]['items_by_size'][size]
+            if not bag[item_id]['items_by_size']:
+                bag.pop(item_id)
+            messages.success(request, f'Removed size {size.upper()} {artwork.name} from your bag')
+    else:
+        if quantity > 0:
+            bag[item_id] = quantity
+            messages.success(request, f'Updated {artwork.name} quantity to {bag[item_id]}')
+        else:
+            bag.pop(item_id)
+            messages.success(request, f'Removed {artwork.name} from your bag')
+
+    request.session['bag'] = bag
+    return redirect(reverse('view_bag'))
+
 
 def remove_from_bag(request, item_id):
-    """Remove the item (or specific size) from the bag."""
+    """ Remove the item from the shopping bag """
+
     artwork = get_object_or_404(Artwork, pk=item_id)
 
     try:
-        size = request.POST.get("product_size")
-        bag = request.session.get("bag", {})
+        size = None
+        if 'product_size' in request.POST:
+            size = request.POST['product_size']
+        bag = request.session.get('bag', {})
 
-        # remove just this size
-        if item_id in bag and "items_by_size" in bag[item_id]:
-            bag[item_id]["items_by_size"].pop(size, None)
-            if not bag[item_id]["items_by_size"]:
-                bag.pop(item_id, None)
-        messages.success(request, f"Removed size {size.upper()} {artwork.name} from your bag")
+        if size:
+            del bag[item_id]['items_by_size'][size]
+            if not bag[item_id]['items_by_size']:
+                bag.pop(item_id)
+            messages.success(request, f'Removed size {size.upper()} {artwork.name} from your bag')
+        else:
+            bag.pop(item_id)
+            messages.success(request, f'Removed {artwork.name} from your bag')
 
-        request.session["bag"] = bag
+        request.session['bag'] = bag
         return HttpResponse(status=200)
 
     except Exception as e:
-        messages.error(request, f"Error removing item: {e}")
+        messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
