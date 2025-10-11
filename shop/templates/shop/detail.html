@@ -102,7 +102,7 @@
                             <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
                         </div>
 
-                        <form action="{% url 'bag:add_to_bag' artwork.id %}" method="post">
+                        <form action="{% url 'add_to_bag' artwork.id %}" method="post">
                             {% csrf_token %}
                             <select name="product_size" id="id_product_size">
                                 {% for opt in size_options %}
