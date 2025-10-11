@@ -77,8 +77,8 @@
                             <div class="form-group w-50">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <button class="decrement-qty btn btn-black rounded-0"
-                                            data-item_id="{{ artwork.id }}" id="decrement-qty_{{ artwork.id }}">
+                                        <button class="decrement-qty btn btn-dark" data-item_id="{{ artwork.id }}"
+                                            id="decrement-qty_{{ artwork.id }}">
                                             <span class="icon"><i class="fas fa-minus"></i></span>
                                         </button>
                                     </div>
@@ -95,14 +95,27 @@
                         </div>
 
                         <div class="col-12 mt-2">
-                            <a href="{% url 'all_artworks' %}" class="btn btn-outline-black rounded-0 mt-5">
+                            <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark mt-5">
                                 <span class="icon"><i class="fas fa-chevron-left"></i></span>
                                 <span class="text-uppercase">Keep Shopping</span>
                             </a>
-                            <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
+                            <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
                         </div>
 
-                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                        <form action="{% url 'bag:add_to_bag' artwork.id %}" method="post">
+                            {% csrf_token %}
+                            <select name="product_size" id="id_product_size">
+                                {% for opt in size_options %}
+                                <option value="{{ opt.code }}" {% if opt.code == default_size %}selected{% endif %}>
+                                    {{ opt.code }} ({{ opt.label }})
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <input type="number" name="quantity" value="1" min="1" max="99">
+                            <input type="hidden" name="redirect_url" value="{{ request.get_full_path }}">
+                            <button type="submit" class="btn btn-dark mt-2">Add to Bag</button>
+                        </form>
                     </div>
                 </form>
 
