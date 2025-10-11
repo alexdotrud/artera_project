@@ -57,6 +57,7 @@ def adjust_bag(request, item_id):
     if 'product_size' in request.POST:
         size = request.POST['product_size']
     bag = request.session.get('bag', {})
+    bag = {int(k): v for k, v in bag.items()}
 
     if size:
         if quantity > 0:

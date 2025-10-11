@@ -56,7 +56,7 @@
                             </td>
 
                             <td class="py-3">
-                                <p class="my-0">${{ it.unit_price|floatformat:2 }}</p>
+                                <p class="my-0">${{ it.artwork.price|floatformat:2  }}</p>
                             </td>
 
                             <td class="py-3 w-25">
@@ -73,7 +73,7 @@
                                             </div>
                                             <input class="form-control form-control-sm qty_input" type="number"
                                                 name="quantity" value="{{ item.quantity }}" min="1" max="99"
-                                                data-item_id="{{ it.item_id }}" id="id_qty_{{ item.item_id }}">
+                                                data-item_id="{{ it.item_id }}" id="id_qty_{{ it.item_id }}">
                                             <div class="input-group-append">
                                                 <button class="increment-qty btn btn-sm btn-black rounded-0"
                                                     data-item_id="{{ it.item_id }}" id="increment-qty_{{ it.item_id }}">
@@ -90,8 +90,9 @@
                                 <a class="remove-item text-danger float-right" id="remove_{{ it.item_id }}"
                                     data-product_size="{{ item.size }}"><small>Remove</small></a>
                             </td>
-                            <td class="py-3 text-end">
-                                <p class="my-0">${{ it.line_total }}</p>
+                            <td class="py-3">
+                                <p class="my-0"> ${{ it.artwork.price|floatformat:2 }}
+                                </p>
                             </td>
                         </tr>
                         {% endfor %}
@@ -119,27 +120,28 @@
     </div>
 </div>
 {% include "shop/includes/quantity_input_script.html" %}
+
 <script type="text/javascript">
     // Update quantity on click
     $('.update-link').click(function (e) {
-        var form = $(this).prev('.update-form');
-        form.submit();
+        e.preventDefault();
+        var $form = $(this).closest('td').find('.update-form').first();
+        if ($form.length) $form.trigger('submit');
     })
 
     // Remove item and reload on click
     $('.remove-item').click(function (e) {
+        e.preventDefault();
         var csrfToken = "{{ csrf_token }}";
         var itemId = $(this).attr('id').split('remove_')[1];
-        var size = $(this).data('product_size');
-        var url = `/bag/remove/${itemId}/`;
+        var size = $(this).data('product_size'); // may be undefined
+        var url = "/bag/remove/" + itemId + "/";
         var data = {
-            'csrfmiddlewaretoken': csrfToken,
-            'product_size': size
+            'csrfmiddlewaretoken': csrfToken
         };
-        $.post(url, data)
-            .done(function () {
-                location.reload();
-            });
+        if (typeof size !== 'undefined' && size !== null && size !== '') {
+            data['product_size'] = size;
+        }
     })
 </script>
 {% endblock %}
