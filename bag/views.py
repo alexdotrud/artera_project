@@ -37,3 +37,36 @@ def add_to_bag(request, item_id):
 
     request.session["bag"] = bag
     return redirect(redirect_url)
+
+def adjust_bag(request, item_id):
+    """
+    Adjust the quantity of the specified line.
+    If quantity <= 0, remove it.
+    """
+    artwork = get_object_or_404(Artwork, pk=item_id)
+
+    quantity = int(request.POST.get("quantity"))
+    size = request.POST.get("artwork_size")
+    bag = request.session.get("bag", {})
+
+
+    if item_id in bag and "items_by_size" in bag[item_id]:
+        if quantity > 0:
+            bag[item_id]["items_by_size"][size] = quantity
+            messages.success(
+                request,
+                f'Updated size {size.upper()} {artwork.name} quantity to {bag[item_id]["items_by_size"][size]}',
+            )
+        else:
+                # remove this size
+            try:
+                del bag[item_id]["items_by_size"][size]
+            except KeyError:
+                pass
+            if not bag[item_id]["items_by_size"]:
+                bag.pop(item_id, None)
+            messages.success(request, f"Removed size {size.upper()} {artwork.name} from your bag")
+
+    request.session["bag"] = bag
+    return redirect(reverse("bag:view_bag"))
+
