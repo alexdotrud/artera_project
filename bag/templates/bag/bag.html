@@ -29,7 +29,7 @@
                     <tbody>
                         {% for it in items %}
                         <tr>
-                            <td class="p-3" style="width: 140px;">
+                            <td class="p-3">
                                 {% if it.artwork.image %}
                                 <a href="{% url 'shop:detail' it.artwork.id %}">
                                     <img class="img-fluid rounded" src="{{ it.artwork.image.url }}"
@@ -39,4 +39,50 @@
                                 <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png"
                                     alt="{{ it.artwork.name }}">
                                 {% endif %}
+                            </td>
+
+                            <td class="py-3">
+                                <p class="my-0 fw-bold">
+                                    <a href="{% url 'shop:detail' it.artwork.id %}"
+                                        class="text-decoration-none text-dark">
+                                        {{ it.artwork.name }}
+                                    </a>
+                                </p>
+                                <p class="my-0"><strong>Size:</strong> {{ it.size|upper }}</p>
+                                {% if it.artwork.sku %}
+                                <p class="my-0 small text-muted">SKU: {{ it.artwork.sku|upper }}</p>
+                                {% endif %}
+                                {% if it.artwork.category %}
+                                <p class="my-0 small text-muted">
+                                    {{ it.artwork.category.friendly_name|default:it.artwork.category.name }}
+                                </p>
+                                {% endif %}
+                            </td>
+
+                            <td class="py-3 text-end">
+                                <p class="my-0">${{ it.unit_price }}</p>
+                            </td>
+
+                            <td class="py-3 text-center">
+                                <form class="d-inline-block" method="POST"
+                                    action="{% url 'adjust_bag' it.artwork.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_size" value="{{ it.size }}">
+                                    <div class="input-group input-group-sm" style="max-width: 200px;">
+                                        <button type="button" class="btn btn-outline-dark"
+                                            onclick="this.nextElementSibling.stepDown(); this.closest('form').submit();">−</button>
+                                        <input class="form-control text-center" type="number" name="quantity"
+                                            value="{{ it.qty }}" min="0" max="99">
+                                        <button type="button" class="btn btn-outline-dark"
+                                            onclick="this.previousElementSibling.stepUp(); this.closest('form').submit();">+</button>
+                                    </div>
+                                </form>
+                                <div class="mt-1">
+                                    <form method="POST" action="{% url 'adjust_bag' it.artwork.id %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_size" value="{{ it.size }}">
+                                        <input type="hidden" name="quantity" value="0">
+                                        <button class="btn btn-link btn-sm text-danger p-0">Remove</button>
+                                    </form>
+                                </div>
                             </td>
