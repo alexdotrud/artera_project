@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    // Clamp helper
+    function clamp(val, min, max) {
+        val = parseInt(val, 10);
+        if (isNaN(val)) val = min;
+        return Math.max(min, Math.min(max, val));
+    }
+
+    // Enable/disable +/- based on current value
+    function handleEnableDisable(itemId) {
+        var $input = $('#id_qty_' + itemId);
+        var currentValue = clamp($input.val(), 1, 99);
+        $input.val(currentValue); // normalize display
+
+        var minusDisabled = currentValue <= 1;
+        var plusDisabled = currentValue >= 99;
+
+        $('#decrement-qty_' + itemId).prop('disabled', minusDisabled);
+        $('#increment-qty_' + itemId).prop('disabled', plusDisabled);
+    }
+
+    // Init on page load for all qty inputs
+    $(function () {
+        var $allQtyInputs = $('.qty_input');
+        $allQtyInputs.each(function () {
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+
+        // Re-check on manual input change
+        $allQtyInputs.on('change input', function () {
+            var itemId = $(this).data('item_id');
+            // Clamp immediately
+            var clamped = clamp($(this).val(), 1, 99);
+            $(this).val(clamped);
+            handleEnableDisable(itemId);
+        });
+
+        // Increment
+        $('.increment-qty').on('click', function (e) {
+            e.preventDefault(); // keep buttons as submit but block here
+            var $closestInput = $(this).closest('.input-group').find('.qty_input');
+            var currentValue = clamp($closestInput.val(), 1, 99);
+            var next = clamp(currentValue + 1, 1, 99);
+            $closestInput.val(next).trigger('change');
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+
+        // Decrement
+        $('.decrement-qty').on('click', function (e) {
+            e.preventDefault();
+            var $closestInput = $(this).closest('.input-group').find('.qty_input');
+            var currentValue = clamp($closestInput.val(), 1, 99);
+            var next = clamp(currentValue - 1, 1, 99);
+            $closestInput.val(next).trigger('change');
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+
+        // Keyboard support: + / = to increment, - to decrement (when input focused)
+        $allQtyInputs.on('keydown', function (e) {
+            var itemId = $(this).data('item_id');
+            if (e.key === '+' || e.key === '=') {
+                e.preventDefault();
+                $(this).val(clamp(parseInt($(this).val(), 10) + 1, 1, 99)).trigger('change');
+                handleEnableDisable(itemId);
+            } else if (e.key === '-') {
+                e.preventDefault();
+                $(this).val(clamp(parseInt($(this).val(), 10) - 1, 1, 99)).trigger('change');
+                handleEnableDisable(itemId);
+            }
+        });
+    });
+</script>
