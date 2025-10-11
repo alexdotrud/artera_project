@@ -17,18 +17,16 @@ def bag_contents(request):
         artwork = get_object_or_404(Artwork, pk=item_id)
 
         for size, qty in item_data.get("items_by_size", {}).items():
-            unit_price = (artwork.price + SIZE_SURCHARGE[size]).quantize(Decimal("0.01"))
-            line_total = unit_price * qty
-            total += line_total
-            product_count += qty
-            bag_items.append({
-                "item_id": item_id,
-                "quantity": qty,
-                "artwork": artwork,
-                "size": size,
-                "unit_price": unit_price,
-                "line_total": line_total,
-            })
+                line_total = artwork.price * qty
+                total += line_total
+                product_count += qty
+                bag_items.append({
+                    "item_id": item_id,
+                    "artwork": artwork,
+                    "size": size,
+                    "quantity": qty,
+                    "line_total": line_total,
+                })
 
     # Delivery settings (safe defaults)
     free_delivery_threshold = getattr(settings, "FREE_DELIVERY_THRESHOLD", Decimal("50.00"))

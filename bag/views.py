@@ -8,6 +8,8 @@ def view_bag(request):
     return render(request, "bag/bag.html")
 
 def add_to_bag(request, item_id):
+    if request.method != "POST":
+        return redirect("bag:view_bag")
     """
     Add a quantity of the specified artwork to the shopping bag.
     """
