@@ -202,9 +202,8 @@
 
     <!--Toast Messages-->
     {% if messages %}
-    <div class="message-container toasts" id="toastSource">
+    <div id="toastSource" class="toast-container position-fixed top-0 end-0 p-3" style="z-index:1055;">
         {% for message in messages %}
-        {% if 'toast' in message.tags %}
         {% with message.level as level %}
         {% if level == 40 %}
         {% include 'includes/toasts/toast_error.html' %}
@@ -216,7 +215,6 @@
         {% include 'includes/toasts/toast_info.html' %}
         {% endif %}
         {% endwith %}
-        {% endif %}
         {% endfor %}
     </div>
     {% endif %}
@@ -238,7 +236,7 @@
     </footer>
 
     <script type="text/javascript">
-        $('.toast').toast('show');
+        $('.toast-container').toast('show');
     </script>
 
 </body>
