@@ -200,6 +200,27 @@
     </div>
     {% endif %}
 
+    <!--Toast Messages-->
+    {% if messages %}
+    <div class="message-container toasts" id="toastSource">
+        {% for message in messages %}
+        {% if 'toast' in message.tags %}
+        {% with message.level as level %}
+        {% if level == 40 %}
+        {% include 'includes/toasts/toast_error.html' %}
+        {% elif level == 30 %}
+        {% include 'includes/toasts/toast_warning.html' %}
+        {% elif level == 25 %}
+        {% include 'includes/toasts/toast_success.html' %}
+        {% else %}
+        {% include 'includes/toasts/toast_info.html' %}
+        {% endif %}
+        {% endwith %}
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Main content -->
     <main>
         {% block content %}
@@ -215,6 +236,11 @@
             <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
         </p>
     </footer>
+
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
+
 </body>
 
 </html>
