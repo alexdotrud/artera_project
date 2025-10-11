@@ -18,11 +18,11 @@
                 <table class="table table-sm table-borderless align-middle">
                     <thead class="text-black">
                         <tr>
-                            <th scope="col">Product</th>
+                            <th scope="col">Product Info</th>
                             <th scope="col"></th>
-                            <th scope="col" class="text-end">Price</th>
-                            <th scope="col" class="text-center">Qty</th>
-                            <th scope="col" class="text-end">Subtotal</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
 
@@ -64,19 +64,37 @@
                             </td>
 
                             <td class="py-3 text-center">
-                                <form class="d-inline-block" method="POST"
-                                    action="{% url 'adjust_bag' it.artwork.id %}">
+                                <form class="form update-form" method="POST"
+                                    action="{% url 'adjust_bag' item.item_id %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name="product_size" value="{{ it.size }}">
-                                    <div class="input-group input-group-sm" style="max-width: 200px;">
-                                        <button type="button" class="btn btn-outline-dark"
-                                            onclick="this.nextElementSibling.stepDown(); this.closest('form').submit();">−</button>
-                                        <input class="form-control text-center" type="number" name="quantity"
-                                            value="{{ it.qty }}" min="0" max="99">
-                                        <button type="button" class="btn btn-outline-dark"
-                                            onclick="this.previousElementSibling.stepUp(); this.closest('form').submit();">+</button>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <button class="decrement-qty btn btn-sm btn-black rounded-0"
+                                                    data-item_id="{{ item.item_id }}"
+                                                    id="decrement-qty_{{ item.item_id }}">
+                                                    <span>
+                                                        <i class="fas fa-minus fa-sm"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <input class="form-control form-control-sm qty_input" type="number"
+                                                name="quantity" value="{{ item.quantity }}" min="1" max="99"
+                                                data-item_id="{{ item.item_id }}" id="id_qty_{{ item.item_id }}">
+                                            <div class="input-group-append">
+                                                <button class="increment-qty btn btn-sm btn-black rounded-0"
+                                                    data-item_id="{{ item.item_id }}"
+                                                    id="increment-qty_{{ item.item_id }}">
+                                                    <span>
+                                                        <i class="fas fa-plus fa-sm"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <input type="hidden" name="product_size" value="{{ item.size }}">
+                                        </div>
                                     </div>
                                 </form>
+                                <a class="update-link text-info"><small>Update</small></a>
                                 <div class="mt-1">
                                     <form method="POST" action="{% url 'adjust_bag' it.artwork.id %}" class="d-inline">
                                         {% csrf_token %}
