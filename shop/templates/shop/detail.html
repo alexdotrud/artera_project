@@ -54,7 +54,7 @@
 
                 <p class="mt-3">{{ artwork.description }}</p>
 
-                <form class="form" action="" method="POST">
+                <form class="form" action="{%url 'add_to_bag' artwork.id %}" method="POST">
                     {% csrf_token %}
                     <div class="form-row">
 
@@ -98,16 +98,12 @@
                             <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark mt-5">
                                 <span class="text-uppercase">Keep Shopping</span>
                             </a>
-                            <form method="POST" action="{% url 'add_to_bag' artwork.id %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="quantity" value="1">
-                                <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                                <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
-                            </form>
+                            <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
                         </div>
+                        <input type="hidden" name="redirect_url" value="{{ request.get_full_path }}">
+
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
