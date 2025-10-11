@@ -318,6 +318,13 @@ header .position-absolute.end-0 {
     display: block;
 }
 
+/* Shopping Bag */
+
+.bag img {
+    max-height: 300px;
+    width: auto;
+}
+
 
 /* Login/ Logout/ Signup */
 .auth-cont {

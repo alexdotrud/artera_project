@@ -27,7 +27,6 @@ def add_to_bag(request, item_id):
         quantity = 1
     quantity = max(1, min(quantity, 99))
 
-    redirect_url = request.POST.get("redirect_url") or reverse("view_bag")
     size = require_size(request)
     bag = request.session.get("bag", {})
     key = str(item_id)
@@ -36,21 +35,26 @@ def add_to_bag(request, item_id):
         messages.error(request, "Please select a size before adding to bag.")
         return reverse("bag:view_bag")
 
-    if key in bag and "items_by_size" in bag[key]:
-        if quantity > 0:
-            bag[key]["items_by_size"][size] = quantity
+    if key in bag:
+        # ensure structure exists
+        if "items_by_size" not in bag[key]:
+            bag[key] = {"items_by_size": {}}
+
+        if size in bag[key]["items_by_size"]:
+            bag[key]["items_by_size"][size] += quantity
             messages.success(
                 request,
                 f'Updated size {size} {artwork.name} quantity to {bag[key]["items_by_size"][size]}'
             )
         else:
-            bag[key]["items_by_size"].pop(size, None)
-            messages.success(request, f"Removed size {size} {artwork.name} from your bag")
-            if not bag[key]["items_by_size"]:
-                bag.pop(key, None)
+            bag[key]["items_by_size"][size] = quantity
+            messages.success(request, f"Added size {size} {artwork.name} to your bag")
+    else:
+        bag[key] = {"items_by_size": {size: quantity}}
+        messages.success(request, f"Added size {size} {artwork.name} to your bag")
 
     request.session["bag"] = bag
-    return redirect(reverse("view_bag"))
+    return redirect(reverse('view_bag'))
 
 def adjust_bag(request, item_id):
     """
@@ -59,8 +63,14 @@ def adjust_bag(request, item_id):
     """
     artwork = get_object_or_404(Artwork, pk=item_id)
 
+    try:
+        quantity = int(request.POST.get("quantity", 0))
+    except (TypeError, ValueError):
+        quantity = 0
+    quantity = max(0, min(quantity, 99))
+
     quantity = int(request.POST.get("quantity"))
-    size = request.POST.get("product_size")
+    size = (request.POST.get("product_size") or "").strip().upper()
     bag = request.session.get("bag", {})
 
     if size:
@@ -91,7 +101,7 @@ def adjust_bag(request, item_id):
                 messages.success(request, f"Removed {artwork.name} from your bag")
 
     request.session["bag"] = bag
-    return redirect(reverse("bag:view_bag"))
+    return redirect(reverse("view_bag"))
 
 def remove_from_bag(request, item_id):
     """Remove the item (or specific size) from the bag."""

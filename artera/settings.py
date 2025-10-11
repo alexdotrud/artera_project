@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "bag.contexts.bag_contents",
             ],
         },
     },
@@ -169,3 +170,4 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_SECURE = True
