@@ -58,7 +58,7 @@ class OrderItem(models.Model):
     order   = models.ForeignKey(Order, null=False, blank=False,
                                 on_delete=models.CASCADE, related_name='lineitems')
     artwork = models.ForeignKey(Artwork, null=False, blank=False, on_delete=models.PROTECT)
-    size    = models.CharField(max_length=5, null=True, blank=True)
+    size = models.CharField(max_length=5, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=10, decimal_places=2,
                                          null=False, blank=False, editable=False)
