@@ -1,7 +1,7 @@
 /* Color / Font Variables*/
 :root {
     /* Fonts */
-    --primary-font: "Cormorant", serif;
+    --primary-font: "Cardo", serif;
 
     /* Core Brand Colors */
     --primary-color: #442818;
@@ -382,6 +382,7 @@ header .position-absolute.end-0 {
 .bag thead th {
     font-size: 1.1rem;
     border-bottom: 1px solid var(--border) !important;
+    margin: 1rem;
 }
 
 .bag tr {
@@ -410,6 +411,36 @@ header .position-absolute.end-0 {
     border-color: rgba(13, 110, 253, .25);
     text-decoration: none;
     box-shadow: var(--shadow-sm);
+}
+
+.bag .input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bag .decrement-qty,
+.bag .increment-qty {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.bag .qty_input {
+    width: 70px;
+    min-width: 64px;
+    height: 36px;
+    padding: 0 .4rem;
+    text-align: center;
+    line-height: 36px;
+    margin: 0;
 }
 
 
