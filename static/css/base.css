@@ -385,6 +385,13 @@ header .position-absolute.end-0 {
     margin: 1rem;
 }
 
+.bag tfoot th {
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border) !important;
+    margin: 1rem;
+}
+
+
 .bag tr {
     font-size: 0.9rem;
 }
@@ -413,15 +420,6 @@ header .position-absolute.end-0 {
     box-shadow: var(--shadow-sm);
 }
 
-.bag .input-group {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .bag .decrement-qty,
 .bag .increment-qty {
     width: 36px;
@@ -434,15 +432,23 @@ header .position-absolute.end-0 {
 }
 
 .bag .qty_input {
-    width: 70px;
+    width: 64px;
     min-width: 64px;
     height: 36px;
-    padding: 0 .4rem;
-    text-align: center;
+    text-align: left;
     line-height: 36px;
     margin: 0;
 }
 
+.bag table thead tr>th:nth-child(4),
+.bag table tbody tr>td:nth-child(4) {
+    text-align: left !important;
+}
+
+.bag thead th:nth-child(4) {
+    text-align: left;
+    text-indent: 55px;
+}
 
 /* Footer Styles */
 .footer {
