@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import Order, OrderItem
 
+class OrderItemAdminInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    readonly_fields = ('lineitem_total',)
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
