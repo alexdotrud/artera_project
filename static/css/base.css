@@ -365,6 +365,71 @@ header .position-absolute.end-0 {
     gap: .25rem;
 }
 
+/* Checkout */
+.logo-font {
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.fieldset-label {
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+fieldset {
+    border: 1px solid var(--border, rgba(0, 0, 0, .08));
+    background: #fff;
+    border-radius: 8px;
+    padding-top: .75rem !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Inputs */
+.stripe-style-input.form-control,
+.stripe-style-input.form-select {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: 8px;
+    padding: .65rem .8rem;
+    font-size: 1rem;
+}
+
+.stripe-style-input.form-control:focus,
+.stripe-style-input.form-select:focus {
+    border-color: #760909;
+    box-shadow: 0 0 0 .2rem rgba(118, 9, 9, .15);
+    outline: 0;
+}
+
+/* Stripe element box */
+#card-element,
+#payment-element {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: 8px;
+}
+
+#card-errors {
+    min-height: 1.25rem;
+}
+
+
+/* Loading overlay */
+#loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1055;
+}
+
+.loading-spinner {
+    margin: 0;
+}
+
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;
