@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bag_tools %}
 {% block content %}
 <div class="container mb-4 mt-4 bag">
     <div class="row">
@@ -11,7 +12,7 @@
     <div class="row">
         <div class="col">
             {% if bag_items %}
-            <div class="table-responsive">
+            <div class="table-responsive table-borderless">
                 <table class="table">
                     <thead class="text-black">
                         <tr>
@@ -26,7 +27,7 @@
                     <tbody>
                         {% for it in bag_items %}
                         <tr>
-                            <td class="p-3">
+                            <td class="p-3 w-25">
                                 {% if it.artwork.image %}
                                 <a href="{% url 'detail' it.artwork.id %}">
                                     <img class="img-fluid" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
@@ -57,7 +58,7 @@
                                 <p class="my-0">${{ it.artwork.price|floatformat:2  }}</p>
                             </td>
 
-                            <td class="py-3">
+                            <td class="py-3 w-25">
                                 <form class="form update-form" method="POST" action="{% url 'adjust_bag' it.item_id %}">
                                     {% csrf_token %}
                                     <div class="form-group">
@@ -84,14 +85,14 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div class="bag-actions d-flex justify-content-center gap-2 mt-2">
+                                <div class="bag-actions d-flex justify-content-evently gap-4 mt-3">
                                     <a class="update-link text-info">Update</a>
                                     <a class="remove-item text-danger" id="remove_{{ it.item_id }}"
                                         data-product_size="{{ it.size|default:'' }}" href="#">Remove</a>
                                 </div>
                             </td>
                             <td class="py-3">
-                                <p class="my-0"> ${{ it.artwork.price|floatformat:2 }}
+                                <p class="my-0"> ${{ item.product.price | calc_subtotal:item.quantity }}
                                 </p>
                             </td>
                         </tr>

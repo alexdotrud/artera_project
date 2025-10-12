@@ -59,6 +59,7 @@ h6 {
     font-family: var(--primary-font);
     color: var(--secondary-color);
     letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 p {
@@ -305,33 +306,64 @@ header .position-absolute.end-0 {
 
 
 /* Shop Page Styles */
-.shop-cont .card {
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    max-width: fit-content;
-    max-height: fit-content;
-}
-
-.shop-cont .card-img-top {
-    width: auto;
-    max-width: 100%;
-    height: 100%;
-    max-height: 600px;
-    max-width: 400px;
-    object-fit: contain;
-    background-color: transparent;
-    border-radius: 4px;
-    display: block;
-}
-
-/* Shopping Bag */
-
 .bag img {
     max-height: 300px;
     width: auto;
 }
 
+.bag .table {
+    background: var(--surface);
+    border: none;
+    overflow: hidden;
+}
+
+.bag thead th {
+    font-size: 1.1rem;
+    margin: 1rem;
+}
+
+.bag tr {
+    font-size: 0.9rem;
+}
+
+.bag img {
+    width: auto;
+    max-height: 100px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.bag .remove-item:hover,
+.bag .remove-item:focus {
+    background: rgba(179, 38, 30, .08);
+    border-color: rgba(179, 38, 30, .25);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.bag .update-link:hover,
+.bag .update-link:focus {
+    background: rgba(13, 110, 253, .08);
+    border-color: rgba(13, 110, 253, .25);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.bag .decrement-qty,
+.bag .increment-qty {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.bag .input-group {
+    max-width: 220px;
+    gap: .25rem;
+}
 
 /* Login/ Logout/ Signup */
 .auth-cont {
@@ -373,82 +405,6 @@ header .position-absolute.end-0 {
     padding-left: 0;
 }
 
-/* Bag Styles */
-.bag .table {
-    border: 1px solid var(--border);
-    overflow: hidden;
-}
-
-.bag thead th {
-    font-size: 1.1rem;
-    border-bottom: 1px solid var(--border) !important;
-    margin: 1rem;
-}
-
-.bag tfoot th {
-    font-size: 1.1rem;
-    border-bottom: 1px solid var(--border) !important;
-    margin: 1rem;
-}
-
-
-.bag tr {
-    font-size: 0.9rem;
-}
-
-.bag img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-}
-
-.bag .remove-item:hover,
-.bag .remove-item:focus {
-    background: rgba(179, 38, 30, .08);
-    border-color: rgba(179, 38, 30, .25);
-    text-decoration: none;
-    box-shadow: var(--shadow-sm);
-}
-
-.bag .update-link:hover,
-.bag .update-link:focus {
-    background: rgba(13, 110, 253, .08);
-    border-color: rgba(13, 110, 253, .25);
-    text-decoration: none;
-    box-shadow: var(--shadow-sm);
-}
-
-.bag .decrement-qty,
-.bag .increment-qty {
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.bag .qty_input {
-    width: 64px;
-    min-width: 64px;
-    height: 36px;
-    text-align: left;
-    line-height: 36px;
-    margin: 0;
-}
-
-.bag table thead tr>th:nth-child(4),
-.bag table tbody tr>td:nth-child(4) {
-    text-align: left !important;
-}
-
-.bag thead th:nth-child(4) {
-    text-align: left;
-    text-indent: 55px;
-}
 
 /* Footer Styles */
 .footer {
@@ -470,7 +426,6 @@ header .position-absolute.end-0 {
     border-color: var(--primary-color);
     color: #fff;
     border-radius: 8px;
-    padding: 0.5rem 1.1rem;
     letter-spacing: 0.2px;
 }
 
@@ -486,6 +441,7 @@ header .position-absolute.end-0 {
     color: var(--primary-color);
     border-color: var(--primary-color);
     border-radius: 8px;
+    letter-spacing: 0.2px;
 }
 
 .btn-outline-dark:hover,
@@ -543,6 +499,26 @@ i:hover {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    .bag thead th:nth-child(1),
+    .bag tbody td:nth-child(1) {
+        width: 25%;
+    }
+
+    .bag thead th:nth-child(3),
+    .bag tbody td:nth-child(3) {
+        text-align: left;
+    }
+
+    .bag thead th:nth-child(4),
+    .bag tbody td:nth-child(4) {
+        width: 25%;
+    }
+
+    .bag thead th:nth-child(5),
+    .bag tbody td:nth-child(5) {
+        text-align: left;
     }
 
 }
