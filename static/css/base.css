@@ -41,7 +41,7 @@ body {
 }
 
 main {
-    margin-top: 50px;
+    margin-top: 64px;
     flex: 1;
 }
 
@@ -375,16 +375,17 @@ header .position-absolute.end-0 {
 
 /* Bag Styles */
 .bag .table {
-    background: var(--surface);
     border: 1px solid var(--border);
     overflow: hidden;
 }
 
 .bag thead th {
-    font-weight: 700;
-    color: var(--primary-color);
+    font-size: 1.1rem;
     border-bottom: 1px solid var(--border) !important;
-    background: #fff;
+}
+
+.bag tr {
+    font-size: 0.9rem;
 }
 
 .bag img {
@@ -393,8 +394,24 @@ header .position-absolute.end-0 {
     object-fit: cover;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
-    background: #fff;
 }
+
+.bag .remove-item:hover,
+.bag .remove-item:focus {
+    background: rgba(179, 38, 30, .08);
+    border-color: rgba(179, 38, 30, .25);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.bag .update-link:hover,
+.bag .update-link:focus {
+    background: rgba(13, 110, 253, .08);
+    border-color: rgba(13, 110, 253, .25);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+}
+
 
 /* Footer Styles */
 .footer {

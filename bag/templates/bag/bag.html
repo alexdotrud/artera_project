@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container mb-4 bag">
+<div class="container mb-4 mt-4 bag">
     <div class="row">
         <div class="col">
-            <hr>
             <h2 class="mb-4">Shopping Bag</h2>
-            <hr>
         </div>
     </div>
 
@@ -14,7 +12,7 @@
         <div class="col">
             {% if bag_items %}
             <div class="table-responsive">
-                <table class="table table-sm table-borderless align-middle">
+                <table class="table table-sm align-middle">
                     <thead class="text-black">
                         <tr>
                             <th scope="col">Product Info</th>
@@ -44,7 +42,7 @@
                             </td>
 
                             <td class="py-3">
-                                <p class="my-0 fw-bold">
+                                <p class="my-0">
                                     <a href="{% url 'detail' it.artwork.id %}" class="text-decoration-none text-dark">
                                         {{ it.artwork.name }}
                                     </a>
@@ -86,9 +84,11 @@
                                         </div>
                                     </div>
                                 </form>
-                                <a class="update-link text-info"><small>Update</small></a>
-                                <a class="remove-item text-danger float-right" id="remove_{{ it.item_id }}"
-                                    data-product_size="{{ item.size }}"><small>Remove</small></a>
+                                <div class="bag-actions d-flex justify-content-center gap-2 mt-2">
+                                    <a class="update-link text-info">Update</a>
+                                    <a class="remove-item text-danger" id="remove_{{ it.item_id }}"
+                                        data-product_size="{{ it.size|default:'' }}" href="#">Remove</a>
+                                </div>
                             </td>
                             <td class="py-3">
                                 <p class="my-0"> ${{ it.artwork.price|floatformat:2 }}
