@@ -190,19 +190,7 @@
 
     <!-- Messages -->
     {% if messages %}
-    <div class="message-container position-fixed start-50 translate-middle-x mt-3" style="z-index: 1055;">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow" role="alert">
-            {{ message }}
-            <button type="button" class="close-btn" data-bs-dismiss="alert" aria-label="Close">&times;</button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    <!--Toast Messages-->
-    {% if messages %}
-    <div id="toastSource" class="toast-container position-fixed top-0 end-0 p-3" style="z-index:1055;">
+    <div id="toastSource" class="toast-container position-fixed top-0 end-0 p-3">
         {% for message in messages %}
         {% with message.level as level %}
         {% if level == 40 %}
@@ -235,8 +223,12 @@
         </p>
     </footer>
 
-    <script type="text/javascript">
-        $('.toast-container').toast('show');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('#toastSource .toast').forEach(function (el) {
+                bootstrap.Toast.getOrCreateInstance(el).show();
+            });
+        });
     </script>
 
 </body>
