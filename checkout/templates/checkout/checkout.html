@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bag_tools %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4">Checkout</h2>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Order Summary -->
+        <div class="col-12 col-lg-6 order-lg-last mb-5">
+            <p class="text-muted">Order Summary ({{ product_count }})</p>
+
+            <div class="row">
+                <div class="col-7 offset-2">
+                    <p class="mb-1 mt-0 small text-muted">Item</p>
+                </div>
+                <div class="col-3 text-end">
+                    <p class="mb-1 mt-0 small text-muted">Subtotal</p>
+                </div>
+            </div>
+
+            {% for item in bag_items %}
+            <div class="row align-items-center">
+                <div class="col-2 mb-1">
+                    <a href="{% url 'detail' item.artwork.id %}">
+                        {% if item.artwork.image %}
+                        <img class="w-100" src="{{ item.artwork.image.url }}" alt="{{ item.artwork.name }}">
+                        {% elif item.artwork.image_url %}
+                        <img class="w-100" src="{{ item.artwork.image_url }}" alt="{{ item.artwork.name }}">
+                        {% else %}
+                        <img class="w-100" src="{% static 'images/no-image.jpg' %}" alt="{{ item.artwork.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-7">
+                    <p class="my-0"><strong>{{ item.artwork.name }}</strong></p>
+                    <p class="my-0 small">
+                        Size: {% if item.size %}{{ item.size|upper }}{% else %}N/A{% endif %}
+                    </p>
+                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                </div>
+                <div class="col-3 text-end">
+                    <p class="my-0 small text-muted">
+                        ${{ item.artwork.price|calc_subtotal:item.quantity|floatformat:2 }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <hr class="my-0">
+
+            <div class="row text-black text-end">
+                <div class="col-7 offset-2">
+                    <p class="my-0">Order Total:</p>
+                    <p class="my-0">Delivery:</p>
+                    <p class="my-0">Grand Total:</p>
+                </div>
+                <div class="col-3">
+                    <p class="my-0">${{ total|floatformat:2 }}</p>
+                    <p class="my-0">${{ delivery|floatformat:2 }}</p>
+                    <p class="my-0"><strong>${{ grand_total|floatformat:2 }}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-overlay" class="d-none">
+            <h1 class="text-light logo-font loading-spinner">
+                <span class="icon"><i class="fas fa-3x fa-sync-alt fa-spin"></i></span>
+            </h1>
+        </div>
+        {% endblock %}
+
+        {% block postloadjs %}
+        {{ block.super }}
+        {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+        {{ client_secret|json_script:"id_client_secret" }}
+        <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+        {% endblock %}
