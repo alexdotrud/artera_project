@@ -373,6 +373,28 @@ header .position-absolute.end-0 {
     padding-left: 0;
 }
 
+/* Bag Styles */
+.bag .table {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.bag thead th {
+    font-weight: 700;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border) !important;
+    background: #fff;
+}
+
+.bag img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    background: #fff;
+}
 
 /* Footer Styles */
 .footer {

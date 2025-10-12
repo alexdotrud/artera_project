@@ -56,11 +56,17 @@
                     Spend <strong>${{ free_delivery_delta|floatformat:2 }}</strong> more to get free delivery!
                 </p>
                 {% endif %}
+                <div class="toast-actions d-grid gap-2 d-sm-flex mt-3">
+                    <a href="{% url 'view_bag' %}" class="btn btn-black w-100 rounded-0">
+                        <span class="text-uppercase">View Bag</span>
+                        <span class="icon"><i class="fa-solid fa-bag-shopping"></i></span>
+                    </a>
 
-                <a href="{% url 'view_bag' %}" class="btn btn-black w-100 rounded-0">
-                    <span class="text-uppercase">Go To Secure Checkout</span>
-                    <span class="icon"><i class="fas fa-lock"></i></span>
-                </a>
+                    <a href="{% url 'view_bag' %}" class="btn btn-black w-100 rounded-0">
+                        <span class="text-uppercase">Checkout</span>
+                        <span class="icon"><i class="fas fa-lock"></i></span>
+                    </a>
+                </div>
             </div>
         </div>
         {% endif %}
