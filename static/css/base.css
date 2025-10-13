@@ -400,11 +400,12 @@ fieldset {
     outline: 0;
 }
 
-#card-element,
-#payment-element {
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, .12);
+#card-element {
+    border: 1px solid var(--border, rgba(0, 0, 0, .08));
     border-radius: 8px;
+    padding: .65rem .85rem;
+    background: #fff;
+    min-height: 44px;
 }
 
 #card-errors {
