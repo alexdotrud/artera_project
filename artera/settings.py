@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import runpy
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+runpy.run_path(os.path.join(BASE_DIR, 'env.py'))
 
 load_dotenv(os.path.join(BASE_DIR, 'env.py'))
 
@@ -174,7 +177,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
-CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL', '')
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_SECURE = True

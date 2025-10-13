@@ -1,8 +1,7 @@
-var stripe_public_key = $('#id_stripe_public_key').text().slice(1, -1);
-var client_secret = $('#id_client_secret').text().slice(1, -1);
-var stripe = Stripe(stripe_public_key);
+var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
+var clientSecret = $('#id_client_secret').text().slice(1, -1);
+var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
-var css = getComputedStyle(document.documentElement);
 var style = {
     base: {
         color: '#000',
@@ -18,15 +17,10 @@ var style = {
         iconColor: '#dc3545'
     }
 };
-
 var card = elements.create('card', {
     style: style
 });
 card.mount('#card-element');
-
-card.on('change', function (event) {
-    $('#card-errors').text(event.error ? event.error.message : '');
-});
 
 // Handle realtime validation errors on the card element
 card.addEventListener('change', function (event) {
