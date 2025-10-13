@@ -5,13 +5,13 @@ var elements = stripe.elements();
 var css = getComputedStyle(document.documentElement);
 var style = {
     base: {
-        color: (css.getPropertyValue('--ink') || '#1f1f1f').trim(),
-        fontFamily: '"Cardo", serif',
+        color: '#000',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
         fontSize: '16px',
         '::placeholder': {
-            color: (css.getPropertyValue('--muted') || '#6c757d').trim()
-        },
-        iconColor: (css.getPropertyValue('--primary-color') || '#442818').trim()
+            color: '#aab7c4'
+        }
     },
     invalid: {
         color: '#dc3545',
@@ -24,7 +24,6 @@ var card = elements.create('card', {
 });
 card.mount('#card-element');
 
-// Real-time errors
 card.on('change', function (event) {
     $('#card-errors').text(event.error ? event.error.message : '');
 });
