@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load bag_tools %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="overlay"></div>
@@ -27,13 +28,13 @@
                 </div>
             </div>
 
-            {% for item in bag_items %}
+            {% for it in bag_items %}
             <div class="row align-items-center">
                 <div class="col-2 mb-1">
-                    <a href="{% url 'artwork_detail' it.artwork.id %}">
-                        {% if item.artwork.image %}
+                    <a href="{% url 'detail' it.artwork.id %}">
+                        {% if it.artwork.image %}
                         <img class="w-100" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
-                        {% elif item.artwork.image_url %}
+                        {% elif it.artwork.image_url %}
                         <img class="w-100" src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}">
                         {% else %}
                         <img class="w-100" src="{% static 'images/no-image.jpg' %}" alt="{{ it.artwork.name }}">
@@ -43,13 +44,13 @@
                 <div class="col-7">
                     <p class="my-0"><strong>{{ it.artwork.name }}</strong></p>
                     <p class="my-0 small">
-                        Size: {% if item.size %}{{ item.size|upper }}{% else %}N/A{% endif %}
+                        Size: {% if it.size %}{{ it.size|upper }}{% else %}N/A{% endif %}
                     </p>
                     <p class="my-0 small text-muted">Qty: {{ it.quantity }}</p>
                 </div>
                 <div class="col-3 text-end">
                     <p class="my-0 small text-muted">
-                        ${{ it.artwork.price|calc_subtotal:item.quantity|floatformat:2 }}
+                        ${{ it.artwork.price|calc_subtotal:it.quantity|floatformat:2 }}
                     </p>
                 </div>
             </div>
@@ -79,35 +80,20 @@
 
                 <fieldset class="rounded px-3 mb-5">
                     <legend class="fieldset-label small text-black px-2 w-auto">Details</legend>
-                    {% if order_form.full_name.field %}
-                    {{ order_form.full_name|as_crispy_field|default:order_form.full_name }}
-                    {{ order_form.email|as_crispy_field|default:order_form.email }}
-                    {% else %}
-                    {{ order_form.full_name }}
-                    {{ order_form.email }}
-                    {% endif %}
+                    {{ order_form.full_name | as_crispy_field }}
+                    {{ order_form.email | as_crispy_field }}
                 </fieldset>
 
                 <fieldset class="rounded px-3 mb-5">
                     <legend class="fieldset-label small text-black px-2 w-auto">Delivery</legend>
 
-                    {% if order_form.phone_number.field %}
-                    {{ order_form.phone_number|as_crispy_field|default:order_form.phone_number }}
-                    {{ order_form.street_address1|as_crispy_field|default:order_form.street_address1 }}
-                    {{ order_form.street_address2|as_crispy_field|default:order_form.street_address2 }}
-                    {{ order_form.town_or_city|as_crispy_field|default:order_form.town_or_city }}
-                    {{ order_form.county|as_crispy_field|default:order_form.county }}
-                    {{ order_form.postcode|as_crispy_field|default:order_form.postcode }}
-                    {{ order_form.country|as_crispy_field|default:order_form.country }}
-                    {% else %}
-                    {{ order_form.phone_number }}
-                    {{ order_form.street_address1 }}
-                    {{ order_form.street_address2 }}
-                    {{ order_form.town_or_city }}
-                    {{ order_form.county }}
-                    {{ order_form.postcode }}
-                    {{ order_form.country }}
-                    {% endif %}
+                    {{ order_form.phone_number | as_crispy_field }}
+                    {{ order_form.country | as_crispy_field }}
+                    {{ order_form.postcode | as_crispy_field }}
+                    {{ order_form.town_or_city | as_crispy_field }}
+                    {{ order_form.street_address1 | as_crispy_field }}
+                    {{ order_form.street_address2 | as_crispy_field }}
+                    {{ order_form.county | as_crispy_field }}
 
                     <div class="form-check form-check-inline float-end me-0">
                         {% if user.is_authenticated %}
