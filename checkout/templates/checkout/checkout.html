@@ -30,26 +30,26 @@
             {% for item in bag_items %}
             <div class="row align-items-center">
                 <div class="col-2 mb-1">
-                    <a href="{% url 'detail' item.artwork.id %}">
+                    <a href="{% url 'artwork_detail' it.artwork.id %}">
                         {% if item.artwork.image %}
-                        <img class="w-100" src="{{ item.artwork.image.url }}" alt="{{ item.artwork.name }}">
+                        <img class="w-100" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
                         {% elif item.artwork.image_url %}
-                        <img class="w-100" src="{{ item.artwork.image_url }}" alt="{{ item.artwork.name }}">
+                        <img class="w-100" src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}">
                         {% else %}
-                        <img class="w-100" src="{% static 'images/no-image.jpg' %}" alt="{{ item.artwork.name }}">
+                        <img class="w-100" src="{% static 'images/no-image.jpg' %}" alt="{{ it.artwork.name }}">
                         {% endif %}
                     </a>
                 </div>
                 <div class="col-7">
-                    <p class="my-0"><strong>{{ item.artwork.name }}</strong></p>
+                    <p class="my-0"><strong>{{ it.artwork.name }}</strong></p>
                     <p class="my-0 small">
                         Size: {% if item.size %}{{ item.size|upper }}{% else %}N/A{% endif %}
                     </p>
-                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                    <p class="my-0 small text-muted">Qty: {{ it.quantity }}</p>
                 </div>
                 <div class="col-3 text-end">
                     <p class="my-0 small text-muted">
-                        ${{ item.artwork.price|calc_subtotal:item.quantity|floatformat:2 }}
+                        ${{ it.artwork.price|calc_subtotal:item.quantity|floatformat:2 }}
                     </p>
                 </div>
             </div>
