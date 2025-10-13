@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'shop',
     'bag',
     'checkout',
-    "crispy_forms",
-    "crispy_bootstrap5",
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'artera.urls'
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 TEMPLATES = [
     {
@@ -76,7 +78,7 @@ TEMPLATES = [
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
-                'crispy_forms.templatetags.crispy_forms_field',
+                'crispy_forms.templatetags.crispy_forms_filters',
             ]
         },
     },
