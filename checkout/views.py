@@ -31,12 +31,13 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save()
             for item_id, item_data in bag.items():
+                artwork = get_object_or_404(Artwork, pk=item_id)
                 try:
                     product = Artwork.objects.get(id=item_id)
                     if isinstance(item_data, int):
                         order_line_item = OrderItem(
                             order=order,
-                            product=product,
+                            artwork=artwork,
                             quantity=item_data,
                         )
                         order_line_item.save()
@@ -44,7 +45,7 @@ def checkout(request):
                         for size, quantity in item_data['items_by_size'].items():
                             order_line_item = OrderItem(
                                 order=order,
-                                product=product,
+                                artwork=artwork,
                                 quantity=quantity,
                                 product_size=size,
                             )
