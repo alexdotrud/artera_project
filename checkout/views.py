@@ -5,7 +5,7 @@ from django.conf import settings
 from .forms import OrderForm
 from bag.contexts import bag_contents
 from shop.models import Artwork
-from .models import OrderItem
+from .models import OrderItem, Order
 
 import stripe
 
