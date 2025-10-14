@@ -26,7 +26,7 @@
     {% if artworks %}
     <div class="row g-4">
         {% for artwork in artworks %}
-        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex">
             <div class="card">
                 <a href="{% url 'detail' artwork.id %}">
                     {% if artwork.image %}

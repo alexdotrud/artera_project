@@ -306,12 +306,34 @@ header .position-absolute.end-0 {
 
 /* Shop Styles */
 
+.shop-cont .card {
+    height: 100% !important;
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+}
 
+.shop-cont .card-img-top {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 500px;
+    object-fit: contain !important;
+    background-color: transparent;
+    display: block;
+}
+
+.shop-cont .card-body {
+    padding: 0.9rem 1rem;
+    text-align: center;
+    background-color: transparent;
+}
 
 /* Bag Styles */
 .bag img {
-    max-height: 300px;
-    width: auto;
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
 }
 
 .bag .table {
