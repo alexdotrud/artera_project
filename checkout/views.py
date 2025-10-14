@@ -47,41 +47,38 @@ def checkout(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid
+            order.original_bag = json.dumps(bag)
+            order.save()
+
             for item_id, item_data in bag.items():
                 artwork = get_object_or_404(Artwork, pk=item_id)
-                try:
-                    product = Artwork.objects.get(id=item_id)
-                    if isinstance(item_data, int):
-                        order_line_item = OrderItem(
-                            order=order,
-                            artwork=artwork,
-                            quantity=item_data,
-                        )
-                        order_line_item.save()
-                    else:
-                        for size, quantity in item_data['items_by_size'].items():
-                            order_line_item = OrderItem(
-                                order=order,
-                                artwork=artwork,
-                                quantity=quantity,
-                                size=size,
-                            )
-                            order_line_item.save()
-                except Artwork.DoesNotExist:
-                    messages.error(request, (
-                        "One of the products in your bag wasn't found in our database. "
-                        "Please call us for assistance!")
+
+                if isinstance(item_data, int):
+                    order_line_item = OrderItem(
+                    order=order,
+                    artwork=artwork,
+                    quantity=item_data,
                     )
-                    order.delete()
-                    return redirect(reverse('view_bag'))
+                    order_line_item.save()
+                else:
+                    for size, quantity in item_data['items_by_size'].items():
+                        order_line_item = OrderItem(
+                        order=order,
+                        artwork=artwork,
+                        quantity=quantity,
+                        size=size,
+                        )
+                    order_line_item.save()
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. \
                 Please double check your information.')
-
+            return redirect(reverse('checkout'))
     else:
         bag = request.session.get('bag', {})
         if not bag:
