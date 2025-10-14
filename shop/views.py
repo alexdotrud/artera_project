@@ -5,12 +5,12 @@ from django.db.models.functions import Lower
 from decimal import Decimal
 from django.utils import timezone
 from datetime import timedelta
+from django.db.models.functions import Random
 
 from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 
 def all_artworks(request, category_id=None):
-
     artworks = Artwork.objects.all().select_related("category")
     categories = Category.objects.all().order_by("name")
     if category_id:
@@ -23,37 +23,38 @@ def all_artworks(request, category_id=None):
     sort = None
     direction = None
 
-    if request.GET:
         # Sorting
-        if 'sort' in request.GET:
-            sortkey = request.GET['sort']
-            sort = sortkey
-            if sortkey == 'name':
-                artworks = artworks.annotate(lower_name=Lower('name'))
-                sortkey = 'lower_name'
-            if sortkey == 'category':
-                sortkey = 'category__name'
+    if 'sort' in request.GET:
+        sortkey = request.GET['sort']
+        sort = sortkey
+        if sortkey == 'name':
+            artworks = artworks.annotate(lower_name=Lower('name'))
+            sortkey = 'lower_name'
+        if sortkey == 'category':
+            sortkey = 'category__name'
 
-            if 'direction' in request.GET:
-                direction = request.GET['direction']
-                if direction == 'desc':
-                    sortkey = f'-{sortkey}'
-            artworks = artworks.order_by(sortkey)
+        if 'direction' in request.GET:
+            direction = request.GET['direction']
+            if direction == 'desc':
+                sortkey = f'-{sortkey}'
+        artworks = artworks.order_by(sortkey)
+    else:
+        artworks = artworks.order_by(Random())
 
-        if 'category' in request.GET:
-            names = [c.strip() for c in request.GET['category'].split(',') if c.strip()]
-            artworks = artworks.filter(category__name__in=names)
-            current_categories = Category.objects.filter(name__in=names)
+    if 'category' in request.GET:
+        names = [c.strip() for c in request.GET['category'].split(',') if c.strip()]
+        artworks = artworks.filter(category__name__in=names)
+        current_categories = Category.objects.filter(name__in=names)
 
-        # Search
-        if 'q' in request.GET:
-            query = request.GET['q'].strip()
-            if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                # adjust if you don't namespace:
-                return redirect(reverse('shop:all_artworks'))
-            queries = Q(name__icontains=query) | Q(description__icontains=query)
-            artworks = artworks.filter(queries)
+    # Search
+    if 'q' in request.GET:
+        query = request.GET['q'].strip()
+        if not query:
+            messages.error(request, "You didn't enter any search criteria!")
+            # adjust if you don't namespace:
+            return redirect(reverse('shop:all_artworks'))
+        queries = Q(name__icontains=query) | Q(description__icontains=query)
+        artworks = artworks.filter(queries)
     
     current_sorting = f"{sort or ''}_{direction or ''}"
 
