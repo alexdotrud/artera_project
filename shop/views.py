@@ -11,8 +11,9 @@ from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE
 
 
 def all_artworks(request, category_id=None):
-    artworks = Artwork.objects.all().select_related("category")
-    categories = Category.objects.all().order_by("name")
+    artworks = Artwork.objects.select_related("category").order_by(Random())
+    categories = Category.objects.order_by("name")
+
     if category_id:
         artworks = artworks.filter(category_id=category_id)
   # Temporarily disabled age filter until migration is fixed
@@ -20,26 +21,6 @@ def all_artworks(request, category_id=None):
 # artworks = artworks.filter(created_at__gte=three_years_ago)
     query = None
     current_categories = None
-    sort = None
-    direction = None
-
-        # Sorting
-    if 'sort' in request.GET:
-        sortkey = request.GET['sort']
-        sort = sortkey
-        if sortkey == 'name':
-            artworks = artworks.annotate(lower_name=Lower('name'))
-            sortkey = 'lower_name'
-        if sortkey == 'category':
-            sortkey = 'category__name'
-
-        if 'direction' in request.GET:
-            direction = request.GET['direction']
-            if direction == 'desc':
-                sortkey = f'-{sortkey}'
-        artworks = artworks.order_by(sortkey)
-    else:
-        artworks = artworks.order_by(Random())
 
     if 'category' in request.GET:
         names = [c.strip() for c in request.GET['category'].split(',') if c.strip()]
@@ -55,14 +36,11 @@ def all_artworks(request, category_id=None):
             return redirect(reverse('shop:all_artworks'))
         queries = Q(name__icontains=query) | Q(description__icontains=query)
         artworks = artworks.filter(queries)
-    
-    current_sorting = f"{sort or ''}_{direction or ''}"
 
     context = {
         'artworks': artworks,
         'search_term': query,
         'current_categories': current_categories,
-        'current_sorting': current_sorting,
         'SIZE_SURCHARGE': SIZE_SURCHARGE,
         'categories': categories,
     }
