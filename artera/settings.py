@@ -11,14 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-import runpy
-from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-runpy.run_path(os.path.join(BASE_DIR, 'env.py'))
-
-load_dotenv(os.path.join(BASE_DIR, 'env.py'))
+try:
+    import env
+except ModuleNotFoundError:
+    pass
 
 SECRET_KEY = 'django-insecure-bf_nx7m0sd(kbofoqv1g*ba))$ux)2(ju#mr-kr5#21@5iql_d'
 DEBUG = True

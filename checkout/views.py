@@ -47,7 +47,7 @@ def checkout(request):
                                 order=order,
                                 artwork=artwork,
                                 quantity=quantity,
-                                product_size=size,
+                                size=size,
                             )
                             order_line_item.save()
                 except Artwork.DoesNotExist:

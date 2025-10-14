@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container my-5">
-    <h2>Thank you!</h2>
-    <p>Your order <strong>{{ order.order_number }}</strong> was processed successfully.</p>
-    <p>We’ve sent a confirmation email to <strong>{{ order.email }}</strong>.</p>
+    <div class="row justify-content-center">
+        <h2>Thank you!</h2>
+        <p>Your order <strong>{{ order.order_number }}</strong> was processed successfully.</p>
+        <p>We’ve sent a confirmation email to <strong>{{ order.email }}</strong>.</p>
 
-    <hr>
-    <h5>Order Summary</h5>
-    <ul class="list-unstyled">
-        <li>Order Total: ${{ order.order_total|floatformat:2 }}</li>
-        <li>Delivery: ${{ order.delivery_cost|floatformat:2 }}</li>
-        <li><strong>Grand Total: ${{ order.grand_total|floatformat:2 }}</strong></li>
-    </ul>
+        <hr>
+        <h5>Order Summary</h5>
+        <ul class="list-unstyled">
+            <li>Order Total: ${{ order.order_total|floatformat:2 }}</li>
+            <li>Delivery: ${{ order.delivery_cost|floatformat:2 }}</li>
+            <li><strong>Grand Total: ${{ order.grand_total|floatformat:2 }}</strong></li>
+        </ul>
 
-    <a href="{% url 'all_artworks' %}" class="btn btn-dark">Continue Shopping</a>
+        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Continue Shopping</a>
+    </div>
 </div>
 {% endblock %}
