@@ -100,7 +100,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm" aria-labelledby="mobileAccount">
                             {% if request.user.is_authenticated %}
-                            <li><a class="dropdown-item" href="">My Profile</a></li>
+                            <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
                             <li><a class="dropdown-item" href="">Make a Custom
                                     Request</a></li>
@@ -154,7 +154,7 @@
                             <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm"
                                 aria-labelledby="accountMenu">
                                 {% if request.user.is_authenticated %}
-                                <li><a class="dropdown-item" href="">My Profile</a></li>
+                                <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
                                 <li><a class="dropdown-item" href="">Make a Custom
                                         Request</a></li>

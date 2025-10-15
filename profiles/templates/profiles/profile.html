@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5 profile">
+    <h1 class="mb-4 text-center">Edit Profile</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} mb-3">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Sidebar: quick actions -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body text-center">
+                    <div class="avatar mb-3 mx-auto">
+                        <span>{{ user_obj.username|first|upper }}</span>
+                    </div>
+                    <h5 class="mb-1">{{ user_obj.username }}</h5>
+                    <div class="text-muted small mb-3">{{ user_obj.email|default:"No email set" }}</div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'library' %}" class="btn btn-dark">My Library</a>
+                        {% if perms.account %}{% endif %}
+                        <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">Change
+                            password</a>
+                        <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary">Sign out</a>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="text-start small">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="text-muted">Joined</span>
+                            <span>{{ user_obj.date_joined|date:"Y-m-d" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main: edit form -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Email (User model) -->
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" value="{{ user_obj.email }}" class="form-control">
+                        </div>
+
+                        <!-- ProfileForm fields (already have form-control classes in your widgets) -->
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.full_name.label }}</label>
+                                {{ form.full_name }}
+                                {% if form.full_name.errors %}<div class="text-danger small">
+                                    {{ form.full_name.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.phone_number.label }}</label>
+                                {{ form.phone_number }}
+                                {% if form.phone_number.errors %}<div class="text-danger small">
+                                    {{ form.phone_number.errors.0 }}</div>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">{{ form.address_line_delivery.label }}</label>
+                                {{ form.address_line_delivery }}
+                                {% if form.address_line_delivery.errors %}<div class="text-danger small">
+                                    {{ form.address_line_delivery.errors.0 }}</div>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">{{ form.address_line_living.label }}</label>
+                                {{ form.address_line_living }}
+                                {% if form.address_line_living.errors %}<div class="text-danger small">
+                                    {{ form.address_line_living.errors.0 }}</div>{% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.city.label }}</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.postal_code.label }}</label>
+                                {{ form.postal_code }}
+                                {% if form.postal_code.errors %}<div class="text-danger small">
+                                    {{ form.postal_code.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.country.label }}</label>
+                                {{ form.country }}
+                                {% if form.country.errors %}<div class="text-danger small">{{ form.country.errors.0 }}
+                                </div>{% endif %}
+                            </div>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                        <div class="text-danger small mt-2">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a href="{% url 'all_artworks' %}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-dark">Save changes</button>
+                        </div>
+                    </form>
+
+                    <div class="small text-muted mt-3">
+                        Last updated:
+                        {% if form.instance.updated_at %}{{ form.instance.updated_at|date:"Y-m-d H:i" }}{% else %}—{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
