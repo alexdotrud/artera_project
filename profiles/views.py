@@ -20,7 +20,7 @@ def library(request):
             OrderItem.objects
             .filter(order__email__iexact=buyer_email)
             .select_related('artwork', 'order')
-            .order_by('-order__id', '-id')
+            .order_by('-order__date', '-id')
         )
 
     return render(request, 'profiles/library.html', {
