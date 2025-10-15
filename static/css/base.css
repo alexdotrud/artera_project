@@ -454,7 +454,11 @@ fieldset {
 }
 
 /* Library */
-
+.order-block img {
+    max-height: 300px;
+    max-width: 200px;
+    border: var(--shadow-sm);
+}
 
 
 /* Login/ Logout/ Signup */

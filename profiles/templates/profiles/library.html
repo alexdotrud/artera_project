@@ -10,17 +10,58 @@
 
     {% if orders %}
     {% for order in orders %}
-    <div class="order-block mb-4 p-3 bg-white rounded-3 shadow-sm">
+    <div class="order-block mb-4 p-3 shadow-sm">
         <!-- Header row -->
-        <div class="d-flex align-items-center gap-3 flex-wrap">
+        <div class="d-flex align-items-center justify-content-center gap-4 text-center">
             <div class="fw-semibold">
                 Order #{{ order.order_number }}
                 <span class="text-muted">• {{ order.date|date:"Y-m-d" }}</span>
                 <span class="text-muted">• {{ order.item_count }} item{{ order.item_count|pluralize }}</span>
             </div>
-
-
-
+            <button class="btn btn-link btn-sm ms-auto text-decoration-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#o{{ order.id }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                Details ▾
+            </button>
         </div>
-        {% endfor %}
-        {% endblock %}
+
+        <div id="o{{ order.id }}" class="collapse {% if forloop.first %}show{% endif %} mt-3">
+            {% for it in order.lineitems.all %}
+            <div class="row g-3 py-3 border-top">
+                <div class="col-12 col-md-4">
+                    <a href="{% url 'detail' it.artwork.id %}">
+                        {% if it.artwork.image %}
+                        <img class="img-fluid" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
+                        {% elif it.artwork.image_url %}
+                        <img class="img-fluid" src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}">
+                        {% else %}
+                        <img class="img-fluid" src="{% static 'images/no-image.jpg' %}" alt="{{ it.artwork.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-12 col-md-8">
+                    <h5 class="mb-1">{{ it.artwork.name }}</h5>
+                    {% if it.artwork.description %}
+                    <p class="text-muted small mb-2">{{ it.artwork.description }}</p>
+                    {% endif %}
+                    <dl class="row small mb-2">
+                        <dt class="col-4 col-sm-3">Size</dt>
+                        <dd class="col-8 col-sm-9">{{ it.size }}</dd>
+                        <dt class="col-4 col-sm-3">Ordered</dt>
+                        <dd class="col-8 col-sm-9">{{ order.date|date:"Y-m-d H:i" }}</dd>
+                        <dt class="col-4 col-sm-3">Order #</dt>
+                        <dd class="col-8 col-sm-9">{{ order.order_number }}</dd>
+                    </dl>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="text-center py-5">
+        <p class="mb-3">Your library is empty.</p>
+        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Browse artworks</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -2,8 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Prefetch, Count
 
-from .models import Profile
-from checkout.models import OrderItem
+from checkout.models import OrderItem, Order
 
 
 @login_required
