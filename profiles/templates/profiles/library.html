@@ -1,78 +1,62 @@
-{% extends "base.html" %}
-{% load static %}
-{% block content %}
-<div class="container py-5">
-    <h1 class="mb-4 text-center">Your Library</h1>
-
-    {% if library_items %}
-    <div class="row g-4">
-        {% for it in library_items %}
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
-            <div class="card w-100 border-0 shadow-sm rounded-3 overflow-hidden">
-                <a href="{% url 'detail' it.artwork.id %}">
-                    {% if it.artwork.image %}
-                    <img src="{{ it.artwork.image.url }}" class="w-100 d-block" alt="{{ it.artwork.name }}"
-                        loading="lazy">
-                    {% elif it.artwork.image_url %}
-                    <img src="{{ it.artwork.image_url }}" class="w-100 d-block" alt="{{ it.artwork.name }}"
-                        loading="lazy">
-                    {% else %}
-                    <img class="img-fluid" src="{% static 'images/no-image.jpg' %}" alt="{{ it.artwork.name }}">
-            </div>
-            {% endif %}
+{% for it in order_items %}
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="row g-0 align-items-stretch">
+        <!-- Image -->
+        <div class="col-12 col-md-4">
+            <a href="{% url 'detail' it.artwork.id %}" class="d-block h-100">
+                {% if it.artwork.image %}
+                <img src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}" class="img-fluid w-100 h-100"
+                    style="object-fit: cover;">
+                {% elif it.artwork.image_url %}
+                <img src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}" class="img-fluid w-100 h-100"
+                    style="object-fit: cover;">
+                {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light w-100 h-100"
+                    style="min-height:240px;">
+                    <span class="text-muted">No Image</span>
+                </div>
+                {% endif %}
             </a>
+        </div>
 
-            <div class="card-body d-flex flex-column text-center">
-                <h5 class="mb-1">{{ it.artwork.name }}</h5>
-                <div class="text-muted small mb-2">
-                    {% if it.size %}Size: <strong>{{ it.size }}</strong>{% endif %}
-                    {% if it.order %} • Order #{{ it.order.order_number }}{% endif %}
+        <!-- Info -->
+        <div class="col-12 col-md-8">
+            <div class="p-3 p-md-4 h-100 d-flex flex-column">
+                <div class="mb-2">
+                    <span class="text-muted">Name:</span>
+                    <strong>{{ it.artwork.name }}</strong>
                 </div>
 
-                <div class="small mb-3">
-                    {% if it.expires_at %}
-                    {% if it.expires_at|date:"U" > now|date:"U" %}
-                    Expires: <strong>{{ it.expires_at|date:"Y-m-d" }}</strong>
+                <div class="mb-2">
+                    <span class="text-muted">Description:</span>
+                    {{ it.artwork.description|default:"—"|truncatewords:30 }}
+                </div>
+
+                <div class="mb-2">
+                    <span class="text-muted">Size:</span>
+                    {{ it.size|default:"—" }}
+                </div>
+
+                {% with ordered_at=it.order.date|default:it.order.created_at|default:it.order.id %}
+                <div class="mb-2">
+                    <span class="text-muted">Ordered At:</span>
+                    {% if it.order.date or it.order.created_at %}
+                    {{ ordered_at|date:"Y-m-d H:i" }}
                     {% else %}
-                    <span class="text-danger">Link expired</span>
+                    Order #{{ ordered_at }}
                     {% endif %}
+                </div>
+                {% endwith %}
+
+                <div class="mt-auto pt-2">
+                    {% if it.artwork.file %}
+                    <a href="{{ it.artwork.file.url }}" class="btn btn-dark">Download</a>
                     {% else %}
-                    <span class="text-muted">No expiry</span>
+                    <button class="btn btn-outline-secondary" disabled>No file available</button>
                     {% endif %}
-                    • Downloads: <strong>{{ it.download_count }}/{{ it.max_downloads }}</strong>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
 </div>
-
-{% if page_obj %}
-<nav class="mt-4">
-    <ul class="pagination justify-content-center">
-        {% if page_obj.has_previous %}
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">Previous</span></li>
-        {% endif %}
-
-        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of
-                {{ page_obj.paginator.num_pages }}</span></li>
-
-        {% if page_obj.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">Next</span></li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
-
-{% else %}
-<div class="text-center py-5">
-    <p class="mb-3">Your library is empty.</p>
-    <a href="{% url 'all_artworks' %}" class="btn btn-dark">Browse artworks</a>
-</div>
-{% endif %}
-</div>
-{% endblock %}
+{% endfor %}
