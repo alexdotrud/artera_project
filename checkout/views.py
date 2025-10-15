@@ -57,22 +57,20 @@ def checkout(request):
                 artwork = get_object_or_404(Artwork, pk=item_id)
 
                 if isinstance(item_data, int):
-                    order_line_item = OrderItem(
-                    order=order,
-                    artwork=artwork,
-                    quantity=item_data,
-                    )
-                    order_line_item.save()
-                else:
-                    for size, quantity in item_data['items_by_size'].items():
-                        order_line_item = OrderItem(
+                    OrderItem.objects.create(
                         order=order,
                         artwork=artwork,
-                        quantity=quantity,
-                        size=size,
+                        quantity=item_data,
+                    )
+                else:
+                    for size, quantity in item_data['items_by_size'].items():
+                        OrderItem.objects.create(
+                            order=order,
+                            artwork=artwork,
+                            quantity=quantity,
+                            size=size,
                         )
-                    order_line_item.save()
-
+            order.update_total()
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:

@@ -454,20 +454,7 @@ fieldset {
 }
 
 /* Library */
-.library .card {
-    overflow: hidden;
-    background: transparent;
-}
 
-.library img {
-    max-width: 300px;
-    height: auto;
-    display: block;
-}
-
-.library .card-body {
-    padding: .9rem 1rem 1.1rem;
-}
 
 
 /* Login/ Logout/ Signup */
