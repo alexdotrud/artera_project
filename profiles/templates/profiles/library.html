@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <div class="container mb-4 mt-4 library">
     <div class="row">
@@ -6,63 +7,20 @@
             <h2 class="mb-4">Library</h2>
         </div>
     </div>
-    {% regroup order_items by order as orders %}
-    {% for grp in orders reversed %}
-    {% with order=grp.grouper items=grp.list %}
-    <div class="mb-3">
-        <div class="fw-semibold">
-            Order #{{ order.order_number }}
-            <span class="text-muted">• {{ order.date|date:"Y-m-d" }}</span>
-            <span class="text-muted">• {{ items|length }} item{{ items|length|pluralize }}</span>
-        </div>
-        <!-- collapse with items loop (use 'items') -->
-    </div>
-    {% endwith %}
-    {% endfor %}
 
-    {% for it in order_items %}
-    <div class="text-muted small mb-3">
-        <span class="me-2">Order #{{ it.order.order_number }}</span>
-        <span class="me-2">• {{ it.order.date|date:"Y-m-d" }}</span>
-        <button class="btn btn-link p-0 small text-decoration-none" type="button" data-bs-toggle="collapse"
-            data-bs-target="#details-{{ it.id }}" aria-expanded="false" aria-controls="details-{{ it.id }}">
-            Details ▾
-        </button>
-
-        <!-- Collapsible details -->
-        <div id="details-{{ it.id }}" class="collapse mt-3">
-            <div class="row">
-                <!-- Image -->
-                <div class="col-12 col-md-4">
-                    {% if it.artwork.image %}
-                    <a href="{% url 'detail' it.artwork.id %}">
-                        <img class="img-fluid" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
-                    </a>
-                    {% elif it.artwork.image_url %}
-                    <a href="{% url 'detail' it.artwork.id %}">
-                        <img class="img-fluid" src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}">
-                    </a>
-                    {% else %}
-                    <img class="img-fluid" src="" alt="{{ it.artwork.name }}">
-                    {% endif %}
-                </div>
-                <div class="col-12 col-md-8">
-                    <dl class="row mb-0">
-                        <dt class="col-4 col-sm-3">Name</dt>
-                        <dd class="col-8 col-sm-9">{{ it.artwork.name }}</dd>
-
-                        <dt class="col-4 col-sm-3">Description</dt>
-                        <dd class="col-8 col-sm-9">{{ it.artwork.description|default:"—"|linebreaksbr }}</dd>
-
-                        <dt class="col-4 col-sm-3">Size</dt>
-                        <dd class="col-8 col-sm-9">{{ it.size|default:"—" }}</dd>
-
-                        <dt class="col-4 col-sm-3">Ordered At</dt>
-                        <dd class="col-8 col-sm-9">{{ it.order.date|date:"Y-m-d H:i" }}</dd>
-                    </dl>
-                </div>
+    {% if orders %}
+    {% for order in orders %}
+    <div class="order-block mb-4 p-3 bg-white rounded-3 shadow-sm">
+        <!-- Header row -->
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="fw-semibold">
+                Order #{{ order.order_number }}
+                <span class="text-muted">• {{ order.date|date:"Y-m-d" }}</span>
+                <span class="text-muted">• {{ order.item_count }} item{{ order.item_count|pluralize }}</span>
             </div>
+
+
+
         </div>
-    </div>
-    {% endfor %}
-    {% endblock %}
+        {% endfor %}
+        {% endblock %}
