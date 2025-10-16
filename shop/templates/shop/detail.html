@@ -46,8 +46,8 @@
                 {% if artwork.category %}
                 <p class="small mt-1 mb-0">
                     <a href="{% url 'all_artworks' %}?category={{ artwork.category.name }}">
-                        <i
-                            class="fas fa-tag mr-1"></i>{{ artwork.category.friendly_name|default:artwork.category.name }}
+                        <i class="fas fa-tag mr-1"></i>
+                        {{ artwork.category.friendly_name|default:artwork.category.name }}
                     </a>
                 </p>
                 {% endif %}
