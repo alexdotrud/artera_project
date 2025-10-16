@@ -46,21 +46,7 @@ def checkout(request):
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
         }
-        initial = {}
-        if request.user.is_authenticated:
-            profile, _ = Profile.objects.get_or_create(user=request.user)
-            initial = {
-                'full_name': profile.full_name or '',
-                'email': request.user.email or '',
-                'phone_number': profile.phone_number or '',
-                'country': profile.country or '',
-                'postcode': profile.postal_code or '',
-                'town_or_city': profile.city or '',
-                'street_address1': profile.address_line_delivery or '',
-                'street_address2': profile.address_line_living or '',
-                'county': '',
-            }
-        order_form = OrderForm(initial=initial) 
+        order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
@@ -86,6 +72,17 @@ def checkout(request):
                             size=size,
                         )
             order.update_total()
+            if request.user.is_authenticated and ('save-info' in request.POST):
+               profile, _ = Profile.objects.get_or_create(user=request.user)
+               profile.full_name = request.POST.get('full_name', '').strip()
+               profile.phone_number = request.POST.get('phone_number', '').strip()
+               profile.address_line_delivery = request.POST.get('street_address1', '').strip()
+               profile.address_line_living = request.POST.get('street_address2', '').strip()
+               profile.city = request.POST.get('town_or_city', '').strip()
+               profile.postal_code = request.POST.get('postcode', '').strip()
+               profile.country = request.POST.get('country', '').strip()
+               profile.save()
+
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
@@ -106,8 +103,22 @@ def checkout(request):
             amount=stripe_total,
             currency=settings.STRIPE_CURRENCY,
         )
-        
-        order_form = OrderForm()
+
+        initial = {}
+        if request.user.is_authenticated:
+            profile, _ = Profile.objects.get_or_create(user=request.user)
+            initial = {
+                'full_name': profile.full_name or '',
+                'email': request.user.email or '',
+                'phone_number': profile.phone_number or '',
+                'country': profile.country or '',
+                'postcode': profile.postal_code or '',
+                'town_or_city': profile.city or '',
+                'street_address1': profile.address_line_delivery or '',
+                'street_address2': profile.address_line_living or '',
+                'county': '',
+            }
+        order_form = OrderForm(initial=initial) 
 
         if not stripe_public_key:
             messages.warning(request, 'Stripe public key is missing. \
