@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from urllib.parse import urlencode
 from django.contrib import messages
-from django.db.models import Q
-from shop.models import Artwork
-from shop.models import SIZE_SURCHARGE
 
 
 def homepege(request):
@@ -12,6 +11,10 @@ def artwork_search(request):
     q = (request.GET.get("q") or "").strip()
     if not q:
         messages.error(request, "You didn't enter any search criteria!")
-        return redirect("/")
-    else:
-        return render(request, "shop/list.html")
+        return redirect(reverse('all_artworks'))
+
+    params = {'q': q}
+    if 'category' in request.GET:
+        params['category'] = request.GET['category']
+
+    return redirect(f"{reverse('all_artworks')}?{urlencode(params)}")
