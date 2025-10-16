@@ -4,11 +4,6 @@
 <div class="container py-5 profile">
     <h1 class="mb-4 text-center">Edit Profile</h1>
 
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags|default:'info' }} mb-3">{{ message }}</div>
-    {% endfor %}
-    {% endif %}
 
     <div class="row g-4">
         <!-- Sidebar: quick actions -->

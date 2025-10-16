@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.db import transaction
 from django.db.models import Prefetch, Count
 from django.contrib import messages
+from allauth.account.models import EmailAddress
 
 from checkout.models import OrderItem, Order
 from .forms import ProfileForm
@@ -13,10 +15,26 @@ def profile(request):
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile)
+        new_email = (request.POST.get('email') or '').strip()
 
         if form.is_valid():
-            form.save()
-            messages.success(request, "Profile updated.")
+            with transaction.atomic():
+                form.save()
+                if new_email and new_email.lower() != (request.user.email or '').lower():
+                    # Create or reuse EmailAddress for the new email (unverified, not primary)
+                    ea = EmailAddress.objects.filter(
+                        user=request.user, email__iexact=new_email
+                    ).first()
+                    if not ea:
+                        ea = EmailAddress(user=request.user, email=new_email, primary=False, verified=False)
+                        ea.save()
+
+                    # Send confirmation to the new email
+                    ea.send_confirmation(request)
+                    messages.info(request, "We sent a verification link to your new email. "
+                                            "It will replace your current email after you confirm.")
+                else:
+                    messages.success(request, "Profile updated.")
             return redirect('profile')
         else:
             messages.error(request, "Please fix the errors below.")
