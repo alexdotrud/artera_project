@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 class Profile(models.Model):
@@ -14,6 +14,7 @@ class Profile(models.Model):
     country = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    avatar = CloudinaryField('image', blank=True, null=True, folder='avatars')
 
     def __str__(self):
         return f"{self.user.username}'s profile"

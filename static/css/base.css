@@ -324,7 +324,23 @@ header .position-absolute.end-0 {
     background-color: transparent;
 }
 
-/* Bag Styles */
+/* Library */
+.profile .card {
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.profile .avatar {
+    width: 92px;
+    height: 92px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+}
+
+/* Bag */
 .bag img {
     width: 100%;
     height: auto;
