@@ -7,6 +7,7 @@ from .forms import OrderForm
 from bag.contexts import bag_contents
 from shop.models import Artwork
 from .models import OrderItem, Order
+from profiles.models import Profile
 
 import stripe
 import json
@@ -19,7 +20,7 @@ def cache_checkout_data(request):
         stripe.PaymentIntent.modify(pid, metadata={
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
-            'username': request.user,
+            'username': getattr(request.user, 'username', ''),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -45,7 +46,21 @@ def checkout(request):
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
         }
-        order_form = OrderForm(form_data)
+        initial = {}
+        if request.user.is_authenticated:
+            profile, _ = Profile.objects.get_or_create(user=request.user)
+            initial = {
+                'full_name': profile.full_name or '',
+                'email': request.user.email or '',
+                'phone_number': profile.phone_number or '',
+                'country': profile.country or '',
+                'postcode': profile.postal_code or '',
+                'town_or_city': profile.city or '',
+                'street_address1': profile.address_line_delivery or '',
+                'street_address2': profile.address_line_living or '',
+                'county': '',
+            }
+        order_form = OrderForm(initial=initial) 
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
