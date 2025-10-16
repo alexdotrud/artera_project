@@ -55,7 +55,7 @@ def library(request):
 
     orders = (
         Order.objects
-        .filter(email__iexact=email)
+        .filter(user=request.user)
         .order_by('-date', '-id')
         .annotate(item_count=Count('lineitems'))
         .prefetch_related(

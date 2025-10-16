@@ -8,6 +8,7 @@ from django_countries.fields import CountryField
 from shop.models import Artwork 
 
 class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name='orders')
     order_number = models.CharField(max_length=32, null=False, editable=False)
     full_name = models.CharField(max_length=50,  null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
@@ -36,7 +37,7 @@ class Order(models.Model):
         self.order_total = total
 
         threshold = Decimal(getattr(settings, 'FREE_DELIVERY_THRESHOLD', 0))
-        pct       = Decimal(getattr(settings, 'STANDARD_DELIVERY_PERCENTAGE', 0))
+        pct = Decimal(getattr(settings, 'STANDARD_DELIVERY_PERCENTAGE', 0))
 
         if threshold and self.order_total < threshold:
             self.delivery_cost = (self.order_total * pct / Decimal('100')).quantize(Decimal('0.01'))

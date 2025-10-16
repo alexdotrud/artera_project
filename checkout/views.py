@@ -49,6 +49,8 @@ def checkout(request):
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
+            if request.user.is_authenticated:
+                order.user = request.user  
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
@@ -115,8 +117,7 @@ def checkout(request):
                 'postcode': profile.postal_code or '',
                 'town_or_city': profile.city or '',
                 'street_address1': profile.address_line_delivery or '',
-                'street_address2': profile.address_line_living or '',
-                'county': '',
+                'county': profile.country or '',
             }
         order_form = OrderForm(initial=initial) 
 
