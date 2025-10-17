@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def artwork_request(request):
+    return render(request, 'home/home.html')
+
+def offer_request(request):
+    return render(request, 'home/home.html')
