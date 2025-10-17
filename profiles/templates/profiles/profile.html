@@ -19,8 +19,6 @@
                     <div class="d-grid gap-2">
                         <a href="{% url 'library' %}" class="btn btn-dark">My Library</a>
                         {% if perms.account %}{% endif %}
-                        <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">Change
-                            password</a>
                         <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary">Sign out</a>
                     </div>
 

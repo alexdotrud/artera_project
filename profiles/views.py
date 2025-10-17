@@ -4,6 +4,7 @@ from django.db import transaction
 from django.db.models import Prefetch, Count
 from django.contrib import messages
 from allauth.account.models import EmailAddress
+from django.http import HttpResponseBadRequest
 
 from checkout.models import OrderItem, Order
 from .forms import ProfileForm
@@ -45,6 +46,22 @@ def profile(request):
         'form': form,
         'user_obj': request.user,
     })
+
+@login_required
+def avatar_upload(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("POST only")
+
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    f = request.FILES.get('avatar')
+    if not f:
+        return HttpResponseBadRequest("No file")
+
+    # CloudinaryField will upload on save
+    profile.avatar = f
+    profile.save(update_fields=['avatar'])
+    messages.success(request, "Avatar updated.")
+    return redirect('profile')
 
 @login_required
 def library(request):
