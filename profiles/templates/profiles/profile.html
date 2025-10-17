@@ -6,34 +6,39 @@
 
 
     <div class="row g-4">
-        <!-- Sidebar: quick actions -->
+        <!-- LEFT: Avatar card -->
         <div class="col-12 col-lg-4">
             <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-body text-center">
                     <div class="avatar mb-3 mx-auto">
-                        <span>{{ user_obj.username|first|upper }}</span>
                         {% if form.instance.avatar %}
-                        <img src="{{ form.instance.avatar.url }}?w=160&h=160&c_fill,g_face,r_max,q=auto,f=auto"
-                            alt="Avatar">
+                        <img src="{{ form.instance.avatar.url }}" alt="Avatar" class="avatar-image">
                         {% else %}
-                        <img src="{% static 'images/default-avatar.png' %}" alt="Default avatar">
+                        <img src="{% static 'images/default-avatar.png' %}" alt="Default avatar" class="avatar-image">
                         {% endif %}
                     </div>
-                    <h5 class="mb-1">{{ user_obj.username }}</h5>
-                    <div class="text-muted small mb-3">{{ user_obj.email }}</div>
 
-                    <div class="d-grid gap-2">
-                        <a href="{% url 'library' %}" class="btn btn-dark">My Library</a>
-                        {% if perms.account %}{% endif %}
-                        <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary">Sign out</a>
-                    </div>
+                    <!-- Upload Avatar -->
+                    <form method="post" action="{% url 'avatar_upload' %}" enctype="multipart/form-data"
+                        class="d-grid gap-2 mb-2">
+                        {% csrf_token %}
+                        <input type="file" name="avatar" class="form-control" accept="image/*" required>
+                        <button class="btn btn-dark" type="submit">Upload Avatar</button>
+                    </form>
+
+                    {% if form.instance.avatar %}
+                    <form method="post" action="{% url 'avatar_remove' %}" class="d-grid gap-2">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-secondary" type="submit">Remove avatar</button>
+                    </form>
+                    {% endif %}
 
                     <hr class="my-4">
-
-                    <div class="text-start small">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="text-muted">Joined</span>
-                            <span>{{ user_obj.date_joined|date:"Y-m-d" }}</span>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'library' %}" class="btn btn-dark">My Library</a>
+                        <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary">Sign out</a>
+                        <div class="small text-muted">
+                            <span class="me-2">Joined</span>{{ user_obj.date_joined|date:"Y-m-d" }}
                         </div>
                     </div>
                 </div>
@@ -85,7 +90,8 @@
                             <div class="col-md-4">
                                 <label class="form-label">{{ form.city.label }}</label>
                                 {{ form.city }}
-                                {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}</div>
+                                {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}
+                                </div>
                                 {% endif %}
                             </div>
                             <div class="col-md-4">
@@ -97,7 +103,8 @@
                             <div class="col-md-4">
                                 <label class="form-label">{{ form.country.label }}</label>
                                 {{ form.country }}
-                                {% if form.country.errors %}<div class="text-danger small">{{ form.country.errors.0 }}
+                                {% if form.country.errors %}<div class="text-danger small">
+                                    {{ form.country.errors.0 }}
                                 </div>{% endif %}
                             </div>
                         </div>

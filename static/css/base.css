@@ -324,6 +324,12 @@ header .position-absolute.end-0 {
     background-color: transparent;
 }
 
+/* Profile */
+.avatar-image {
+    width: 85px;
+    height: 85px;
+}
+
 /* Library */
 .profile .card {
     border: 1px solid var(--border);
@@ -338,6 +344,12 @@ header .position-absolute.end-0 {
     place-items: center;
     margin-bottom: 0.5rem;
     border: 1px solid var(--border);
+}
+
+.order-block img {
+    max-height: 300px;
+    max-width: 200px;
+    border: var(--shadow-sm);
 }
 
 /* Bag */
@@ -462,14 +474,6 @@ fieldset {
 .loading-spinner {
     margin: 0;
 }
-
-/* Library */
-.order-block img {
-    max-height: 300px;
-    max-width: 200px;
-    border: var(--shadow-sm);
-}
-
 
 /* Login/ Logout/ Signup */
 .auth-cont {
