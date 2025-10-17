@@ -12,6 +12,12 @@
                 <div class="card-body text-center">
                     <div class="avatar mb-3 mx-auto">
                         <span>{{ user_obj.username|first|upper }}</span>
+                        {% if form.instance.avatar %}
+                        <img src="{{ form.instance.avatar.url }}?w=160&h=160&c_fill,g_face,r_max,q=auto,f=auto"
+                            alt="Avatar">
+                        {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="Default avatar">
+                        {% endif %}
                     </div>
                     <h5 class="mb-1">{{ user_obj.username }}</h5>
                     <div class="text-muted small mb-3">{{ user_obj.email }}</div>

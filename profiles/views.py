@@ -64,6 +64,18 @@ def avatar_upload(request):
     return redirect('profile')
 
 @login_required
+def avatar_remove(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("POST only")
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    if profile.avatar:
+        profile.avatar.delete(save=False)
+        profile.avatar = None
+        profile.save(update_fields=['avatar'])
+    messages.success(request, "Avatar removed.")
+    return redirect('profile')
+
+@login_required
 def library(request):
     """All orders history."""
     email = (request.user.email or '').strip()
