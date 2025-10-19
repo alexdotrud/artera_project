@@ -46,29 +46,29 @@
         <!-- Side card -->
         <div class="col-12 col-lg-4">
             <div class="card border-0 shadow-sm rounded">
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <span class="small text-muted"> Order Status:</span>
-                    {% if request_obj.status == 'accepted' %}
-                    <span class="badge bg-success">{{ request_obj.get_status_display }}</span>
-                    {% elif request_obj.status == 'rejected' %}
-                    <span class="badge bg-danger">{{ request_obj.get_status_display }}</span>
-                    {% else %} {# in_review #}
-                    <span class="badge bg-secondary">{{ request_obj.get_status_display }}</span>
-                    {% endif %}
-                    <div class="card-body p-4">
-                        <h5 class="mb-2">What’s next?</h5>
-                        <p class="text-muted mb-3">
-                            We’ll review your request and get back to you. You can close this page—your request is
-                            saved.
-                        </p>
-                        <div class="d-grid gap-2">
-                            <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
-                            <a href="{% url 'request' %}" class="btn btn-outline-secondary">Submit Another</a>
-                        </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <span>Status:</span>
+                        {% if request_obj.status == 'accepted' %}
+                        <span class="badge bg-success">{{ request_obj.get_status_display }}</span>
+                        {% elif request_obj.status == 'rejected' %}
+                        <span class="badge bg-danger">{{ request_obj.get_status_display }}</span>
+                        {% else %} {# in_review #}
+                        <span class="badge bg-secondary">{{ request_obj.get_status_display }}</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="mb-2">What’s next?</h5>
+                    <p class="text-muted mb-3">
+                        We’ll review your request and get back to you. You can close this page—your request is saved.
+                    </p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
+                        <a href="{% url 'request' %}" class="btn btn-outline-secondary">Submit Another</a>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-    {% endblock %}
+
+</div>
+{% endblock %}
