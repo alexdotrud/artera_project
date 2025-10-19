@@ -7,7 +7,7 @@ from .models import ArtworkRequest
 @login_required
 def artwork_request(request):
     if request.method == "POST":
-        form = ArtworkRequestForm(request.POST)
+        form = ArtworkRequestForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user

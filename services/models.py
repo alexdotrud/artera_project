@@ -13,7 +13,7 @@ class ArtworkRequest(models.Model):
     description = models.TextField(blank=True)
     ref_image_url = models.URLField(blank=True)
     ref_image = CloudinaryField('image', folder='requests', blank=True)
-    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    budget_cents = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS, default="in_review")
     created_at = models.DateTimeField(auto_now_add=True)
 

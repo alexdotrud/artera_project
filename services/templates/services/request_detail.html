@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+
+    <div class="mb-3">
+        <a class="small text-muted" href="{% url 'request' %}">&larr; Create another</a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main card -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4 p-md-5">
+
+                    <h1 class="mb-2">{{ request_obj.title }}</h1>
+
+                    <div class="text-muted mb-3 d-flex flex-wrap gap-2">
+                        <span>Status: <strong>{{ request_obj.get_status_display }}</strong></span>
+                        <span>&bull;</span>
+                        <span>Submitted: {{ request_obj.created_at|date:"Y-m-d" }}</span>
+                    </div>
+
+                    {% with desc=request_obj.description %}
+                    {% if desc %}
+                    <p class="mb-4">{{ desc|linebreaksbr }}</p>
+                    {% endif %}
+                    {% endwith %}
+
+                    {% if request_obj.ref_image and request_obj.ref_image.url %}
+                    <div class="ratio ratio-4x3 rounded overflow-hidden border" style="--bs-border-opacity:.1;">
+                        <img src="{{ request_obj.ref_image.url }}" class="w-100 h-100 object-fit-cover"
+                            alt="Reference image">
+                    </div>
+                    {% elif request_obj.ref_image_url %}
+                    <div class="ratio ratio-4x3 rounded overflow-hidden border" style="--bs-border-opacity:.1;">
+                        <img src="{{ request_obj.ref_image_url }}" class="w-100 h-100 object-fit-cover"
+                            alt="Reference image">
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-3 small text-muted d-flex flex-wrap gap-3">
+
+                        {% if request_obj.budget_cents %}
+                        <span>Budget: ${{ request_obj.budget_cents }}</span>
+                        <span>Budget: ${{ request_obj.budget_cents|divisibleby:100 }}</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Side card -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-3 h-100">
+                <div class="card-body p-4">
+                    <h5 class="mb-2">What’s next?</h5>
+                    <p class="text-muted mb-3">
+                        We’ll review your request and get back to you. You can close this page—your request is saved.
+                    </p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
+                        <a href="{% url 'services:request_new' %}" class="btn btn-outline-secondary">Submit Another</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
