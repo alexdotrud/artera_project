@@ -3,7 +3,7 @@
 <div class="container py-5">
     <h1 class="mb-4 text-center">Submit Your Print Offer</h1>
 
-    <div class="row justify-content-center">
+    <div class="row d-flex  align-items-center justify-content-center">
         <div class="col-12 col-lg-10">
             <div class="services-card p-4 p-md-5">
                 <form method="post" class="row g-3">
@@ -52,11 +52,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label">{{ form.sample_image_url.label }}</label>
-                        {{ form.sample_image_url }}
-                        <div class="form-text">Link to a sample image (optional).</div>
-                        {% if form.sample_image_url.errors %}<div class="text-danger small mt-1">
-                            {{ form.sample_image_url.errors.0 }}</div>{% endif %}
+                        {{ form.sample_image }}
                     </div>
 
                     {% if form.non_field_errors %}

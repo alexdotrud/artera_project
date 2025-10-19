@@ -5,7 +5,7 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
-            <div class="card border-0 shadow-sm rounded-3">
+            <div class="services-card border-0 shadow-sm rounded-3">
                 <div class="card-body p-4 p-md-5">
 
                     <form method="post" enctype="multipart/form-data" class="row g-3">
@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">{{ form.budget_cents.label }}</label>
+                            <label class="form-label">Budget :</label>
                             {{ form.budget_cents }}
                             <div class="form-text">Enter budget in cents (optional).</div>
                             {% if form.budget_cents.errors %}<div class="text-danger small mt-1">

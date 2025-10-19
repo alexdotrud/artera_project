@@ -11,6 +11,5 @@ class ArtworkRequestAdmin(admin.ModelAdmin):
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "full_name", "email", "status", "created_at")
-    list_filter = ("status", "created_at")
+    list_display = ("id", "title", "full_name", "email", "created_at")
     search_fields = ("title", "full_name", "email", "description")

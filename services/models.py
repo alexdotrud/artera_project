@@ -17,11 +17,6 @@ class ArtworkRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Offer(models.Model):
-    STATUS = [
-        ("in_review","In review"),
-        ("accepted","Accepted"),
-        ("rejected","Rejected"),
-    ]
     full_name = models.CharField(max_length=120)
     email = models.EmailField()
     phone_number = models.CharField(max_length=32, blank=True)
@@ -29,5 +24,4 @@ class Offer(models.Model):
     description = models.TextField(blank=True)
     category = models.CharField(max_length=80, blank=True)
     sample_image = CloudinaryField('image', folder='requests', blank=True)
-    status = models.CharField(max_length=20, choices=STATUS, default='in_review')
     created_at = models.DateTimeField(auto_now_add=True)
