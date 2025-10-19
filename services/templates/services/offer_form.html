@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Submit Your Print Offer</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="services-card p-4 p-md-5">
+                <form method="post" class="row g-3">
+                    {% csrf_token %}
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.full_name.label }}</label>
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}<div class="text-danger small mt-1">{{ form.full_name.errors.0 }}
+                        </div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.phone_number.label }}</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}<div class="text-danger small mt-1">
+                            {{ form.phone_number.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.category.label }}</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}<div class="text-danger small mt-1">{{ form.category.errors.0 }}
+                        </div>{% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">{{ form.title.label }}</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">{{ form.description.label }}</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}<div class="text-danger small mt-1">
+                            {{ form.description.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">{{ form.sample_image_url.label }}</label>
+                        {{ form.sample_image_url }}
+                        <div class="form-text">Link to a sample image (optional).</div>
+                        {% if form.sample_image_url.errors %}<div class="text-danger small mt-1">
+                            {{ form.sample_image_url.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    <div class="col-12 text-danger small">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+                        <a href="{% url 'all_artworks' %}" class="btn btn-outline-secondary">Cancel</a>
+                        <button class="btn btn-dark" type="submit">Send Offer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

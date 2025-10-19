@@ -27,7 +27,7 @@ def request_detail(request, pk):
 
 def offer_request(request):
     if request.method == "POST":
-        form = OfferForm(request.POST)
+        form = OfferForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Thanks! Your offer was submitted.")
