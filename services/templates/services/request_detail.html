@@ -9,7 +9,7 @@
     <div class="row g-4">
         <!-- Main card -->
         <div class="col-12 col-lg-8">
-            <div class="card border-0 shadow-sm rounded-3">
+            <div class="card border-0 shadow-sm rounded services-card">
                 <div class="card-body p-4 p-md-5">
 
                     <h1 class="mb-2">{{ request_obj.title }}</h1>
@@ -26,15 +26,9 @@
                     {% endif %}
                     {% endwith %}
 
-                    {% if request_obj.ref_image and request_obj.ref_image.url %}
-                    <div class="ratio ratio-4x3 rounded overflow-hidden border" style="--bs-border-opacity:.1;">
-                        <img src="{{ request_obj.ref_image.url }}" class="w-100 h-100 object-fit-cover"
-                            alt="Reference image">
-                    </div>
-                    {% elif request_obj.ref_image_url %}
-                    <div class="ratio ratio-4x3 rounded overflow-hidden border" style="--bs-border-opacity:.1;">
-                        <img src="{{ request_obj.ref_image_url }}" class="w-100 h-100 object-fit-cover"
-                            alt="Reference image">
+                    {% if request_obj.ref_image %}
+                    <div class="rounded">
+                        <img src="{{ request_obj.ref_image.url }}" class=" req-image" alt="Reference image">
                     </div>
                     {% endif %}
 
@@ -42,7 +36,6 @@
 
                         {% if request_obj.budget_cents %}
                         <span>Budget: ${{ request_obj.budget_cents }}</span>
-                        <span>Budget: ${{ request_obj.budget_cents|divisibleby:100 }}</span>
                         {% endif %}
                     </div>
 
@@ -52,20 +45,30 @@
 
         <!-- Side card -->
         <div class="col-12 col-lg-4">
-            <div class="card border-0 shadow-sm rounded-3 h-100">
-                <div class="card-body p-4">
-                    <h5 class="mb-2">What’s next?</h5>
-                    <p class="text-muted mb-3">
-                        We’ll review your request and get back to you. You can close this page—your request is saved.
-                    </p>
-                    <div class="d-grid gap-2">
-                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
-                        <a href="{% url 'services:request_new' %}" class="btn btn-outline-secondary">Submit Another</a>
+            <div class="card border-0 shadow-sm rounded">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="small text-muted"> Order Status:</span>
+                    {% if request_obj.status == 'accepted' %}
+                    <span class="badge bg-success">{{ request_obj.get_status_display }}</span>
+                    {% elif request_obj.status == 'rejected' %}
+                    <span class="badge bg-danger">{{ request_obj.get_status_display }}</span>
+                    {% else %} {# in_review #}
+                    <span class="badge bg-secondary">{{ request_obj.get_status_display }}</span>
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <h5 class="mb-2">What’s next?</h5>
+                        <p class="text-muted mb-3">
+                            We’ll review your request and get back to you. You can close this page—your request is
+                            saved.
+                        </p>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
+                            <a href="{% url 'request' %}" class="btn btn-outline-secondary">Submit Another</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
-{% endblock %}
+    </div>
+    {% endblock %}

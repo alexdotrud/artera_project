@@ -475,6 +475,21 @@ fieldset {
     margin: 0;
 }
 
+/* Request Form/ Request Details */
+.services-card {
+    height: auto;
+    display: block;
+}
+
+.req-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    max-height: 500px;
+    border-radius: 12px;
+}
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;

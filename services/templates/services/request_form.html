@@ -8,7 +8,7 @@
             <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-body p-4 p-md-5">
 
-                    <form method="post" class="row g-3">
+                    <form method="post" enctype="multipart/form-data" class="row g-3">
                         {% csrf_token %}
 
                         <div class="col-12">
@@ -26,15 +26,6 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">{{ form.ref_image_url.label }}</label>
-                            {{ form.ref_image_url }}
-                            <div class="form-text">Link to a reference image (optional).</div>
-                            {% if form.ref_image_url.errors %}<div class="text-danger small mt-1">
-                                {{ form.ref_image_url.errors.0 }}</div>{% endif %}
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">{{ form.ref_image.label }}</label>
                             {{ form.ref_image }}
                             <div class="form-text">Upload a reference imgage.</div>
                             {% if form.ref_image.errors %}<div class="text-danger small mt-1">
