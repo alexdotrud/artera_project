@@ -9,6 +9,7 @@ from django.http import HttpResponseBadRequest
 from checkout.models import OrderItem, Order
 from .forms import ProfileForm
 from .models import Profile
+from services.models import ArtworkRequest
 
 @login_required
 def profile(request):
@@ -94,4 +95,13 @@ def library(request):
             )
         )
     )
-    return render(request, 'profiles/library.html', {'orders': orders})
+    requests_qs = (
+        ArtworkRequest.objects
+        .filter(user=request.user)
+        .order_by('-created_at')
+    )
+
+    return render(request, 'profiles/library.html', {
+        'orders': orders,
+        'requests': requests_qs,
+    })
