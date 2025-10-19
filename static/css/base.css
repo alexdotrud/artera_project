@@ -506,6 +506,14 @@ fieldset {
     height: auto;
 }
 
+/* Offer Request */
+.img-sample {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;

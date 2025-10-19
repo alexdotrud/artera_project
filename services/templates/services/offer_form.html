@@ -1,71 +1,106 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <div class="container py-5">
-    <h1 class="mb-4 text-center">Submit Your Print Offer</h1>
+    <div class="row align-items-center g-4">
 
-    <div class="row d-flex  align-items-center justify-content-center">
-        <div class="col-12 col-lg-10">
-            <div class="services-card p-4 p-md-5">
-                <form method="post" class="row g-3">
-                    {% csrf_token %}
+        <div class="col-12 col-md-6">
+            <h1 class="mb-4">About Our Collaborations & Artists</h1>
+            <p class="text-start">
+                At Artera, we collaborate with independent artists, illustrators, and designers from around the world.
+                Each contributor brings a unique perspective — from minimalist line work to expressive abstract pieces.
+                If you’re an artist interested in joining Artera, we’d love to hear from you.
+                Fill out the form below with your details, links to your work, and a short description of your style or
+                ideas.
+                Once we review your submission, our team will get back to you to discuss potential collaboration
+                opportunities.
+            </p>
+            <div>
+                <button id="formToggle" class="btn btn-outline-dark mt-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collabForm" aria-expanded="false" aria-controls="collabForm">
+                    <span class="toggle-text">Fill the Collaboration Form</span>
+                </button>
+            </div>
+        </div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">{{ form.full_name.label }}</label>
-                        {{ form.full_name }}
-                        {% if form.full_name.errors %}<div class="text-danger small mt-1">{{ form.full_name.errors.0 }}
-                        </div>{% endif %}
+        <div class="col-12 col-md-6">
+            <img src="{% static 'images/artera-team.jpg' %}" alt="Picture of Artera Team"
+                class="img-fluid shadow-sm w-100">
+        </div>
+
+        <div class="collapse" id="collabForm">
+            <div class="row d-flex  align-items-center justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="services-card p-4 p-md-5">
+                        <form method="post" class="row g-3">
+                            {% csrf_token %}
+                            <h2>Collaboration form</h2>
+                            <hr>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.full_name.label }}</label>
+                                {{ form.full_name }}
+                                {% if form.full_name.errors %}<div class="text-danger small mt-1">
+                                    {{ form.full_name.errors.0 }}
+                                </div>{% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.email.label }}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.phone_number.label }}</label>
+                                {{ form.phone_number }}
+                                {% if form.phone_number.errors %}<div class="text-danger small mt-1">
+                                    {{ form.phone_number.errors.0 }}</div>{% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.category.label }}</label>
+                                {{ form.category }}
+                                {% if form.category.errors %}<div class="text-danger small mt-1">
+                                    {{ form.category.errors.0 }}
+                                </div>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">{{ form.title.label }}</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors.0 }}
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">{{ form.description.label }}</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}<div class="text-danger small mt-1">
+                                    {{ form.description.errors.0 }}</div>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Add your work sample</label>
+                                <div class="img-sample mb-1">
+                                    {{ form.sample_image }}
+                                </div>
+                            </div>
+
+                            {% if form.non_field_errors %}
+                            <div class="col-12 text-danger small">{{ form.non_field_errors }}</div>
+                            {% endif %}
+
+                            <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+                                <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Cancel</a>
+                                <button class="btn btn-dark" type="submit">Send Offer</button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">{{ form.email.label }}</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">{{ form.phone_number.label }}</label>
-                        {{ form.phone_number }}
-                        {% if form.phone_number.errors %}<div class="text-danger small mt-1">
-                            {{ form.phone_number.errors.0 }}</div>{% endif %}
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">{{ form.category.label }}</label>
-                        {{ form.category }}
-                        {% if form.category.errors %}<div class="text-danger small mt-1">{{ form.category.errors.0 }}
-                        </div>{% endif %}
-                    </div>
-
-                    <div class="col-12">
-                        <label class="form-label">{{ form.title.label }}</label>
-                        {{ form.title }}
-                        {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors.0 }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-12">
-                        <label class="form-label">{{ form.description.label }}</label>
-                        {{ form.description }}
-                        {% if form.description.errors %}<div class="text-danger small mt-1">
-                            {{ form.description.errors.0 }}</div>{% endif %}
-                    </div>
-
-                    <div class="col-12">
-                        {{ form.sample_image }}
-                    </div>
-
-                    {% if form.non_field_errors %}
-                    <div class="col-12 text-danger small">{{ form.non_field_errors }}</div>
-                    {% endif %}
-
-                    <div class="col-12 d-flex justify-content-end gap-2 mt-2">
-                        <a href="{% url 'all_artworks' %}" class="btn btn-outline-secondary">Cancel</a>
-                        <button class="btn btn-dark" type="submit">Send Offer</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
