@@ -102,7 +102,7 @@
                             {% if request.user.is_authenticated %}
                             <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
-                            <li><a class="dropdown-item" href="">Make a Custom
+                            <li><a class="dropdown-item" href="{% url 'request' %}">Make a Custom
                                     Request</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -156,7 +156,7 @@
                                 {% if request.user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
-                                <li><a class="dropdown-item" href="">Make a Custom
+                                <li><a class="dropdown-item" href="{% url 'request' %}">Make a Custom
                                         Request</a></li>
                                 <li>
                                     <hr class="dropdown-divider">

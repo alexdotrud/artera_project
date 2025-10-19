@@ -17,7 +17,8 @@ def artwork_request(request):
         messages.error(request, "Please fix the errors below.")
     else:
         form = ArtworkRequestForm()
-    return render(request, 'home/request_form.html')
+
+    return render(request, "services/request_form.html", {"form": form})
 
 @login_required
 def request_detail(request, pk):

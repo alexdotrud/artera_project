@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 class ArtworkRequest(models.Model):
     STATUS = [
@@ -11,7 +12,8 @@ class ArtworkRequest(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True)
     ref_image_url = models.URLField(blank=True)
-    budget_cents = models.IntegerField(null=True, blank=True)
+    ref_image = CloudinaryField('image', folder='requests', blank=True)
+    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS, default="in_review")
     created_at = models.DateTimeField(auto_now_add=True)
 
