@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Make a Request</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body p-4 p-md-5">
+
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+
+                        <div class="col-12">
+                            <label class="form-label">{{ form.title.label }}</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}<div class="text-danger small mt-1">{{ form.title.errors.0 }}
+                            </div>{% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}<div class="text-danger small mt-1">
+                                {{ form.description.errors.0 }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.ref_image_url.label }}</label>
+                            {{ form.ref_image_url }}
+                            <div class="form-text">Link to a reference image (optional).</div>
+                            {% if form.ref_image_url.errors %}<div class="text-danger small mt-1">
+                                {{ form.ref_image_url.errors.0 }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">{{ form.budget_cents.label }}</label>
+                            {{ form.budget_cents }}
+                            <div class="form-text">Enter budget in cents (optional).</div>
+                            {% if form.budget_cents.errors %}<div class="text-danger small mt-1">
+                                {{ form.budget_cents.errors.0 }}</div>{% endif %}
+                        </div>
+
+                        {% if form.non_field_errors %}
+                        <div class="col-12 text-danger small">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+                            <a href="{% url 'all_artworks' %}" class="btn btn-outline-secondary">Cancel</a>
+                            <button class="btn btn-dark" type="submit">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
