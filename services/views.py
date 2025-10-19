@@ -25,6 +25,27 @@ def request_detail(request, pk):
     obj = get_object_or_404(ArtworkRequest, pk=pk, user=request.user)
     return render(request, "services/request_detail.html", {"request_obj": obj})
 
+@login_required
+def request_edit(request, pk):
+    req = get_object_or_404(ArtworkRequest, pk=pk, user=request.user)
+    if request.method == "POST":
+        form = ArtworkRequestForm(request.POST, request.FILES, instance=req)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Request updated.")
+            return redirect("request_detail", pk=req.pk)
+        messages.error(request, "Please fix the errors below.")
+    else:
+        form = ArtworkRequestForm(instance=req)
+    return render(request, "services/request_edit.html", {"form": form, "request_obj": req})
+
+@login_required
+def request_delete(request, pk):
+    req = get_object_or_404(ArtworkRequest, pk=pk, user=request.user)
+    req.delete()
+    messages.success(request, "Request deleted.")
+    return redirect("library")
+
 def offer_request(request):
     if request.method == "POST":
         form = OfferForm(request.POST, request.FILES)
