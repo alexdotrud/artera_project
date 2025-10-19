@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5">
-    <h1 class="mb-4 text-center">Make a Request</h1>
+    <h1 class="mb-4 text-center">{% if is_edit %}Edit Request{% else %}Make a Request{% endif %}</h1>
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
@@ -25,17 +25,24 @@
                                 {{ form.description.errors.0 }}</div>{% endif %}
                         </div>
 
+                        {% if is_edit and request_obj.ref_image %}
+                        <div class="rounded">
+                            <img src="{{ request_obj.ref_image.url }}" class="current-image" alt="Current Image">
+                        </div>
+                        {% else %}
                         <div class="col-md-6">
                             {{ form.ref_image }}
-                            <div class="form-text">Upload a reference imgage.</div>
-                            {% if form.ref_image.errors %}<div class="text-danger small mt-1">
-                                {{ form.ref_image.errors.0 }}</div>{% endif %}
+                            <div class="form-text">Upload a reference image.</div>
+                            {% if form.ref_image.errors %}
+                            <div class="text-danger small mt-1">{{ form.ref_image.errors.0 }}</div>
+                            {% endif %}
                         </div>
+                        {% endif %}
 
                         <div class="col-md-6">
                             <label class="form-label">Budget :</label>
                             {{ form.budget_cents }}
-                            <div class="form-text">Enter budget in cents (optional).</div>
+                            <div class="form-text">Enter your budget.</div>
                             {% if form.budget_cents.errors %}<div class="text-danger small mt-1">
                                 {{ form.budget_cents.errors.0 }}</div>{% endif %}
                         </div>

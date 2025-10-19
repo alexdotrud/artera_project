@@ -330,7 +330,6 @@ header .position-absolute.end-0 {
     height: 85px;
 }
 
-/* Library */
 .profile .card {
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
@@ -346,11 +345,22 @@ header .position-absolute.end-0 {
     border: 1px solid var(--border);
 }
 
+/* Library */
+
 .order-block img {
     max-height: 300px;
     max-width: 200px;
     border: var(--shadow-sm);
 }
+
+.request-card,
+.order-card {
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    background: transparent;
+    min-height: 80px;
+}
+
 
 /* Bag */
 .bag img {
@@ -491,6 +501,11 @@ fieldset {
     border-radius: 12px;
 }
 
+.current-image {
+    width: 250px;
+    height: auto;
+}
+
 /* Login/ Logout/ Signup */
 .auth-cont {
     min-height: 85vh;
@@ -577,6 +592,13 @@ fieldset {
     border-color: var(--primary-color);
     box-shadow: var(--shadow-sm);
     display: focus;
+}
+
+.btn-danger {
+    border-color: var(--primary-color);
+    border-radius: 8px;
+    letter-spacing: 0.2px;
+    width: 100%;
 }
 
 a {

@@ -28,7 +28,7 @@
 
                     {% if request_obj.ref_image %}
                     <div class="rounded">
-                        <img src="{{ request_obj.ref_image.url }}" class=" req-image" alt="Reference image">
+                        <img src="{{ request_obj.ref_image.url }}" class="req-image" alt="Reference image">
                     </div>
                     {% endif %}
 
@@ -62,8 +62,13 @@
                         We’ll review your request and get back to you. You can close this page—your request is saved.
                     </p>
                     <div class="d-grid gap-2">
+                        <a href="{% url 'request_edit' request_obj.id  %}" class="btn btn-outline-dark">Edit</a>
+                        <form method="post" action="{% url 'request_delete' request_obj.id  %}" class="m-0">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
                         <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
-                        <a href="{% url 'request' %}" class="btn btn-outline-secondary">Submit Another</a>
+                        <a href="{% url 'request' %}" class="btn btn-outline-dark">Submit Another</a>
                     </div>
                 </div>
             </div>

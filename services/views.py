@@ -37,7 +37,11 @@ def request_edit(request, pk):
         messages.error(request, "Please fix the errors below.")
     else:
         form = ArtworkRequestForm(instance=req)
-    return render(request, "services/request_edit.html", {"form": form, "request_obj": req})
+    return render(request, "services/request_form.html", {
+        "form": form,
+        "is_edit": True,
+        "request_obj": req,
+    })
 
 @login_required
 def request_delete(request, pk):
