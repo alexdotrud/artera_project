@@ -22,21 +22,23 @@
                     <form method="post" action="{% url 'avatar_upload' %}" enctype="multipart/form-data"
                         class="d-grid gap-2 mb-2">
                         {% csrf_token %}
-                        <input type="file" name="avatar" class="form-control" accept="image/*" required>
-                        <button class="btn btn-dark" type="submit">Upload Avatar</button>
+                        <input id="avatar-file" type="file" name="avatar" class="d-none" accept="image/*"
+                            onchange="this.form.submit()">
+                        <label for="avatar-file" class="btn btn-outline-dark mx-auto px-4">Choose Image</label>
                     </form>
 
                     {% if form.instance.avatar %}
                     <form method="post" action="{% url 'avatar_remove' %}" class="d-grid gap-2">
                         {% csrf_token %}
-                        <button class="btn btn-outline-secondary" type="submit">Remove avatar</button>
+                        <button class="btn btn-outline-secondary mx-auto px-4" type="submit">Remove avatar</button>
                     </form>
                     {% endif %}
 
                     <hr class="my-4">
                     <div class="d-grid gap-2">
-                        <a href="{% url 'library' %}" class="btn btn-dark">My Library</a>
-                        <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary">Sign out</a>
+                        <a href="{% url 'library' %}" class="btn btn-dark mx-auto px-4">My Library</a>
+                        <a href="{% url 'account_logout' %}" class="btn btn-outline-secondary mx-auto px-4">Sign
+                            out</a>
                         <div class="small text-muted">
                             <span class="me-2">Joined</span>{{ user_obj.date_joined|date:"Y-m-d" }}
                         </div>

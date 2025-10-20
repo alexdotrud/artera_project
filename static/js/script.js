@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    /*
+    Collaborate Page.
+    Function to show the ofeer form after pressing the collaborate button.
+    */
     const el = document.getElementById('collabForm');
     const btn = document.getElementById('formToggle');
     const txt = btn.querySelector('.toggle-text');

@@ -562,10 +562,6 @@ fieldset {
 
 
 /* Footer Styles */
-.btn {
-    max-width: 300px;
-}
-
 .footer {
     background: var(--surface);
     border-top: 1px solid var(--border);
@@ -580,6 +576,11 @@ fieldset {
 }
 
 /* Custom Button/Link/Icon Styles */
+.btn {
+    max-width: 300px;
+    display: block;
+}
+
 .btn-dark {
     background: var(--primary-color);
     border-color: var(--primary-color);

@@ -5,6 +5,7 @@ from django.db.models import Prefetch, Count
 from django.contrib import messages
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseBadRequest
+import cloudinary.uploader
 
 from checkout.models import OrderItem, Order
 from .forms import ProfileForm
@@ -69,10 +70,20 @@ def avatar_remove(request):
     if request.method != 'POST':
         return HttpResponseBadRequest("POST only")
     profile, _ = Profile.objects.get_or_create(user=request.user)
+
     if profile.avatar:
-        profile.avatar.delete(save=False)
+        # For CloudinaryField: destroy the asset by public_id
+        public_id = getattr(profile.avatar, "public_id", None)
+        if public_id:
+            try:
+                cloudinary.uploader.destroy(public_id)
+            except Exception:
+                pass
+
+        # Clear the model field
         profile.avatar = None
         profile.save(update_fields=['avatar'])
+
     messages.success(request, "Avatar removed.")
     return redirect('profile')
 
