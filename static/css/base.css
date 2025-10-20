@@ -485,6 +485,12 @@ fieldset {
     margin: 0;
 }
 
+/* Library */
+.library img {
+    max-width: 300px;
+    height: auto;
+}
+
 /* Request Form/ Request Details */
 .services-card {
     height: auto;
@@ -556,6 +562,10 @@ fieldset {
 
 
 /* Footer Styles */
+.btn {
+    max-width: 300px;
+}
+
 .footer {
     background: var(--surface);
     border-top: 1px solid var(--border);
