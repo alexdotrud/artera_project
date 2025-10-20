@@ -26,16 +26,7 @@ def bag_contents(request):
                     'artwork': artwork,
                     'size': size,
                 })
-        else:
-            # No sizes
-            total += item_data * artwork.price
-            product_count += item_data
-            bag_items.append({
-                'item_id': item_id,
-                'quantity': item_data,
-                'artwork': artwork,
-            })
-
+    
     # Delivery (optional – if you’re not using, just ignore)
     if total < getattr(settings, 'FREE_DELIVERY_THRESHOLD', 0):
         delivery = total * Decimal(getattr(settings, 'STANDARD_DELIVERY_PERCENTAGE', 0) / 100)

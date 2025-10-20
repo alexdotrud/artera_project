@@ -289,7 +289,7 @@ header .position-absolute.end-0 {
 }
 
 .arrow-warning {
-    border-bottom: 8px solid #ffc107;
+    border-bottom: 8px solid #aeaeae;
 }
 
 .arrow-danger {
@@ -483,6 +483,13 @@ fieldset {
 
 .loading-spinner {
     margin: 0;
+}
+
+.summary-image {
+    width: 120px;
+    height: auto;
+    object-fit: cover;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Library */

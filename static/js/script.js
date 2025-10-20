@@ -21,3 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chev.classList.remove('rotate-180');
     });
 });
+
+// Show overlay immediately after clicking "Complete Order"
+const overlay = document.getElementById('loading-overlay');
+overlay.classList.remove('d-none');
+
+// Disable the submit button
+document.getElementById('submit-button').disabled = true;

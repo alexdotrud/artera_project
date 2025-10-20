@@ -1,22 +1,106 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 <div class="container my-5">
-    <div class="row d-flex justify-content-center text-center">
-        <div class="col-12">
-            <h2>Thank you!</h2>
-            <p>Your order <strong>{{ order.order_number }}</strong> was processed successfully.</p>
-            <p>We’ve sent a confirmation email to <strong>{{ order.email }}</strong>.</p>
-        </div>
-        <div class="col-12">
-            <h5>Order Summary</h5>
-            <ul class="list-unstyled">
-                <li>Order Total: ${{ order.order_total|floatformat:2 }}</li>
-                <li>Delivery: ${{ order.delivery_cost|floatformat:2 }}</li>
-                <li><strong>Grand Total: ${{ order.grand_total|floatformat:2 }}</strong></li>
-            </ul>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="text-center mb-4">
+                <h2 class="mb-2">Thank you for your order 🙌</h2>
+            </div>
 
-            <a href="{% url 'all_artworks' %}" class="btn btn-dark">Continue Shopping</a>
-            <a href="{% url 'library' %}" class="btn btn-dark">View Order History</a>
+            <!-- Order Card -->
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Header -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+                        <div>
+                            <h5 class="mb-1">Order Summary</h5>
+                            <small class="text-muted">Placed by {{ order.full_name }}</small>
+                        </div>
+                        <div class="text-md-end mt-3 mt-md-0">
+                            <small class="text-muted d-block">Order Number</small>
+                            <span class="fw-semibold">{{ order.order_number }}</span>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Line Items -->
+                    <div class="mb-4">
+                        {% for li in order.lineitems.all %}
+                        <div class="row align-items-center gy-2 py-2">
+                            <div class="col-7">
+                                {% with art=li.artwork %}
+                                {% if art.image and art.image.url %}
+                                <img class="summary-image" src="{{ art.image.url }}" alt="{{ art.name }}">
+                                {% elif art.image_url %}
+                                <img class="summary-image" src="{{ art.image_url }}" alt="{{ art.name }}">
+                                {% else %}
+                                <img class="summary-image" src="{% static 'images/no-image.jpg' %}"
+                                    alt="{{ art.name }}">
+                                {% endif %}
+                                {% endwith %}
+                                <div class="fw-semibold pt-2">{{ li.artwork.name }}</div>
+                                <div class="text-muted small">
+                                    Size: {% if li.size %}{{ li.size|upper }}{% else %}N/A{% endif %}
+                                    • Qty: {{ li.quantity }}
+                                </div>
+                            </div>
+                            <div class="col-5 text-end">
+                                <div class="text-muted small">Subtotal</div>
+                                <div class="fw-semibold">
+                                    ${{ li.lineitem_total|floatformat:2 }}
+                                </div>
+                            </div>
+                        </div>
+                        {% if not forloop.last %}
+                        <hr class="my-2">{% endif %}
+                        {% empty %}
+                        <p class="text-muted">No items found on this order.</p>
+                        {% endfor %}
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Totals -->
+                    <div class="row">
+                        <div class="col-7 col-md-8"></div>
+                        <div class="col-5 col-md-4">
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Order Total</span>
+                                <span>${{ order.order_total|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Delivery</span>
+                                <span>${{ order.delivery_cost|floatformat:2 }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <span class="fw-semibold">Grand Total</span>
+                                <span class="fw-semibold">${{ order.grand_total|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="mt-4">
+                        <h6 class="mb-2">Delivery Address</h6>
+                        <div class="text-muted small">
+                            <div>{{ order.street_address1 }}</div>
+                            <div>{{ order.postcode }} {{ order.town_or_city }}</div>
+                            <div>{{ order.country }}</div>
+                            <div>Phone: {{ order.phone_number }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-4 d-flex gap-2">
+                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Continue shopping</a>
+                        <a href="{% url 'library' %}" class="btn btn-outline-dark">View your library</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
