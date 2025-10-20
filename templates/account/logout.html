@@ -11,8 +11,10 @@
 
     <form method="post" action="{% url 'account_logout' %}">
       {% csrf_token %}
-      <button type="submit" class="btn btn-danger px-4 me-2">{% trans "Yes, log me out" %}</button>
-      <a href="{% url 'home' %}" class="btn btn-outline-dark px-4">{% trans "No, keep me logged in" %}</a>
+      <div class="d-flex justify-content-center g-2">
+        <button type="submit" class="btn btn-danger px-4 me-2">{% trans "Yes, log me out" %}</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-dark px-4">{% trans "No, keep me logged in" %}</a>
+      </div>
     </form>
   </div>
 </div>

@@ -495,7 +495,6 @@ fieldset {
 .services-card {
     height: auto;
     display: block;
-    background-color: rgba(255, 255, 255, 0.406);
 }
 
 .req-image {
@@ -512,7 +511,17 @@ fieldset {
     height: auto;
 }
 
-/* Offer Request */
+/* Offer Request/ Offer Success */
+
+.services {
+    min-height: 85vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .img-sample {
     padding: 0.65rem 0.85rem;
     border: 1px solid #ccc;
@@ -578,7 +587,6 @@ fieldset {
 /* Custom Button/Link/Icon Styles */
 .btn {
     max-width: 300px;
-    display: block;
 }
 
 .btn-dark {
