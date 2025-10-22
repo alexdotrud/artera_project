@@ -100,6 +100,11 @@
                             <td class="text-end">
                                 <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
                                     data-bs-target="#req{{ r.id }}" aria-expanded="false">Details</button>
+                                <form class="d-inline" method="post" action=""
+                                    onsubmit="return confirm('Delete this request?');">
+                                    {% csrf_token %}
+                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         <tr class="collapse" id="req{{ r.id }}">
@@ -161,7 +166,12 @@
                             <td>{{ o.email|default:o.user }}</td>
                             <td>{{ o.created_at|date:"Y-m-d H:i" }}</td>
                             <td class="text-end">
-                                <a href="" class="btn btn-sm btn-outline-dark">View</a>
+                                <a href="" class="btn btn-sm btn-outline-dark">details</a>
+                                <form class="d-inline" method="post" action=""
+                                    onsubmit="return confirm('Delete this request?');">
+                                    {% csrf_token %}
+                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         {% empty %}
@@ -176,9 +186,5 @@
         </div>
     </div>
 </div>
-
-</div>
-</div>
-
 
 {% endblock %}
