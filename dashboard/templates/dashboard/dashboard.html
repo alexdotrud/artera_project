@@ -54,6 +54,7 @@
     </table>
 </div>
 
+<!--Requests-->
 <div class="col-12">
     <div class="card">
         <div class="card-body">
@@ -128,6 +129,56 @@
     </div>
 </div>
 
+<!-- Offers -->
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Offers</h5>
+            </div>
+            <form class="row g-2 mb-3" method="get">
+                <div class="col-sm-6 col-md-4">
+                    <input class="form-control" name="qo" placeholder="Search…" value="{{ q_off|default:'' }}">
+                </div>
+                <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>From</th>
+                            <th>Created</th>
+                            <th class="text-end"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for o in offers %}
+                        <tr>
+                            <td>{{ o.id }}</td>
+                            <td class="truncate" style="max-width:380px">{{ o.title }}</td>
+                            <td>{{ o.email|default:o.user }}</td>
+                            <td>{{ o.created_at|date:"Y-m-d H:i" }}</td>
+                            <td class="text-end">
+                                <a href="" class="btn btn-sm btn-outline-dark">View</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-muted">No offers.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
 
 
 {% endblock %}
