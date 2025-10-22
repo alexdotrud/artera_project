@@ -14,9 +14,10 @@ class ArtworkForm(forms.ModelForm):
         }
 
 class StatusForm(forms.Form):
-    status = forms.ChoiceField(choices=[
+    STATUS_CHOICES = [
         ("new", "New"),
         ("in_review","In review"),
         ("accepted","Accepted"),
         ("rejected","Rejected"),
-    ])
+    ]
+    status = forms.ChoiceField(choices=STATUS_CHOICES)
