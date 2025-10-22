@@ -86,8 +86,8 @@
                                     </div>
                                 </form>
                                 <div class="bag-actions d-flex justify-content-evently gap-4 mt-3">
-                                    <a class="update-link text-info">Update</a>
-                                    <a class="remove-item text-danger" id="remove_{{ it.item_id }}"
+                                    <a class="update-link text-info" role="button">Update</a>
+                                    <a class="remove-item text-danger" role="button" id="remove_{{ it.item_id }}"
                                         data-product_size="{{ it.size|default:'' }}" href="#">Remove</a>
                                 </div>
                             </td>

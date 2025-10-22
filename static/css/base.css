@@ -300,6 +300,10 @@ header .position-absolute.end-0 {
     border-bottom: 8px solid #0d6efd;
 }
 
+.bg-warning {
+    background-color: #9ba2a8e9 !important;
+}
+
 /* Shop Styles */
 
 .shop-cont .card {
@@ -472,17 +476,24 @@ fieldset {
 }
 
 #loading-overlay {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 10000;
+    display: none;
+    display: none;
     position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, .45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1055;
+    top: 0;
+    left: 0;
 }
 
 .loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: 0;
+    height: 100%;
 }
 
 .summary-image {

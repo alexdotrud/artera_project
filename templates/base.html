@@ -212,9 +212,10 @@
         {% block content %}
         {% endblock %}
     </main>
+
     <footer class="footer py-4">
         <p class="mb-1">
-            © {{ now|date:"Y" }} Artera — All rights reserved.
+            © {% now "Y" %} Artera — All rights reserved.
         </p>
         <p class="small mb-0">
             Project made by <strong>Aleksandra Rudenko</strong> |
@@ -222,6 +223,13 @@
             <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
         </p>
     </footer>
+
+    <div id="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+            <p>Processing your payment…</p>
+        </div>
+    </div>
 
     {% block postloadjs %}{% endblock %}
 
