@@ -56,7 +56,7 @@ def artwork_delete(request, pk):
 def request_update_status(request, pk):
     obj = get_object_or_404(ArtworkRequest, pk=pk)
     status = request.POST.get("status")
-    if status in {"new", "in_progress", "accepted", "rejected"}:
+    if status in {"in_progress", "accepted", "rejected"}:
         obj.status = status
         obj.save(update_fields=["status"])
         messages.success(request, f"Request #{obj.pk} → {obj.status}")
@@ -69,4 +69,11 @@ def request_update_status(request, pk):
 def request_delete(request, pk):
     get_object_or_404(ArtworkRequest, pk=pk).delete()
     messages.success(request, f"Request #{pk} deleted.")
+    return redirect("dashboard:dashboard")
+
+@staff_member_required
+@require_POST
+def offer_delete(request, pk):
+    get_object_or_404(Offer, pk=pk).delete()
+    messages.success(request, f"Offer #{pk} deleted.")
     return redirect("dashboard:dashboard")

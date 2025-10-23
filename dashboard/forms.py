@@ -15,7 +15,6 @@ class ArtworkForm(forms.ModelForm):
 
 class StatusForm(forms.Form):
     STATUS_CHOICES = [
-        ("new", "New"),
         ("in_review","In review"),
         ("accepted","Accepted"),
         ("rejected","Rejected"),
