@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
-    
+
     # Artworks actions
     path("artworks/new/", views.artwork_create, name="artwork_create"),
     path("artworks/<int:pk>/edit/", views.artwork_edit, name="artwork_edit"),
@@ -15,6 +15,5 @@ urlpatterns = [
     path("requests/<int:pk>/delete/", views.request_delete, name="request_delete"),
 
     # Offers details (modal/page)
-    path("offers/<int:pk>/", views.offer_detail, name="offer_detail"),
     path("offers/<int:pk>/delete/", views.offer_delete, name="offer_delete"),
 ]

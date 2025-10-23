@@ -28,13 +28,13 @@ def artwork_create(request):
         messages.success(request, "Artwork created.")
     else:
         messages.error(request, "Please fix the errors and try again.")
-    return redirect("dashboard:dashboar")
+    return redirect("dashboard:dashboard")
 
 @staff_member_required
 def artwork_edit(request, pk):
     art = get_object_or_404(Artwork, pk=pk)
     if request.method == "POST":
-        form = ArtworkForm(request.POST, request.FILES)
+        form = ArtworkForm(request.POST, request.FILES, instance=art)
         if form.is_valid():
             form.save()
             messages.success(request, "Artwork updated.")

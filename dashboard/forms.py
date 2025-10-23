@@ -6,7 +6,7 @@ class ArtworkForm(forms.ModelForm):
         model = Artwork
         fields = [
             "name", "price", "sku", "category", "description",
-            "image", "image_url", "is_active"
+            "image", "image_url"
         ]
         widgets = {
             "description": forms.Textarea(attrs={"rows": 5}),
