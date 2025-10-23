@@ -3,8 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.dashboard_operations, name="operations"),
-
+    path("", views.dashboard, name="dashboard"),
+    
     # Artworks actions
     path("artworks/new/", views.artwork_create, name="artwork_create"),
     path("artworks/<int:pk>/edit/", views.artwork_edit, name="artwork_edit"),
