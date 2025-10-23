@@ -50,3 +50,23 @@ def artwork_delete(request, pk):
     get_object_or_404(Artwork, pk=pk).delete()
     messages.success(request, "Artwork deleted.")
     return redirect("dashboard:dashboard")
+
+@staff_member_required
+@require_POST
+def request_update_status(request, pk):
+    obj = get_object_or_404(ArtworkRequest, pk=pk)
+    status = request.POST.get("status")
+    if status in {"new", "in_progress", "accepted", "rejected"}:
+        obj.status = status
+        obj.save(update_fields=["status"])
+        messages.success(request, f"Request #{obj.pk} → {obj.status}")
+    else:
+        messages.error(request, "Invalid status.")
+    return redirect("dashboard:dashboard")
+
+@staff_member_required
+@require_POST
+def request_delete(request, pk):
+    get_object_or_404(ArtworkRequest, pk=pk).delete()
+    messages.success(request, f"Request #{pk} deleted.")
+    return redirect("dashboard:dashboard")
