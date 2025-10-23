@@ -3,188 +3,204 @@
 {% block content %}
 <h1 class="mb-3">Dashboard</h1>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="mb-0">Artworks</h3>
-    <a href="" class="btn btn-dark">Create New Artwork</a>
-</div>
-
-<form class="row g-2 mb-3" method="get">
-    <div class="col-sm-6 col-md-4">
-        <input class="form-control" name="q" placeholder="Search by name or SKU…" value="{{ q|default:'' }}">
-    </div>
-    <div class="col-auto">
-        <button class="btn btn-outline-dark">Search</button>
-    </div>
-</form>
-
-<div class="table-responsive bg-white">
-    <table class="table table-sm align-middle">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>SKU</th>
-                <th>Active</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for a in artworks %}
-            <tr>
-                <td>{{ a.id }}</td>
-                <td>{{ a.name }}</td>
-                <td>$ {{ a.price|floatformat:2 }}</td>
-                <td>{{ a.sku|default:"—" }}</td>
-                <td>{% if a.is_active %}Yes{% else %}<span class="text-muted">No</span>{% endif %}</td>
-                <td class="text-end">
-                    <a class="btn btn-sm btn-outline-dark" href="">Edit</a>
-                    <form class="d-inline" method="post" action="" onsubmit="return confirm('Delete this artwork?');">
-                        {% csrf_token %}
-                        <button class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="text-muted">No artworks found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-<!--Requests-->
-<div class="col-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Requests</h5>
-            </div>
-            <form class="row g-2 mb-3" method="get">
-                <div class="col-sm-6 col-md-4">
-                    <input class="form-control" name="qr" placeholder="Search…" value="{{ q_req|default:'' }}">
+<div class="row g-4">
+    <!-- Artworks -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Artworks</h5>
+                    <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#newArtworkModal">+ New
+                        Artwork</button>
                 </div>
-                <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
-            </form>
-            <div class="table-responsive">
-                <table class="table table-sm align-middle">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for r in requests %}
-                        <tr>
-                            <td>{{ r.id }}</td>
-                            <td>{{ r.title }}</td>
-                            <td>
-                                <form class="d-flex gap-2 align-items-center" method="post" action="">
-                                    {% csrf_token %}
-                                    <select name="status" class="form-select form-select-sm" style="max-width:220px">
-                                        <option value="new" {% if r.status == 'new' %}selected{% endif %}>New</option>
-                                        <option value="in_progress"
-                                            {% if r.status == 'in_progress' %}selected{% endif %}>In progress</option>
-                                        <option value="waiting_customer"
-                                            {% if r.status == 'rejected' %}selected{% endif %}>Rejected</option>
-                                        <option value="done" {% if r.status == 'accepted' %}selected{% endif %}>Accepted
-                                        </option>
-                                    </select>
-                                    <button class="btn btn-dark btn-sm">Save</button>
-                                </form>
-                            </td>
-                            <td class="text-end">
-                                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
-                                    data-bs-target="#req{{ r.id }}" aria-expanded="false">Details</button>
-                                <form class="d-inline" method="post" action=""
-                                    onsubmit="return confirm('Delete this request?');">
-                                    {% csrf_token %}
-                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="collapse" id="req{{ r.id }}">
-                            <td colspan="4">
-                                <div class="p-3 bg-light rounded">
-                                    <div class="mb-2"><strong>Customer:</strong> {{ r.name|default:r.user }} <span
-                                            class="text-muted">{{ r.email }}</span></div>
-                                    <div class="mb-2"><strong>Description:</strong> {{ r.description|linebreaks }}</div>
-                                    {% if r.reference_image %}
-                                    <img src="{{ r.reference_image.url }}" class="img-fluid rounded border" alt="">
-                                    {% endif %}
-                                    <div class="text-muted small mt-2">Created: {{ r.created_at|date:"Y-m-d H:i" }}
+                <form class="row g-2 mb-3" method="get">
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" name="qa" placeholder="Search name or SKU…"
+                            value="{{ q_art|default:'' }}">
+                    </div>
+                    <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>SKU</th>
+                                <th>Active</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in artworks %}
+                            <tr>
+                                <td>{{ a.id }}</td>
+                                <td>{{ a.name }}</td>
+                                <td>SEK {{ a.price|floatformat:2 }}</td>
+                                <td>{{ a.sku|default:"—" }}</td>
+                                <td>{% if a.is_active %}<span
+                                        class="badge text-bg-success badge-status">Yes</span>{% else %}<span
+                                        class="badge text-bg-secondary badge-status">No</span>{% endif %}</td>
+                                <td class="text-end">
+                                    <a href="{% url 'dashboard:artwork_edit' a.id %}"
+                                        class="btn btn-sm btn-outline-dark">Edit</a>
+                                    <form class="d-inline" method="post"
+                                        action="{% url 'dashboard:artwork_delete' a.id %}"
+                                        onsubmit="return confirm('Delete this artwork?');">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-muted">No artworks.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Requests-->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Requests</h5>
+                </div>
+                <form class="row g-2 mb-3" method="get">
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" name="qr" placeholder="Search…" value="{{ q_req|default:'' }}">
+                    </div>
+                    <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in requests %}
+                            <tr>
+                                <td>{{ r.id }}</td>
+                                <td>{{ r.title }}</td>
+                                <td>
+                                    <form class="d-flex gap-2 align-items-center" method="post" action="">
+                                        {% csrf_token %}
+                                        <select name="status" class="form-select form-select-sm"
+                                            style="max-width:220px">
+                                            <option value="new" {% if r.status == 'new' %}selected{% endif %}>New
+                                            </option>
+                                            <option value="in_progress"
+                                                {% if r.status == 'in_progress' %}selected{% endif %}>In progress
+                                            </option>
+                                            <option value="waiting_customer"
+                                                {% if r.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                                            <option value="done" {% if r.status == 'accepted' %}selected{% endif %}>
+                                                Accepted
+                                            </option>
+                                        </select>
+                                        <button class="btn btn-dark btn-sm">Save</button>
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
+                                        data-bs-target="#req{{ r.id }}" aria-expanded="false">Details</button>
+                                    <form class="d-inline" method="post" action=""
+                                        onsubmit="return confirm('Delete this request?');">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="collapse" id="req{{ r.id }}">
+                                <td colspan="4">
+                                    <div class="p-3 bg-light rounded">
+                                        <div class="mb-2"><strong>Customer:</strong> {{ r.name|default:r.user }} <span
+                                                class="text-muted">{{ r.email }}</span></div>
+                                        <div class="mb-2"><strong>Description:</strong> {{ r.description|linebreaks }}
+                                        </div>
+                                        {% if r.reference_image %}
+                                        <img src="{{ r.reference_image.url }}" class="img-fluid rounded border" alt="">
+                                        {% endif %}
+                                        <div class="text-muted small mt-2">Created: {{ r.created_at|date:"Y-m-d H:i" }}
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-muted">No requests.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
-
-<!-- Offers -->
-<div class="col-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Offers</h5>
-            </div>
-            <form class="row g-2 mb-3" method="get">
-                <div class="col-sm-6 col-md-4">
-                    <input class="form-control" name="qo" placeholder="Search…" value="{{ q_off|default:'' }}">
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-muted">No requests.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
-            </form>
-            <div class="table-responsive">
-                <table class="table table-sm align-middle">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>From</th>
-                            <th>Created</th>
-                            <th class="text-end"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for o in offers %}
-                        <tr>
-                            <td>{{ o.id }}</td>
-                            <td class="truncate" style="max-width:380px">{{ o.title }}</td>
-                            <td>{{ o.email|default:o.user }}</td>
-                            <td>{{ o.created_at|date:"Y-m-d H:i" }}</td>
-                            <td class="text-end">
-                                <a href="" class="btn btn-sm btn-outline-dark">details</a>
-                                <form class="d-inline" method="post" action=""
-                                    onsubmit="return confirm('Delete this request?');">
-                                    {% csrf_token %}
-                                    <button class="btn btn-outline-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="text-muted">No offers.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
-</div>
 
-{% endblock %}
+    <!-- Offers -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">Offers</h5>
+                </div>
+                <form class="row g-2 mb-3" method="get">
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" name="qo" placeholder="Search…" value="{{ q_off|default:'' }}">
+                    </div>
+                    <div class="col-auto"><button class="btn btn-outline-dark btn-sm">Search</button></div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>From</th>
+                                <th>Created</th>
+                                <th class="text-end"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for o in offers %}
+                            <tr>
+                                <td>{{ o.id }}</td>
+                                <td class="truncate" style="max-width:380px">{{ o.title }}</td>
+                                <td>{{ o.email|default:o.user }}</td>
+                                <td>{{ o.created_at|date:"Y-m-d H:i" }}</td>
+                                <td class="text-end">
+                                    <a href="" class="btn btn-sm btn-outline-dark">details</a>
+                                    <form class="d-inline" method="post" action=""
+                                        onsubmit="return confirm('Delete this request?');">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-muted">No offers.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
