@@ -28,7 +28,7 @@ def artwork_create(request):
         messages.success(request, "Artwork created.")
     else:
         messages.error(request, "Please fix the errors and try again.")
-    return redirect("dashboard:dashboard")
+    return redirect("dashboard")
 
 @staff_member_required
 def artwork_edit(request, pk):
@@ -38,7 +38,7 @@ def artwork_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Artwork updated.")
-            return redirect("dashboard:dashboard")
+            return redirect("dashboard")
         messages.error(request, "Please fix the errors and try again.")
     else:
         form = ArtworkForm(instance=art)
@@ -49,7 +49,7 @@ def artwork_edit(request, pk):
 def artwork_delete(request, pk):
     get_object_or_404(Artwork, pk=pk).delete()
     messages.success(request, "Artwork deleted.")
-    return redirect("dashboard:dashboard")
+    return redirect("dashboard")
 
 @staff_member_required
 @require_POST
@@ -62,18 +62,18 @@ def request_update_status(request, pk):
         messages.success(request, f"Request #{obj.pk} → {obj.status}")
     else:
         messages.error(request, "Invalid status.")
-    return redirect("dashboard:dashboard")
+    return redirect("dashboard")
 
 @staff_member_required
 @require_POST
 def request_delete(request, pk):
     get_object_or_404(ArtworkRequest, pk=pk).delete()
     messages.success(request, f"Request #{pk} deleted.")
-    return redirect("dashboard:dashboard")
+    return redirect("dashboard")
 
 @staff_member_required
 @require_POST
 def offer_delete(request, pk):
     get_object_or_404(Offer, pk=pk).delete()
     messages.success(request, f"Offer #{pk} deleted.")
-    return redirect("dashboard:dashboard")
+    return redirect("dashboard")
