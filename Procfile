@@ -1,1 +1,1 @@
-web: gunicorn artera_project.wsgi:application
+web: gunicorn artera.wsgi:application
