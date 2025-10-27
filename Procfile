@@ -1,0 +1,1 @@
+web: gunicorn artera_project.wsgi:application
