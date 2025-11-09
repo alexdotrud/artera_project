@@ -328,6 +328,11 @@ header .position-absolute.end-0 {
     background-color: transparent;
 }
 
+.name {
+    font-size: 1.3rem;
+    font-size: xx-large;
+}
+
 /* Profile */
 .avatar-image {
     width: 85px;
