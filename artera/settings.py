@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_countries',
-    'anymail',
     'home',
     'profiles',
     'shop',
@@ -100,9 +99,25 @@ LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 WSGI_APPLICATION = 'artera.wsgi.application'
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Artera <no-reply@example.com>')
+
+if SENDGRID_API_KEY:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = 'apikey'  # literal username required by SendGrid
+    EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL
+else:
+    # Local/dev fallback - print emails to console instead of sending
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
 
 # Database
 #if 'DATABASE_URL' in os.environ:
