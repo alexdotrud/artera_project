@@ -8,11 +8,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Security settings
-DEBUG = True
+DEBUG = os.environ.get("DEBUG") == "True"
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "artera-d6829bf39792.herokuapp.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://artera-d6829bf39792.herokuapp.com",
+    "https://localhost",
+    "https://127.0.0.1",
 ]
 
 SECRET_KEY = os.getenv('SECRET_KEY', '')
@@ -94,6 +100,7 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "/"
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "/"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = '/'
@@ -101,8 +108,13 @@ LOGOUT_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'artera.wsgi.application'
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Artera <no-reply@example.com>')
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL",
+    "Artera <info.artera.store@gmail.com>"
+)
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 if SENDGRID_API_KEY:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -115,8 +127,6 @@ if SENDGRID_API_KEY:
 else:
     # Local/dev fallback - print emails to console instead of sending
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    SERVER_EMAIL = DEFAULT_FROM_EMAIL
-
 
 
 # Database
