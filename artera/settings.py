@@ -15,6 +15,8 @@ ALLOWED_HOSTS = [
     "artera-d6829bf39792.herokuapp.com",
 ]
 
+SECRET_KEY = os.getenv('SECRET_KEY', '')
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,6 +34,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_countries',
+    'anymail',
     'home',
     'profiles',
     'shop',
