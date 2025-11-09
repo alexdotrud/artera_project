@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0;padding:0;background:#f6f7f9;">
+    <div style="max-width:560px;margin:0 auto;padding:24px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+            style="background:#ffffff;border-radius:12px;overflow:hidden">
+            <tr>
+                <td
+                    style="padding:24px 24px 8px 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <h1 style="margin:0 0 8px 0;font-size:20px;line-height:1.3;">Confirm your email</h1>
+                    <p style="margin:0;color:#666;">Hi {{ user_display }},</p>
+                </td>
+            </tr>
+            <tr>
+                <td
+                    style="padding:8px 24px 0 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <p style="margin:0 0 16px 0;">
+                        Thanks for creating an account at <strong>{{ current_site.name }}</strong>.
+                        Click the button to confirm your email address.
+                    </p>
+                    <p style="margin:20px 0;">
+                        <a href="{{ activate_url }}"
+                            style="display:inline-block;padding:12px 18px;background:#111;color:#fff;text-decoration:none;border-radius:8px;">
+                            Confirm email
+                        </a>
+                    </p>
+                    <p style="margin:16px 0;color:#555;font-size:14px;">
+                        Or copy this link into your browser:<br>
+                        <span style="word-break:break-all;">{{ activate_url }}</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td
+                    style="padding:16px 24px 24px 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;">
+                    <hr style="border:none;border-top:1px solid #eee;margin:0 0 12px 0;">
+                    <p style="margin:0;color:#777;font-size:12px;">
+                        If you didn’t request this, you can ignore this email.
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
