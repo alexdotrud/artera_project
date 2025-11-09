@@ -15,15 +15,12 @@
 
     <div class="row">
         <!-- Order Summary -->
-        <div class="col-12 col-lg-6 order-lg-last mb-5 order-summary">
+        <div class="col-12 col-lg-6 order-lg-last mb-5">
             <p class="text-muted">Order Summary ({{ product_count }})</p>
 
             <div class="row">
                 <div class="col-7 offset-2">
                     <p class="mb-1 mt-0 small text-muted">Item</p>
-                </div>
-                <div class="col-3 text-end">
-                    <p class="mb-1 mt-0 small text-muted">Subtotal</p>
                 </div>
             </div>
 
@@ -45,7 +42,7 @@
                     <p class="my-0 small">
                         Size: {% if it.size %}{{ it.size|upper }}{% else %}N/A{% endif %}
                     </p>
-                    <p class="my-0 small text-muted">Qty: {{ it.quantity }}</p>
+                    <p class="my-0 small text-muted">Qty: 1</p>
                 </div>
                 <div class="col-3 text-end">
                     <p class="my-0 small text-muted">
@@ -57,11 +54,11 @@
 
             <hr class="my-0">
 
-            <div class="row text-black text-end">
-                <div class="col-7 offset-2">
-                    <p class="my-0">Order Total:</p>
+            <div class="row text-end mt-2">
+                <div class="col-7 offset-2 total-text">
+                    <p class="my-0">Subtotal:</p>
                     <p class="my-0">Delivery:</p>
-                    <p class="my-0">Grand Total:</p>
+                    <p class="my-0">Order Total:</p>
                 </div>
                 <div class="col-3">
                     <p class="my-0">${{ total|floatformat:2 }}</p>

@@ -379,10 +379,26 @@ header .position-absolute.end-0 {
     object-fit: contain;
 }
 
+.bag .empty {
+    text-align: center;
+}
+
 .bag .table {
     background: var(--surface);
     border: none;
     overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bag th,
+.bag td {
+    color: var(--primary-color);
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 1rem;
+    border-color: rgb(210, 207, 207);
 }
 
 .bag thead th {
@@ -409,12 +425,12 @@ header .position-absolute.end-0 {
     box-shadow: var(--shadow-sm);
 }
 
-.bag .update-link:hover,
-.bag .update-link:focus {
-    background: rgba(13, 110, 253, .08);
-    border-color: rgba(13, 110, 253, .25);
+.bag .remove-item {
+    color: #dc3545;
     text-decoration: none;
-    box-shadow: var(--shadow-sm);
+    border: none;
+    background: transparent;
+    transition: color 0.2s ease;
 }
 
 .bag .decrement-qty,
@@ -437,6 +453,10 @@ header .position-absolute.end-0 {
 .logo-font {
     text-transform: uppercase;
     letter-spacing: .5px;
+}
+
+.total-text {
+    font-size: 0.8rem;
 }
 
 .fieldset-label {
@@ -680,26 +700,6 @@ i:hover {
 
     .shop-cont .card-img-top {
         min-height: 300px;
-    }
-
-    .bag thead th:nth-child(1),
-    .bag tbody td:nth-child(1) {
-        width: 25%;
-    }
-
-    .bag thead th:nth-child(3),
-    .bag tbody td:nth-child(3) {
-        text-align: left;
-    }
-
-    .bag thead th:nth-child(4),
-    .bag tbody td:nth-child(4) {
-        width: 25%;
-    }
-
-    .bag thead th:nth-child(5),
-    .bag tbody td:nth-child(5) {
-        text-align: left;
     }
 
 }

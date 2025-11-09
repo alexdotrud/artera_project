@@ -1,150 +1,121 @@
 {% extends "base.html" %}
-{% load bag_tools %}
 {% load static %}
 {% block content %}
-<div class="container mb-4 mt-4 bag">
-    <div class="row">
-        <div class="col">
-            <h2 class="mb-4">Shopping Bag</h2>
+<div class="d-flex align-items-center justify-content-center py-5" style="min-height: 75vh;">
+    <div class="container mb-4 bag">
+        <div class="row">
+            <div class="col">
+                <h1 class="mb-4">Shopping Bag</h2>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            {% if bag_items %}
-            <div class="table-responsive table-borderless">
-                <table class="table">
-                    <thead class="text-black">
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Product Info</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Subtotal</th>
-                        </tr>
-                    </thead>
+        <div class="row">
+            <div class="col">
+                {% if bag_items %}
+                <div class="table-responsive table-borderless">
+                    <table class="table rounded mt-2 mb-4">
+                        <thead class="text-black">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Product Info</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        {% for it in bag_items %}
-                        <tr>
-                            <td class="p-3 w-25">
-                                {% if it.artwork.image %}
-                                <a href="{% url 'detail' it.artwork.id %}">
-                                    <img class="img-fluid" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
-                                </a>
-                                {% elif it.artwork.image_url %}
-                                <a href="{% url 'detail' it.artwork.id %}">
-                                    <img class="img-fluid" src="{{ it.artwork.image_url }}" alt="{{ it.artwork.name }}">
-                                </a>
-                                {% else %}
-                                <img class="img-fluid" src="{% static 'images/no-image.jpg' %}"
-                                    alt="{{ it.artwork.name }}">
-                                {% endif %}
-                            </td>
-
-                            <td class="py-3">
-                                <p class="my-0">
-                                    <a href="{% url 'detail' it.artwork.id %}" class="text-decoration-none text-dark">
-                                        {{ it.artwork.name }}
+                        <tbody>
+                            {% for it in bag_items %}
+                            <tr>
+                                <td class="p-3 w-25">
+                                    {% if it.artwork.image %}
+                                    <a href="{% url 'detail' it.artwork.id %}">
+                                        <img class="img-fluid" src="{{ it.artwork.image.url }}"
+                                            alt="{{ it.artwork.name }}">
                                     </a>
-                                </p>
-                                <p class="my-0"><strong>Size:</strong> {{ it.size|upper }}</p>
-                                {% if it.artwork.sku %}
-                                <p class="my-0 small text-muted">SKU: {{ it.artwork.sku|upper }}</p>
-                                {% endif %}
-                            </td>
+                                    {% elif it.artwork.image_url %}
+                                    <a href="{% url 'detail' it.artwork.id %}">
+                                        <img class="img-fluid" src="{{ it.artwork.image_url }}"
+                                            alt="{{ it.artwork.name }}">
+                                    </a>
+                                    {% else %}
+                                    <img class="img-fluid" src="{% static 'images/no-image.jpg' %}"
+                                        alt="{{ it.artwork.name }}">
+                                    {% endif %}
+                                </td>
 
-                            <td class="py-3">
-                                <p class="my-0">${{ it.artwork.price|floatformat:2  }}</p>
-                            </td>
+                                <!-- Product info -->
+                                <td class="py-3">
+                                    <p class="my-0">
+                                        <a href="{% url 'detail' it.artwork.id %}"
+                                            class="text-decoration-none text-dark">
+                                            {{ it.artwork.name }}
+                                        </a>
+                                    </p>
+                                    <p class="my-0"><strong>Size:</strong> {{ it.size|upper }}</p>
+                                    {% if it.artwork.sku %}
+                                    <p class="my-0 small text-muted">SKU: {{ it.artwork.sku|upper }}</p>
+                                    {% endif %}
+                                </td>
 
-                            <td class="py-3 w-25">
-                                <form class="form update-form" method="POST" action="{% url 'adjust_bag' it.item_id %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <button class="decrement-qty btn btn-sm btn-black rounded-0"
-                                                    data-item_id="{{ item.item_id }}"
-                                                    id="decrement-qty_{{ item.item_id }}">
-                                                    <span><i class="fas fa-minus fa-sm"></i></span>
-                                                </button>
-                                            </div>
-                                            <input class="form-control form-control-sm qty_input" type="number"
-                                                name="quantity" value="{{ it.quantity }}" min="1" max="99"
-                                                data-item_id="{{ it.item_id }}" id="id_qty_{{ it.item_id }}">
-                                            <div class="input-group-append">
-                                                <button class="increment-qty btn btn-sm btn-black rounded-0"
-                                                    data-item_id="{{ it.item_id }}" id="increment-qty_{{ it.item_id }}">
-                                                    <span><i class="fas fa-plus fa-sm"></i></span>
-                                                </button>
-                                            </div>
-                                            {% if item.size %}
-                                            <input type="hidden" name="product_size" value="{{ item.size }}">
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="bag-actions d-flex justify-content-evently gap-4 mt-3">
-                                    <a class="update-link text-info" role="button">Update</a>
-                                    <a class="remove-item text-danger" role="button" id="remove_{{ it.item_id }}"
-                                        data-product_size="{{ it.size|default:'' }}" href="#">Remove</a>
-                                </div>
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0"> ${{ it.artwork.price|calc_subtotal:it.quantity|floatformat:2  }}
-                                </p>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                                <!-- Unit price -->
+                                <td class="py-3">
+                                    <p>
+                                        ${{ it.price|default:it.artwork.price|floatformat:2 }}
+                                    </p>
+                                </td>
+                                <!-- Quantity (fixed to 1) + remove -->
+                                <td class="py-3">
+                                    <p class="mb-1">1</p>
+                                </td>
+                                <td class="py-3">
+                                    <form method="post" action="{% url 'remove_from_bag' it.item_id %}">
+                                        {% csrf_token %}
+                                        {% if it.size %}
+                                        <input type="hidden" name="product_size" value="{{ it.size }}">
+                                        {% endif %}
+                                        <button type="submit" class="btn remove-item">Remove</button>
+                                    </form>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
 
-                    <tfoot>
-                        <tr>
-                            <th colspan="4" class="text-end">Total:</th>
-                            <th class="text-end">${{ total }}</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                        <tfoot class="align-bottom">
+                            <tr>
+                                <th colspan="3"></th>
+                                <th class="text-end pt-4">Delivery:</th>
+                                <th class="text-start pt-4">
+                                    {% if delivery > 0 %}
+                                    ${{ delivery|floatformat:2 }}
+                                    {% else %}
+                                    <span class="text-success">Free</span>
+                                    {% endif %}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="3"></th>
+                                <th class="text-end pb-3 fw-bold">Total:</th>
+                                <th class="text-start pb-3 fw-bold">
+                                    ${{ grand_total|default:total|floatformat:2 }}
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex gap-2 ">
+                    <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Keep Shopping</a>
+                    <a href="{% url 'checkout' %}" class="btn btn-dark">Secure Checkout</a>
+                </div>
+                {% else %}
+                <div class="empty">
+                    <p class="lead mb-4">Your bag is empty.</p>
+                    <a href="{% url 'all_artworks' %}" class="btn btn-dark">Shop Now</a>
+                </div>
+                {% endif %}
             </div>
-
-            <div class="d-flex gap-2">
-                <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Keep Shopping</a>
-                <a href="{% url 'checkout' %}" class="btn btn-dark">Secure Checkout</a>
-            </div>
-
-            {% else %}
-            <p class="lead mb-4">Your bag is empty.</p>
-            <a href="{% url 'all_artworks' %}" class="btn btn-dark">Shop Now</a>
-            {% endif %}
         </div>
     </div>
 </div>
-{% include "shop/includes/quantity_input_script.html" %}
-
-<script type="text/javascript">
-    // Update quantity on click
-    $('.update-link').click(function (e) {
-        e.preventDefault();
-        var $form = $(this).closest('td').find('.update-form').first();
-        if ($form.length) $form.trigger('submit');
-    })
-
-    // Remove item and reload on click
-    $('.remove-item').click(function (e) {
-        e.preventDefault();
-        var csrfToken = "{{ csrf_token }}";
-        var itemId = $(this).attr('id').split('remove_')[1];
-        var size = $(this).data('product_size');
-        var url = `/bag/remove/${itemId}/`;
-        var data = {
-            'csrfmiddlewaretoken': csrfToken,
-            'product_size': size
-        };
-        $.post(url, data)
-            .done(function () {
-                location.reload();
-            });
-    })
-</script>
 {% endblock %}
