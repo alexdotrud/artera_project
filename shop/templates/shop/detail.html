@@ -11,8 +11,8 @@
 
 {% block content %}
 <div class="overlay"></div>
-<div class="container-fluid">
-    <div class="row align-items-center">
+<div class="container-fluid d-flex align-items-center justify-content-center py-5" style="min-height: 75vh;">
+    <div class="row align-items-center w-100">
         <!-- Image -->
         <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
             <div class="image-container my-5">
@@ -35,7 +35,7 @@
 
         <!-- Details -->
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="product-details-container mb-2 mt-md-5">
+            <div class="product-details-container mt-md-5">
                 <p class="mb-2 name">{{ artwork.name }}</p>
 
                 <!-- Category -->
@@ -55,7 +55,7 @@
                     <div class="form-row">
 
                         <!-- Size select -->
-                        <div class="mb-3">
+                        <div class="mb-1">
                             <label for="id_product_size" class="form-label fw-bold">Size:</label>
                             <div class="input-group w-75">
                                 <select class="form-select rounded" name="product_size" id="id_product_size">
