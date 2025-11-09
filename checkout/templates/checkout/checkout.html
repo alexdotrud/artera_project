@@ -56,14 +56,14 @@
 
             <div class="row text-end mt-2">
                 <div class="col-7 offset-2 total-text">
-                    <p class="my-0">Subtotal:</p>
-                    <p class="my-0">Delivery:</p>
-                    <p class="my-0">Order Total:</p>
+                    <p class="my-0 text-muted">Subtotal:</p>
+                    <p class="my-0 text-muted">Delivery:</p>
+                    <p class="my-0 fw-semibold">Order Total:</p>
                 </div>
                 <div class="col-3">
-                    <p class="my-0">${{ total|floatformat:2 }}</p>
-                    <p class="my-0">${{ delivery|floatformat:2 }}</p>
-                    <p class="my-0"><strong>${{ grand_total|floatformat:2 }}</strong></p>
+                    <p class="my-0 text-muted">${{ total|floatformat:2 }}</p>
+                    <p class="my-0 text-muted">${{ delivery|floatformat:2 }}</p>
+                    <p class="my-0 fw-semibold"><strong>${{ grand_total|floatformat:2 }}</strong></p>
                 </div>
             </div>
         </div>
@@ -93,9 +93,10 @@
 
                     <div class="form-check form-check-inline float-end me-0">
                         {% if user.is_authenticated %}
-                        <label class="form-check-label" for="id-save-info">Save this delivery information to my
+                        <label class="form-check-label" for="id-save-info">Save this delivery
+                            information to my
                             profile</label>
-                        <input class="form-check-input ms-2 me-0" type="checkbox" id="id-save-info" name="save-info"
+                        <input class="form-check-input ms-2 me-0" type="checkbox" id="id-save-info" name="save_info"
                             checked>
                         {% else %}
                         <label class="form-check-label" for="id-save-info">
@@ -130,7 +131,7 @@
                         <span class="icon"><i class="fas fa-lock"></i></span>
                     </button>
 
-                    <p class="small text-danger">
+                    <p class="small text-danger mt-2">
                         <span class="icon"><i class="fas fa-exclamation-circle"></i></span>
                         <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
                     </p>

@@ -45,11 +45,12 @@
                                 <div class="fw-semibold pt-2">{{ li.artwork.name }}</div>
                                 <div class="text-muted small">
                                     Size: {% if li.size %}{{ li.size|upper }}{% else %}N/A{% endif %}
-                                    • Qty: {{ li.quantity }}
+                                </div>
+                                <div class="text-muted small">
+                                    Qty: 1
                                 </div>
                             </div>
                             <div class="col-5 text-end">
-                                <div class="text-muted small">Subtotal</div>
                                 <div class="fw-semibold">
                                     ${{ li.lineitem_total|floatformat:2 }}
                                 </div>
@@ -69,7 +70,7 @@
                         <div class="col-7 col-md-8"></div>
                         <div class="col-5 col-md-4">
                             <div class="d-flex justify-content-between">
-                                <span class="text-muted">Order Total</span>
+                                <span class="text-muted">Subtotal</span>
                                 <span>${{ order.order_total|floatformat:2 }}</span>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -77,7 +78,7 @@
                                 <span>${{ order.delivery_cost|floatformat:2 }}</span>
                             </div>
                             <div class="d-flex justify-content-between mt-2">
-                                <span class="fw-semibold">Grand Total</span>
+                                <span class="fw-semibold">Order Total</span>
                                 <span class="fw-semibold">${{ order.grand_total|floatformat:2 }}</span>
                             </div>
                         </div>
@@ -89,7 +90,7 @@
                         <div class="text-muted small">
                             <div>{{ order.street_address1 }}</div>
                             <div>{{ order.postcode }} {{ order.town_or_city }}</div>
-                            <div>{{ order.country }}</div>
+                            <div>{{ order.country.name }}</div>
                             <div>Phone: {{ order.phone_number }}</div>
                         </div>
                     </div>

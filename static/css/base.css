@@ -384,7 +384,7 @@ header .position-absolute.end-0 {
 }
 
 .bag .table {
-    background: var(--surface);
+    background-color: rgba(224, 224, 224, 0.189);
     border: none;
     overflow: hidden;
     width: 100%;

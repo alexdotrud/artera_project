@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
+from django_countries import countries
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
 
 from .forms import OrderForm
 from .models import Order, OrderItem
@@ -12,6 +16,31 @@ from profiles.models import Profile
 import stripe
 import json
 
+
+def send_order_confirmation(order):
+    """Send a confirmation email for a completed order."""
+    site = Site.objects.get_current()
+    ctx = {
+        "order": order,
+        "site": site,
+    }
+
+    subject = render_to_string("checkout/email/confirmation_subject.txt", ctx).strip()
+    text_body = render_to_string("checkout/email/confirmation_body.txt", ctx)
+    try:
+        html_body = render_to_string("checkout/email/confirmation_body.html", ctx)
+    except Exception:
+        html_body = None
+
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=text_body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[order.email],
+    )
+    if html_body:
+        email.attach_alternative(html_body, "text/html")
+    email.send(fail_silently=False)
 
 @require_POST
 def cache_checkout_data(request):
@@ -28,6 +57,17 @@ def cache_checkout_data(request):
         messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
         return HttpResponse(content=str(e), status=400)
 
+def _country_to_code(country: str) -> str:
+    """Convert a country name or code to a normalized ISO country code."""
+    if not country:
+        return ''
+    country = str(country).strip()
+    if len(country) == 2 and country.isalpha():
+        return country.upper()
+    for code, name in countries:
+        if name.lower() == country.lower():
+            return code
+    return country
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
@@ -67,14 +107,23 @@ def checkout(request):
                         )
                         order_item.save()
                     else:
-                        for size, quantity in item_data['items_by_size'].items():
+                        sizes_dict = {}
+                        if isinstance(item_data, dict):
+                            if 'sizes' in item_data and isinstance(item_data['sizes'], dict):
+                                sizes_dict = item_data['sizes']
+                            elif 'items_by_size' in item_data and isinstance(item_data['items_by_size'], dict):
+                                sizes_dict = item_data['items_by_size']
+
+                        for size, quantity in sizes_dict.items():
+                            qty = int(quantity) if quantity else 1
                             order_item = OrderItem(
-                                order=order,
-                                artwork=artwork,
-                                quantity=quantity,
-                                size=size,
-                            )
+                            order=order,
+                            artwork=artwork,
+                            quantity=qty,
+                            size=size,
+                        )
                             order_item.save()
+
                 except Artwork.DoesNotExist:
                     messages.error(request, (
                         "One of the artworks in your bag wasn't found in our database. "
@@ -83,18 +132,20 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
                 
-            if request.user.is_authenticated and 'save-info' in request.POST:
+            if request.user.is_authenticated and 'save_info' in request.POST:
                 profile, _ = Profile.objects.get_or_create(user=request.user)
-                profile.full_name = request.POST.get('full_name', '').strip()
-                profile.phone_number = request.POST.get('phone_number', '').strip()
-                profile.address_line_delivery = request.POST.get('street_address1', '').strip()
-                profile.address_line_living = request.POST.get('street_address2', '').strip()
-                profile.city = request.POST.get('town_or_city', '').strip()
-                profile.postal_code = request.POST.get('postcode', '').strip()
-                profile.country = request.POST.get('country', '').strip()
+                cd = order_form.cleaned_data
+                profile.full_name = cd.get('full_name', '') or ''
+                profile.phone_number = cd.get('phone_number', '') or ''
+                profile.address_line_delivery = cd.get('street_address1', '') or ''
+                profile.address_line_living = cd.get('street_address2', '') or ''
+                profile.city = cd.get('town_or_city', '') or ''
+                profile.postal_code = cd.get('postcode', '') or ''
+                c = cd.get('country')
+                profile.country = getattr(c, 'code', '') or '' 
                 profile.save()
 
-            request.session['save_info'] = 'save-info' in request.POST
+            request.session['save_info'] = 'save_info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. Please double check your information.')
@@ -116,16 +167,17 @@ def checkout(request):
         initial = {}
         if request.user.is_authenticated:
             profile, _ = Profile.objects.get_or_create(user=request.user)
+            country_code = _country_to_code(profile.country)
             initial = {
                 'full_name': profile.full_name or '',
                 'email': request.user.email or '',
                 'phone_number': profile.phone_number or '',
-                'country': profile.country or '',
+                'country': country_code,
                 'postcode': profile.postal_code or '',
                 'town_or_city': profile.city or '',
                 'street_address1': profile.address_line_delivery or '',
                 'street_address2': profile.address_line_living or '',
-                'county': profile.country or '',
+                'county': '', 
             }
         order_form = OrderForm(initial=initial)
 
@@ -148,8 +200,7 @@ def checkout_success(request, order_number):
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
+    messages.success(request, f'Order successfully processed! A confirmation \
         email will be sent to {order.email}.')
 
     if 'bag' in request.session:
