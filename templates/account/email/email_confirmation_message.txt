@@ -1,0 +1,10 @@
+Hi {{ user.get_full_name|default:user.email }},
+
+We received a request to link this email address to your Artera account.
+
+Confirm your new email:
+{{ activate_url }}
+
+If you didn’t request this, you can ignore this email.
+
+— Artera · {{ current_site.name }}
