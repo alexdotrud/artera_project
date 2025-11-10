@@ -1,0 +1,26 @@
+Hi {{ order.full_name }},
+
+Thanks for your purchase at Artera.
+
+Order number: {{ order.order_number }}
+Date: {{ order.date|date:"Y-m-d H:i" }}
+
+Items:
+{% for li in order.lineitems.all %}
+- {{ li.artwork.name }}{% if li.size %} ({{ li.size|upper }}){% endif %} — Qty: {{ li.quantity }} — ${{ li.lineitem_total|floatformat:2 }}
+{% endfor %}
+
+Subtotal: ${{ order.order_total|floatformat:2 }}
+Delivery: ${{ order.delivery_cost|floatformat:2 }}
+Total: ${{ order.grand_total|floatformat:2 }}
+
+Delivery address:
+{{ order.street_address1 }}
+{% if order.street_address2 %}{{ order.street_address2 }}{% endif %}
+{{ order.postcode }} {{ order.town_or_city }}
+{% if order.county %}{{ order.county }}{% endif %}
+{{ order.country.name }}
+
+If something looks off, reply to this email.
+
+— Artera

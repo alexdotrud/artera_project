@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0;padding:0;background:#f6f7f9;">
+    <div style="max-width:560px;margin:0 auto;padding:24px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+            style="background:#ffffff;border-radius:12px;overflow:hidden">
+            <!-- Header -->
+            <tr>
+                <td
+                    style="padding:24px 24px 8px 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <h1 style="margin:0 0 8px 0;font-size:20px;line-height:1.3;">Order confirmed</h1>
+                    <p style="margin:0;color:#666;">Hi {{ order.full_name }}, thanks for your purchase at
+                        <strong>{{ site.name }}</strong>.</p>
+                    <p style="margin:6px 0 0 0;color:#666;font-size:13px;">Order
+                        <strong>{{ order.order_number }}</strong> • {{ order.date|date:"Y-m-d H:i" }}</p>
+                </td>
+            </tr>
+
+            <!-- Items -->
+            <tr>
+                <td
+                    style="padding:8px 24px 0 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <p style="margin:0 0 10px 0;font-weight:600;">Items</p>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                        style="border-collapse:collapse;">
+                        {% for li in order.lineitems.all %}
+                        <tr>
+                            <td style="padding:8px 0;width:64px;vertical-align:top;">
+                                {% with art=li.artwork %}
+                                {% if art.image and art.image.url %}
+                                <img src="{{ art.image.url }}" alt="{{ art.name }}" width="48" height="48"
+                                    style="display:block;border-radius:8px;object-fit:cover;">
+                                {% elif art.image_url %}
+                                <img src="{{ art.image_url }}" alt="{{ art.name }}" width="48" height="48"
+                                    style="display:block;border-radius:8px;object-fit:cover;">
+                                {% else %}
+                                <img src="http://{{ site.domain }}/static/images/no-image.jpg" alt="{{ art.name }}"
+                                    width="48" height="48" style="display:block;border-radius:8px;object-fit:cover;">
+                                {% endif %}
+                                {% endwith %}
+                            </td>
+                            <td style="padding:8px 8px;vertical-align:middle;">
+                                <div style="font-size:14px;font-weight:600;margin:0 0 3px 0;">{{ li.artwork.name }}
+                                </div>
+                                <div style="font-size:12px;color:#666;margin:0;">
+                                    {% if li.size %}Size: {{ li.size|upper }} • {% endif %}Qty: {{ li.quantity }}
+                                </div>
+                            </td>
+                            <td style="padding:8px 0;vertical-align:middle;text-align:right;white-space:nowrap;">
+                                <div style="font-size:14px;font-weight:600;">${{ li.lineitem_total|floatformat:2 }}
+                                </div>
+                            </td>
+                        </tr>
+                        {% if not forloop.last %}
+                        <tr>
+                            <td colspan="3" style="padding:0;">
+                                <hr style="border:none;border-top:1px solid #eee;margin:0;">
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Totals -->
+            <tr>
+                <td
+                    style="padding:8px 24px 0 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="width:60%"></td>
+                            <td style="width:40%">
+                                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="padding:4px 0;color:#666;font-size:13px;">Subtotal</td>
+                                        <td style="padding:4px 0;text-align:right;font-size:13px;">
+                                            ${{ order.order_total|floatformat:2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:4px 0;color:#666;font-size:13px;">Delivery</td>
+                                        <td style="padding:4px 0;text-align:right;font-size:13px;">
+                                            {% if order.delivery_cost > 0 %}${{ order.delivery_cost|floatformat:2 }}{% else %}Free{% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:6px 0;font-weight:700;">Total</td>
+                                        <td style="padding:6px 0;text-align:right;font-weight:700;">
+                                            ${{ order.grand_total|floatformat:2 }}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Library CTA -->
+            <tr>
+                <td
+                    style="padding:16px 24px 0 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <p style="margin:0 0 10px 0;">Your purchases are available in your library.</p>
+                    <p style="margin:12px 0 0 0;">
+                        <a href="http://{{ site.domain }}{% url 'library' %}"
+                            style="display:inline-block;padding:12px 18px;background:#111;color:#fff;text-decoration:none;border-radius:8px;">
+                            Go to your Library
+                        </a>
+                    </p>
+                </td>
+            </tr>
+
+            <!-- Address -->
+            <tr>
+                <td
+                    style="padding:16px 24px 0 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;">
+                    <p style="margin:0 0 8px 0;font-weight:600;">Delivery address</p>
+                    <p style="margin:0;color:#333;font-size:13px;line-height:1.6;">
+                        {{ order.street_address1 }}<br>
+                        {% if order.street_address2 %}{{ order.street_address2 }}<br>{% endif %}
+                        {{ order.postcode }} {{ order.town_or_city }}{% if order.county %},
+                        {{ order.county }}{% endif %}<br>
+                        {{ order.country.name }}{% if order.phone_number %}<br>Phone:
+                        {{ order.phone_number }}{% endif %}
+                    </p>
+                </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+                <td
+                    style="padding:16px 24px 24px 24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;">
+                    <hr style="border:none;border-top:1px solid #eee;margin:0 0 12px 0;">
+                    <p style="margin:0;color:#777;font-size:12px;">
+                        If something looks off, just reply to this email.
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
