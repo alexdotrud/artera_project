@@ -1,6 +1,7 @@
 from django.db import models
 from decimal import Decimal
 from django.utils import timezone
+from cloudinary.models import CloudinaryField
 
 
 SIZE_CHOICES = [
@@ -40,6 +41,13 @@ class Artwork(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+    digital_file = CloudinaryField(
+        "digital",
+        resource_type="raw",
+        blank=True,
+        null=True,
+        folder="artera/downloads",
+    )
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
