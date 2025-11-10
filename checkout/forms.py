@@ -11,6 +11,10 @@ class OrderForm(forms.ModelForm):
             'town_or_city', 'postcode', 'country',
             'county',
         )
+        labels = {
+            'street_address1': 'Delivery address',
+            'street_address2': 'Spare address',
+        }
 
     def __init__(self, *args, **kwargs):
         """
@@ -25,22 +29,22 @@ class OrderForm(forms.ModelForm):
             'phone_number': 'Phone Number',
             'postcode': 'Postal Code',
             'town_or_city': 'Town or City',
-            'street_address1': 'Street Address 1',
-            'street_address2': 'Street Address 2',
+            'street_address1': 'Delivery Adress',
+            'street_address2': 'Spare Adress',
             'county': 'County, State or Locality',
         }
 
         # autofocus on first field
         self.fields['full_name'].widget.attrs['autofocus'] = True
 
-        for field_name, field in self.fields.items():
-            # Country usually uses a select; skip placeholder to avoid odd UX
-            if field_name != 'country':
-                placeholder = placeholders.get(field_name, '')
-                if field.required and placeholder:
-                    placeholder = f'{placeholder} *'
-                if placeholder:
-                    field.widget.attrs['placeholder'] = placeholder
+        for name, field in self.fields.items():
+            # set placeholder (skip country select)
+            ph = placeholders.get(name, '')
+            if ph and name != 'country':
+                field.widget.attrs['placeholder'] = ph
 
+            # styling
             field.widget.attrs['class'] = 'stripe-style-input'
-            field.label = False
+
+            # label (add * only here)
+            label = field.label or name.replace('_', ' ').title()
