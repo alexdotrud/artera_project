@@ -121,6 +121,7 @@ def library(request):
 
 @login_required
 def download_artwork(request, order_number, lineitem_id):
+    """Download digital artwork file for an order line item."""
     # Order must belong to the logged-in user (by email)
     order = get_object_or_404(Order, order_number=order_number)
     if not request.user.email or order.email.lower() != request.user.email.lower():
@@ -137,6 +138,7 @@ def download_artwork(request, order_number, lineitem_id):
     return redirect("library")
 
 def force_download(url: str) -> str:
+    """Modify Cloudinary URL to force download."""
     if url and "res.cloudinary.com" in url and "/upload/" in url:
         return url.replace("/upload/", "/upload/fl_attachment/")
     return url
