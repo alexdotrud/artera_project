@@ -1,14 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
-from cloudinary.utils import cloudinary_url
-import time
 from django.db import transaction
 from django.db.models import Prefetch, Count
 from django.contrib import messages
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseBadRequest
 import cloudinary.uploader
+
 
 from checkout.models import OrderItem, Order
 from .forms import ProfileForm
@@ -127,19 +126,17 @@ def download_artwork(request, order_number, lineitem_id):
     if not request.user.email or order.email.lower() != request.user.email.lower():
         return HttpResponseForbidden("Not allowed")
 
-    li = get_object_or_404(OrderItem, id=lineitem_id, order=order)
+    li = get_object_or_404(OrderItem, pk=lineitem_id, order=order)
     art = li.artwork
 
-    if not getattr(art, "digital_file", None):
-        # Nothing attached yet; send back to library
-        return redirect("library")
+    url = art.get_download_url()
+    if url:
+        return redirect(force_download(url))
 
-    # URL for downloading
-    url, _ = cloudinary_url(
-        art.digital_file.public_id,
-        resource_type="raw",
-        secure=True,
-        sign_url=True,
-        flags="attachment:Artera-{}.pdf".format(art.name.replace(" ", "-")),
-    )
-    return redirect(url)
+    messages.error(request, "The requested artwork is not available for download.")
+    return redirect("library")
+
+def force_download(url: str) -> str:
+    if url and "res.cloudinary.com" in url and "/upload/" in url:
+        return url.replace("/upload/", "/upload/fl_attachment/")
+    return url

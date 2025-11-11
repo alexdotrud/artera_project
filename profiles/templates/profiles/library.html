@@ -53,6 +53,15 @@
                         <dd class="col-8 col-sm-9">{{ order.order_number }}</dd>
                     </dl>
                 </div>
+                <div class="col-12 col-md-8">
+                    {% if it.artwork.get_download_url %}
+                    <a href="{% url 'download_artwork' order.order_number it.id %}" class="btn btn-dark btn-sm mt-2">
+                        Download
+                    </a>
+                    {% else %}
+                    <span class="badge bg-secondary mt-2">File not attached yet</span>
+                    {% endif %}
+                </div>
             </div>
             {% endfor %}
         </div>
