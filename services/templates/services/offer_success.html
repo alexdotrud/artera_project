@@ -1,79 +1,81 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
             <div class="text-center mb-4">
-                <h2 class="mb-2">Thank you for your order 🙌</h2>
+                <h2 class="mb-2">Thanks for your submission 🙌</h2>
                 <p class="text-muted mb-0">
-                    Order <strong>#{{ order.order_number }}</strong> was processed successfully.
+                    We received your collaboration offer from <strong>{{ offer.full_name }}</strong>.
                 </p>
                 <p class="text-muted">
-                    A confirmation email was sent to <strong>{{ order.email }}</strong>.
+                    We’ll review it and get back to you.
                 </p>
             </div>
 
-            <!-- Order Card -->
+            <!-- Offer summary card -->
             <div class="card shadow-sm border-0 rounded-3">
                 <div class="card-body p-4 p-md-5">
 
-                    <!-- Header -->
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
                         <div>
-                            <h5 class="mb-1">Order Summary</h5>
-                            <small class="text-muted">Placed by {{ order.full_name }}</small>
+                            <h5 class="mb-1">Submission Summary</h5>
+                            <div>
+                                <small class="text-muted">
+                                    Category: {{ offer.category }}
+                                </small>
+                            </div>
+                            <div>
+                                <small class="text-muted">
+                                    Phone: {{ offer.phone_number }}
+                                </small>
+                            </div>
                         </div>
                         <div class="text-md-end mt-3 mt-md-0">
-                            <small class="text-muted d-block">Order Number</small>
-                            <span class="fw-semibold">{{ order.order_number }}</span>
+                            <small class="text-muted d-block">Submitted</small>
+                            <span class="fw-semibold">{{ offer.created_at|date:"Y-m-d H:i" }}</span>
                         </div>
                     </div>
 
                     <hr class="my-4">
 
-                    <!-- Line Items -->
+                    <div class="mb-3">
+                        <div class="fw-semibold mb-1">Title</div>
+                        <div>{{ offer.title }}</div>
+                    </div>
+
                     <div class="mb-4">
-                        {% for item in order.lineitems.all %}
-                        <div class="row align-items-center gy-2 py-2">
-                            <div class="col-7">
-                                <div class="fw-semibold">{{ item.artwork.name }}</div>
-                                <div class="text-muted small">
-                                    Size: {% if item.size %}{{ item.size|upper }}{% else %}N/A{% endif %}
-                                    • Qty: {{ item.quantity }}
-                                </div>
-                            </div>
-                            <div class="col-5 text-end">
-                                <div class="text-muted small">Subtotal</div>
-                                <div class="fw-semibold">
-                                    ${{ item.lineitem_total|floatformat:2 }}
-                                </div>
-                            </div>
-                        </div>
-                        {% if not forloop.last %}
-                        <hr class="my-2">{% endif %}
-                        {% empty %}
-                        <p class="text-muted">No items found on this order.</p>
-                        {% endfor %}
+                        <div class="fw-semibold mb-1">Description</div>
+                        <div class="text-muted">{{ offer.description|linebreaksbr }}</div>
                     </div>
+
+                    {% if offer.sample_image %}
+                    <div class="mb-4">
+                        <div class="fw-semibold mb-2">Sample Image</div>
+                        <img src="{{ offer.sample_image.url }}" alt="Submitted sample"
+                            class="img-fluid rounded shadow-sm">
+                    </div>
+                    {% elif offer.sample_image_url %}
+                    <div class="mb-4">
+                        <div class="fw-semibold mb-2">Sample Link</div>
+                        <a href="{{ offer.sample_image_url }}" target="_blank" rel="noopener" class="link-dark">
+                            {{ offer.sample_image_url }}
+                        </a>
+                    </div>
+                    {% endif %}
 
                     <hr class="my-4">
 
-                    <!-- Totals -->
-                    <div class="row">
-                        <div class="col-7 col-md-8"></div>
-                        <div class="col-5 col-md-4">
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted">Order Total</span>
-                                <span>${{ order.order_total|floatformat:2 }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="text-muted">Delivery</span>
-                                <span>${{ order.delivery_cost|floatformat:2 }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2">
-                                <span class="fw-semibold">Grand Total</span>
-                                <span class="fw-semibold">${{ order.grand_total|floatformat:2 }}</span>
-                            </div>
-                        </div>
+                    <div class="d-flex flex-wrap gap-2 justify-content-end">
+                        <a href="{% url 'offer' %}" class="btn btn-outline-dark">Submit another</a>
+                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Browse artworks</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -47,7 +47,8 @@
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_io/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon_io/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_io/favicon-16x16.png '%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_io/favicon-16x16.png' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon_io/favicon.ico' %}" type="image/x-icon">
     <link rel="manifest" href="{% static 'images/favicon_io/site.webmanifest' %}">
     {% endblock %}
 
@@ -228,9 +229,14 @@
             © {% now "Y" %} Artera — All rights reserved.
         </p>
         <p class="small mb-0">
-            Project made by <strong>Aleksandra Rudenko</strong> |
-            <a href="https://github.com/alexdotrud" target="_blank" rel="noopener noreferrer"></a> |
-            <a href="https://www.linkedin.com/in/aleksandra-rudenko" target="_blank" rel="noopener noreferrer"></a>
+            Project made by <strong>Aleksandra Rudenko</strong>
+            <div class="footer-icons">
+                <a href="https://www.linkedin.com/in/aleksandra-rudenko/" target="_blank"
+                    title="Check my profile on LinkedIn" aria-label="Link to my LinkedIn profile"><i
+                        class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/alexdotrud" target="_blank" title="Check my profile on Github"
+                    aria-label="Link to my GitHub profile"><i class="fa-brands fa-github"></i></a>
+            </div>
         </p>
     </footer>
 

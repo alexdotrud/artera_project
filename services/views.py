@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import ArtworkRequestForm, OfferForm
 from .models import ArtworkRequest
+from .models import Offer
 
 @login_required
 def artwork_request(request):
@@ -54,13 +55,14 @@ def offer_request(request):
     if request.method == "POST":
         form = OfferForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            offer = form.save()
             messages.success(request, "Thanks! Your offer was submitted.")
-            return redirect("offer_success")
+            return redirect("offer_success", offer_id=offer.id)
         messages.error(request, "Please fix the errors below.")
     else:
         form = OfferForm()
     return render(request, "services/offer_form.html", {"form": form})
 
-def offer_success(request):
-    return render(request, "services/offer_success.html")
+def offer_success(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+    return render(request, "services/offer_success.html", {"offer": offer})
