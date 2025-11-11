@@ -16,9 +16,6 @@ def all_artworks(request, category_id=None):
 
     if category_id:
         artworks = artworks.filter(category_id=category_id)
-  # Temporarily disabled age filter until migration is fixed
-# three_years_ago = timezone.now() - timedelta(days=3 * 365)
-# artworks = artworks.filter(created_at__gte=three_years_ago)
     query = None
     current_categories = None
 
@@ -51,12 +48,6 @@ def artwork_detail(request, artwork_id):
     """ A view to show individual artwork details """
     artwork = get_object_or_404(Artwork, pk=artwork_id)
     categories = Category.objects.all().order_by("name")
-#three_years_ago = timezone.now() - timedelta(days=3 * 365)
-   # artwork = get_object_or_404(
-   #     Artwork.objects.filter(created_at__gte=three_years_ago),
-    #    pk=artwork_id
-#)
-
 
     # Size options
     size_options = []

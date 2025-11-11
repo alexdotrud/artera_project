@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
+from cloudinary.utils import cloudinary_url
+import time
 from django.db import transaction
 from django.db.models import Prefetch, Count
 from django.contrib import messages
@@ -116,3 +119,27 @@ def library(request):
         'orders': orders,
         'requests': requests_qs,
     })
+
+@login_required
+def download_artwork(request, order_number, lineitem_id):
+    # Order must belong to the logged-in user (by email)
+    order = get_object_or_404(Order, order_number=order_number)
+    if not request.user.email or order.email.lower() != request.user.email.lower():
+        return HttpResponseForbidden("Not allowed")
+
+    li = get_object_or_404(OrderItem, id=lineitem_id, order=order)
+    art = li.artwork
+
+    if not getattr(art, "digital_file", None):
+        # Nothing attached yet; send back to library
+        return redirect("library")
+
+    # URL for downloading
+    url, _ = cloudinary_url(
+        art.digital_file.public_id,
+        resource_type="raw",
+        secure=True,
+        sign_url=True,
+        flags="attachment:Artera-{}.pdf".format(art.name.replace(" ", "-")),
+    )
+    return redirect(url)
