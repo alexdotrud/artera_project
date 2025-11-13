@@ -247,8 +247,6 @@
         </div>
     </div>
 
-    {% block postloadjs %}{% endblock %}
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('#toastSource .toast').forEach(function (el) {
@@ -256,6 +254,8 @@
             });
         });
     </script>
+
+    {% block postloadjs %}{% endblock %}
 
 </body>
 

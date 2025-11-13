@@ -43,6 +43,7 @@
                             <label class="form-label">Budget :</label>
                             {{ form.budget_cents }}
                             <div class="form-text">Enter your budget.</div>
+                            <p class="text-muted small text-end">* - required fields</p>
                             {% if form.budget_cents.errors %}<div class="text-danger small mt-1">
                                 {{ form.budget_cents.errors.0 }}</div>{% endif %}
                         </div>
