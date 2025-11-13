@@ -20,8 +20,14 @@
         <input class="form-control w-50 me-2" type="search" name="q" value="{{ search_term|default:'' }}"
             placeholder="Search artworks...">
         <button class="btn btn-dark" type="submit">Search</button>
-
     </form>
+
+    {% if search_term %}
+    <p class="text-center text-muted mb-3">
+        Showing results for "<strong>{{ search_term }}</strong>"
+        ({{ artworks|length }} found)
+    </p>
+    {% endif %}
 
     {% if artworks %}
     <div class="row g-4">

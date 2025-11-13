@@ -24,16 +24,6 @@ def all_artworks(request, category_id=None):
         artworks = artworks.filter(category__name__in=names)
         current_categories = Category.objects.filter(name__in=names)
 
-    # Search
-    if 'q' in request.GET:
-        query = request.GET['q'].strip()
-        if not query:
-            messages.error(request, "You didn't enter any search criteria!")
-            # adjust if you don't namespace:
-            return redirect(reverse('shop:all_artworks'))
-        queries = Q(name__icontains=query) | Q(description__icontains=query)
-        artworks = artworks.filter(queries)
-
     context = {
         'artworks': artworks,
         'search_term': query,
@@ -70,3 +60,26 @@ def artwork_detail(request, artwork_id):
         "default_price": default_price,
         "categories": categories,
     })
+
+def artwork_search(request):
+    """ A view to search for artworks based on a query string """
+    query = request.GET.get("q", "").strip()
+
+    artworks = Artwork.objects.select_related("category").order_by(Random())
+    categories = Category.objects.order_by("name")
+    current_categories = None
+
+    if query:
+        artworks = artworks.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query)
+        )
+
+    context = {
+        "artworks": artworks,
+        "search_term": query,
+        "current_categories": current_categories,
+        "SIZE_SURCHARGE": SIZE_SURCHARGE,
+        "categories": categories,
+    }
+    return render(request, "shop/list.html", context)

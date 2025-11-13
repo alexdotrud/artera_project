@@ -690,4 +690,12 @@ i:hover {
         min-height: 300px;
     }
 
+    .navbar .search-form {
+        max-width: 200px;
+    }
+
+    .navbar .search-form input {
+        min-width: 0;
+    }
+
 }
