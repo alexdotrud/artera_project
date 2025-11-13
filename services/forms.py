@@ -10,6 +10,13 @@ class ArtworkRequestForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             "budget_cents": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Automatically add * to required fields
+        for name, field in self.fields.items():
+            if field.required:
+                field.label = f"{field.label} *"
 
 class OfferForm(forms.ModelForm):
     class Meta:
@@ -23,3 +30,10 @@ class OfferForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             "category": forms.TextInput(attrs={"class": "form-control"}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Automatically add * to required fields
+        for name, field in self.fields.items():
+            if field.required:
+                field.label = f"{field.label} *"

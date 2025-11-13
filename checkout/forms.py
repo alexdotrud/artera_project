@@ -33,18 +33,10 @@ class OrderForm(forms.ModelForm):
             'street_address2': 'Spare Adress',
             'county': 'County, State or Locality',
         }
-
-        # autofocus on first field
-        self.fields['full_name'].widget.attrs['autofocus'] = True
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            # set placeholder (skip country select)
-            ph = placeholders.get(name, '')
-            if ph and name != 'country':
-                field.widget.attrs['placeholder'] = ph
-
-            # styling
-            field.widget.attrs['class'] = 'stripe-style-input'
-
-            # label (add * only here)
-            label = field.label or name.replace('_', ' ').title()
+        # Add star only once
+            if field.required and ('*' not in (field.label or '')):
+               field.label = f"{field.label}\u00A0*"
