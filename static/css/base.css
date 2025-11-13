@@ -123,27 +123,41 @@ header .position-absolute.end-0 {
     font-weight: 500;
 }
 
-/* Home Page Styles */
-
-.hero-section {
-    padding-top: 0;
+.mobile-cart-circle {
+    width: 45px;
+    height: 36px;
+    background-color: var(--primary-color);
+    border-radius: 40%;
+    color: #fff;
     display: flex;
-    flex-wrap: wrap;
-    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Home Page Styles */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    background-color: rgba(181, 178, 178, 0.155);
+    height: auto;
     width: 100%;
 }
 
 .hero-image {
-    flex: 1 1 50%;
     background: url("../images/hero-image.jpg") center center / cover no-repeat;
-    min-height: 70vh;
+    flex: 0 0 260px;
+    min-height: 300px;
 }
 
 .hero-right-text {
-    flex: 1 1 50%;
-    background-color: #fff;
-    padding: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1.75rem 1.5rem 2.25rem;
 }
+
 
 /* Category Section */
 .categories-text {
@@ -189,6 +203,7 @@ header .position-absolute.end-0 {
 .about-title,
 .request-title {
     font-size: 1.8rem;
+    margin-top: 1rem;
 }
 
 .about-image,
@@ -431,6 +446,21 @@ header .position-absolute.end-0 {
 .bag .input-group {
     max-width: 220px;
     gap: .25rem;
+}
+
+.bag-item.card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.bag img {
+    max-height: 140px;
+    object-fit: contain;
+}
+
+.bag-totals p {
+    font-size: 1rem;
 }
 
 /* Checkout */
@@ -696,6 +726,42 @@ i:hover {
 
     .navbar .search-form input {
         min-width: 0;
+    }
+
+    .shop-cont .card-img-top {
+        min-height: 300px;
+    }
+
+    .navbar .search-form {
+        max-width: 200px;
+    }
+
+    .navbar .search-form input {
+        min-width: 0;
+    }
+
+    .hero-section {
+        padding-top: 0;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        min-height: 100vh;
+        background-color: transparent;
+    }
+
+    .hero-image {
+        flex: 1 1 50%;
+        min-height: 70vh;
+    }
+
+    .hero-right-text {
+        flex: 1 1 50%;
+        background-color: #fff;
+        padding: 3rem;
+        text-align: left;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
 }
