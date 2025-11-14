@@ -19,7 +19,6 @@
                                 <th scope="col"></th>
                                 <th scope="col">Product Info</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -60,14 +59,11 @@
 
                                 <!-- Unit price -->
                                 <td class="py-3">
-                                    <p>
+                                    <p class="mb-0">
                                         ${{ it.price|default:it.artwork.price|floatformat:2 }}
                                     </p>
                                 </td>
-                                <!-- Quantity (fixed to 1) + remove -->
-                                <td class="py-3">
-                                    <p class="mb-1">1</p>
-                                </td>
+                                <!-- Remove action -->
                                 <td class="py-3">
                                     <form method="post" action="{% url 'remove_from_bag' it.item_id %}">
                                         {% csrf_token %}
@@ -83,7 +79,7 @@
 
                         <tfoot class="align-bottom">
                             <tr>
-                                <th colspan="3"></th>
+                                <th colspan="2"></th>
                                 <th class="text-end pt-4">Delivery:</th>
                                 <th class="text-start pt-4">
                                     {% if delivery > 0 %}
@@ -94,7 +90,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="3"></th>
+                                <th colspan="2"></th>
                                 <th class="text-end pb-3 fw-bold">Total:</th>
                                 <th class="text-start pb-3 fw-bold">
                                     ${{ grand_total|default:total|floatformat:2 }}
@@ -104,7 +100,7 @@
                     </table>
                 </div>
 
-                <div class="d-flex gap-2 ">
+                <div class="d-flex justify-content-center gap-2">
                     <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Keep Shopping</a>
                     <a href="{% url 'checkout' %}" class="btn btn-dark">Secure Checkout</a>
                 </div>
