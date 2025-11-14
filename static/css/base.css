@@ -355,18 +355,28 @@ header .position-absolute.end-0 {
 
 /* Library */
 
-.order-block img {
-    max-height: 300px;
-    max-width: 200px;
-    border: var(--shadow-sm);
+.request-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.request-card,
 .order-card {
     box-shadow: var(--shadow);
     overflow: hidden;
     background: transparent;
     min-height: 80px;
+}
+
+.library .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.library img {
+    max-width: 150px;
+    height: auto;
 }
 
 
@@ -584,12 +594,6 @@ fieldset {
 
 .asteriskField {
     display: none;
-}
-
-/* Library */
-.library img {
-    max-width: 150px;
-    height: auto;
 }
 
 /* Request Form/ Request Details */
@@ -886,8 +890,27 @@ i:hover {
         margin-top: 0;
     }
 
-    .bag .d-flex {
-        justify-content: flex-end !important;
-        flex-wrap: nowrap;
+    /* Library */
+    .library .order-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .order-line-info {
+        text-align: left;
+    }
+
+    .order-line-actions {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .request-card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
 }

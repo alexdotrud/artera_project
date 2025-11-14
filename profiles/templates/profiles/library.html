@@ -13,7 +13,7 @@
     {% for order in orders %}
     <div class="order-card shadow-sm h-100 mb-4 ps-2 pb-2">
         <!-- Header row -->
-        <div class="d-flex align-items-center justify-content-center gap-4">
+        <div class="order-header d-flex align-items-center gap-4">
             <p class="text-dark">
                 Order #{{ order.order_number }}
                 <span>• {{ order.date|date:"Y-m-d" }}</span>
@@ -28,7 +28,7 @@
         <div id="o{{ order.id }}" class="collapse {% if forloop.first %}show{% endif %} mt-3">
             {% for it in order.lineitems.all %}
             <div class="row g-3 py-3 border-top">
-                <div class="col-12">
+                <div class="col-12 col-md-4">
                     <a href="{% url 'detail' it.artwork.id %}">
                         {% if it.artwork.image %}
                         <img class="img-fluid" src="{{ it.artwork.image.url }}" alt="{{ it.artwork.name }}">
@@ -39,7 +39,7 @@
                         {% endif %}
                     </a>
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-5 order-line-info">
                     <h5 class="mb-1">{{ it.artwork.name }}</h5>
                     {% if it.artwork.description %}
                     <p class="text-muted small mb-2">{{ it.artwork.description }}</p>
@@ -53,7 +53,7 @@
                         <dd class="col-8 col-sm-9">{{ order.order_number }}</dd>
                     </dl>
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-3 order-line-actions">
                     {% if it.artwork.get_download_url %}
                     <a href="{% url 'download_artwork' order.order_number it.id %}" class="btn btn-dark btn-sm mt-2">
                         Download
