@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="error-404 d-flex align-items-center justify-content-center py-5">
+    <div class="container text-center">
+        <h1 class="mb-3">404</h1>
+        <h2 class="mb-3">Page not found</h2>
+        <p class="mb-4">
+            The page you were looking for doesn’t exist or has been moved.
+        </p>
+        <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
+            <a href="{% url 'home' %}" class="btn btn-dark">Back to Home</a>
+            <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Browse Artworks</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
