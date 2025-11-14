@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Order, OrderItem
 
+
 class OrderItemAdminInline(admin.TabularInline):
     model = OrderItem
     extra = 0
@@ -11,7 +12,6 @@ class OrderItemAdminInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = (OrderItemAdminInline,)
 
-    # calculated/auto fields should be read-only
     readonly_fields = (
         'order_number',
         'date',
@@ -20,7 +20,6 @@ class OrderAdmin(admin.ModelAdmin):
         'grand_total',
     )
 
-    # field layout in the admin detail page
     fields = (
         'order_number',
         'date',
@@ -41,7 +40,6 @@ class OrderAdmin(admin.ModelAdmin):
         'grand_total',
     )
 
-    # columns in the list view
     list_display = (
         'order_number',
         'date',
