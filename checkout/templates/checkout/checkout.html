@@ -99,8 +99,10 @@
                             checked>
                         {% else %}
                         <label class="form-check-label" for="id-save-info">
-                            <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                            <a class="text-info" href="{% url 'account_login' %}">login</a> to proceed
+                            <a class="text-info" href="{% url 'account_signup' %}"
+                                aria-label="Link for creating account">Create an account</a> or
+                            <a class="text-info" href="{% url 'account_login' %}"
+                                aria-label="link for logging in">login</a> to proceed
                         </label>
                         {% endif %}
                     </div>
@@ -120,7 +122,7 @@
                 </fieldset>
 
                 <div class="submit-button text-end mt-5 mb-2">
-                    <a href="{% url 'view_bag' %}" class="btn btn-outline-dark">
+                    <a href="{% url 'view_bag' %}" class="btn btn-outline-dark" aria-label="Link to review bag">
                         <span class="icon"><i class="fas fa-chevron-left"></i></span>
                         <span class="fw-bold">Adjust Bag</span>
                     </a>

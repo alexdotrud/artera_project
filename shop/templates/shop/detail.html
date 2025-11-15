@@ -17,11 +17,11 @@
         <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
             <div class="image-container my-5">
                 {% if artwork.image %}
-                <a href="{{ artwork.image.url }}" target="_blank" aria-laebl="link to Artwork url">
+                <a href="{{ artwork.image.url }}" target="_blank">
                     <img class="card-img-top img-fluid" src="{{ artwork.image.url }}" alt="{{ artwork.name }}">
                 </a>
                 {% elif artwork.image_url %}
-                <a href="{{ artwork.image_url }}" target="_blank" aria-laebl="link to Artwork url">
+                <a href="{{ artwork.image_url }}" target="_blank">
                     <img class="card-img-top img-fluid" src="{{ artwork.image_url }}" alt="{{ artwork.name }}">
                 </a>
                 {% else %}
@@ -41,11 +41,8 @@
                 <!-- Category -->
                 {% if artwork.category %}
                 <p class="small mb-2">
-                    <a href="{% url 'all_artworks' %}?category={{ artwork.category.name }}"
-                        aria-label="Link to same category">
-                        <i class="fas fa-tag mr-1"></i>
-                        {{ artwork.category.friendly_name|default:artwork.category.name }}
-                    </a>
+                    <i class="fas fa-tag mr-1"></i>
+                    {{ artwork.category.friendly_name|default:artwork.category.name }}
                 </p>
                 {% endif %}
 
@@ -70,22 +67,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark mt-5"
+                            aria-label="Link to continue shopping">
+                            <span class="text-uppercase">Keep Shopping</span>
+                        </a>
+                        <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
+                        <input type="hidden" name="redirect_url" value="{{ request.get_full_path }}">
+                    </div>
+                </form>
             </div>
-
-            <div class="col-12">
-                <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark mt-5"
-                    aria-label="Link to continue shopping">
-                    <span class="text-uppercase">Keep Shopping</span>
-                </a>
-                <input type="submit" class="btn btn-dark text-uppercase mt-5" value="Add to Bag">
-                <input type="hidden" name="redirect_url" value="{{ request.get_full_path }}">
-            </div>
-
         </div>
-        </form>
     </div>
-</div>
-</div>
 </div>
 {% include "shop/includes/quantity_input_script.html" %}
 {% endblock %}

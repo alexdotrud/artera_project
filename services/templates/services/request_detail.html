@@ -67,8 +67,10 @@
                             {% csrf_token %}
                             <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
-                        <a href="{% url 'all_artworks' %}" class="btn btn-dark">Back to Shop</a>
-                        <a href="{% url 'request' %}" class="btn btn-outline-dark">Submit Another</a>
+                        <a href="{% url 'all_artworks' %}" class="btn btn-dark" aria-label="Link to shop page">Back to
+                            Shop</a>
+                        <a href="{% url 'request' %}" class="btn btn-outline-dark"
+                            aria-label="Link to add new request">Submit Another</a>
                     </div>
                 </div>
             </div>

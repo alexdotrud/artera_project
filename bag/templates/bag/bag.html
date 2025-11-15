@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="d-flex align-items-center justify-content-center py-5" style="min-height: 75vh;">
+<div class="d-flex justify-content-center py-5" style="min-height: 75vh;">
     <div class="container mb-4 bag">
         <div class="row">
             <div class="col">
-                <h1 class="mb-4">Shopping Bag</h2>
+                <h1 class="mb-4">Shopping Bag</h1>
             </div>
         </div>
 
@@ -101,13 +101,15 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark">Keep Shopping</a>
-                    <a href="{% url 'checkout' %}" class="btn btn-dark">Secure Checkout</a>
+                    <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark" aria-label="link to shop page">Keep
+                        Shopping</a>
+                    <a href="{% url 'checkout' %}" class="btn btn-dark" aria-label="Link to checkout">Secure
+                        Checkout</a>
                 </div>
                 {% else %}
                 <div class="empty">
                     <p class="lead mb-4">Your bag is empty.</p>
-                    <a href="{% url 'all_artworks' %}" class="btn btn-dark">Shop Now</a>
+                    <a href="{% url 'all_artworks' %}" class="btn btn-dark" aria-label="Link to shop page">Shop Now</a>
                 </div>
                 {% endif %}
             </div>
