@@ -52,8 +52,8 @@
     <link rel="manifest" href="{% static 'images/favicon_io/site.webmanifest' %}">
     {% endblock %}
 
-
     <title>ARTERA</title>
+
 </head>
 
 <body>
@@ -73,9 +73,10 @@
                         ✕
                     </button>
                     <ul class="navbar-nav p-3">
-                        <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                        <li><a class="nav-link" href="{% url 'all_artworks' %}">Shop</a></li>
-                        <li><a class="nav-link" href="{% url 'offer' %}">Collaborate</a></li>
+                        <li><a class="nav-link" href="{% url 'home' %}" aria-label="Link to homepage">Home</a></li>
+                        <li><a class="nav-link" href="{% url 'all_artworks' %}" aria-label="Link to shop">Shop</a></li>
+                        <li><a class="nav-link" href="{% url 'offer' %}"
+                                aria-label="Link to collaboration page">Collaborate</a></li>
                     </ul>
 
                     <form class="d-flex px-3 mb-3" method="get" action="{% url 'artwork_search' %}">
@@ -88,7 +89,8 @@
                     </form>
                 </div>
                 <!-- Logo (always centered) -->
-                <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="{% url 'home' %}">
+                <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="{% url 'home' %}"
+                    aria-label="Link to homepage">
                     <img src="{% static 'images/logo.png' %}" alt="Artera logo" style="height:34px;">
                 </a>
                 <!-- Mobile accounts Menu-->
@@ -96,22 +98,28 @@
                     <!-- Account -->
                     <div class="dropdown me-2">
                         <a class="nav-link text-dark" href="#" id="mobileAccount" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                            aria-expanded="false" aria-label="Dropdown for mobile screen">
                             <i class="fas fa-user fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileAccount">
                             {% if request.user.is_authenticated %}
-                            <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
-                            <li><a class="dropdown-item" href="{% url 'request' %}">Make a Custom
+                            <li><a class="dropdown-item" href="{%url 'profile' %}" aria-label="Link to profile page">My
+                                    Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'library' %}"
+                                    aria-label="Link to library page">Library</a></li>
+                            <li><a class="dropdown-item" href="{% url 'request' %}"
+                                    aria-label="Link to request page">Make a Custom
                                     Request</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_logout' %}"
+                                    aria-label="Link to logout from website">Logout</a></li>
                             {% else %}
-                            <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_login' %}"
+                                    aria-label="Link to login">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_signup' %}"
+                                    aria-label="Link for registration">Register</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -129,20 +137,10 @@
                 <div class="collapse navbar-collapse d-none d-md-flex">
                     <!-- Left side menu -->
                     <ul class="navbar-nav me-auto align-items-center">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'all_artworks' %}">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'offer' %}">Collaborate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'artwork_search' %}">
-                                <i class="fas fa-search me-1"></i> Search
-                            </a>
-                        </li>
+                        <li><a class="nav-link" href="{% url 'home' %}" aria-label="Link to homepage">Home</a></li>
+                        <li><a class="nav-link" href="{% url 'all_artworks' %}" aria-label="Link to shop">Shop</a></li>
+                        <li><a class="nav-link" href="{% url 'offer' %}"
+                                aria-label="Link to collaboration page">Collaborate</a></li>
                     </ul>
                     <!-- Account and Bag -->
                     <ul class="navbar-nav ms-auto align-items-center">
@@ -154,22 +152,30 @@
                             <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm"
                                 aria-labelledby="accountMenu">
                                 {% if request.user.is_authenticated %}
-                                <li><a class="dropdown-item" href="{%url 'profile' %}">My Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'library' %}">Library</a></li>
-                                <li><a class="dropdown-item" href="{% url 'request' %}">Make a Custom
+                                <li><a class="dropdown-item" href="{%url 'profile' %}"
+                                        aria-label="Link to profile page">My
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'library' %}"
+                                        aria-label="Link to library page">Library</a></li>
+                                <li><a class="dropdown-item" href="{% url 'request' %}"
+                                        aria-label="Link to request page">Make a Custom
                                         Request</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}"
+                                        aria-label="Link to logout from website">Logout</a></li>
                                 {% else %}
-                                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
-                                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_login' %}"
+                                        aria-label="Link to login">Login</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_signup' %}"
+                                        aria-label="Link for registration">Register</a></li>
                                 {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="nav-link position-relative" href="{% url 'view_bag' %}">
+                            <a class="nav-link position-relative" href="{% url 'view_bag' %}"
+                                aria-label="link to reviw bag items">
                                 <i class="fas fa-shopping-bag"></i> Bag
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
@@ -219,14 +225,14 @@
         </p>
         <p class="small mb-0">
             Project made by <strong>Aleksandra Rudenko</strong>
-            <div class="footer-icons">
-                <a href="https://www.linkedin.com/in/aleksandra-rudenko/" target="_blank"
-                    title="Check my profile on LinkedIn" aria-label="Link to my LinkedIn profile"><i
-                        class="fa-brands fa-linkedin"></i></a>
-                <a href="https://github.com/alexdotrud" target="_blank" title="Check my profile on Github"
-                    aria-label="Link to my GitHub profile"><i class="fa-brands fa-github"></i></a>
-            </div>
         </p>
+        <div class="footer-icons">
+            <a href="https://www.linkedin.com/in/aleksandra-rudenko/" target="_blank"
+                title="Check my profile on LinkedIn" aria-label="Link to my LinkedIn profile"><i
+                    class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/alexdotrud" target="_blank" title="Check my profile on Github"
+                aria-label="Link to my GitHub profile"><i class="fa-brands fa-github"></i></a>
+        </div>
     </footer>
 
     <div id="loading-overlay" style="display: none;">
