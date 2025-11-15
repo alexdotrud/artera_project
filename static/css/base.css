@@ -707,7 +707,6 @@ fieldset {
     background: var(--secondary-color);
     border-color: var(--secondary-color);
     box-shadow: var(--shadow-sm);
-    display: focus;
 }
 
 .btn-outline-dark {
@@ -723,7 +722,6 @@ fieldset {
     background: var(--primary-color);
     border-color: var(--primary-color);
     box-shadow: var(--shadow-sm);
-    display: focus;
 }
 
 .btn-danger {
@@ -741,7 +739,6 @@ a {
 a:hover {
     color: var(--secondary-color);
     text-decoration: none;
-    display: focus;
 }
 
 i {
@@ -755,7 +752,6 @@ a:hover i,
 button:hover i,
 i:hover {
     color: var(--secondary-color);
-    display: focus;
 }
 
 @media (min-width: 768px) {

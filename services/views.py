@@ -5,6 +5,7 @@ from .forms import ArtworkRequestForm, OfferForm
 from .models import ArtworkRequest
 from .models import Offer
 
+
 @login_required
 def artwork_request(request):
     if request.method == "POST":
@@ -21,10 +22,15 @@ def artwork_request(request):
 
     return render(request, "services/request_form.html", {"form": form})
 
+
 @login_required
 def request_detail(request, pk):
     obj = get_object_or_404(ArtworkRequest, pk=pk, user=request.user)
-    return render(request, "services/request_detail.html", {"request_obj": obj})
+    return render(
+        request,
+        "services/request_detail.html", {"request_obj": obj}
+    )
+
 
 @login_required
 def request_edit(request, pk):
@@ -38,11 +44,16 @@ def request_edit(request, pk):
         messages.error(request, "Please fix the errors below.")
     else:
         form = ArtworkRequestForm(instance=req)
-    return render(request, "services/request_form.html", {
-        "form": form,
-        "is_edit": True,
-        "request_obj": req,
-    })
+    return render(
+        request,
+        "services/request_form.html",
+        {
+            "form": form,
+            "is_edit": True,
+            "request_obj": req,
+        },
+    )
+
 
 @login_required
 def request_delete(request, pk):
@@ -50,6 +61,7 @@ def request_delete(request, pk):
     req.delete()
     messages.success(request, "Request deleted.")
     return redirect("library")
+
 
 def offer_request(request):
     if request.method == "POST":
@@ -62,6 +74,7 @@ def offer_request(request):
     else:
         form = OfferForm()
     return render(request, "services/offer_form.html", {"form": form})
+
 
 def offer_success(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)

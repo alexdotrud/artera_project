@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Artwork, Category
 
-# Register your models here.
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
@@ -10,6 +9,7 @@ class ArtworkAdmin(admin.ModelAdmin):
     search_fields = ("name", "sku", "description")
     autocomplete_fields = ("category",)
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -17,6 +17,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
     search_fields = ("name", "friendly_name")
+
 
 @admin.display(description="Sizes")
 def sizes(self, obj):

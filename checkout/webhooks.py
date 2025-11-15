@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .webhook_handler import StripeWH_Handler  # same app -> relative import
 import stripe
 
+
 @require_POST
 @csrf_exempt
 def webhook(request):
@@ -13,7 +14,7 @@ def webhook(request):
     wh_secret = settings.STRIPE_WH_SECRET
 
     payload = request.body
-    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
     if not sig_header:
         return HttpResponseBadRequest("Missing Stripe signature")
 
@@ -29,8 +30,10 @@ def webhook(request):
     # Connect to handler
     handler = StripeWH_Handler(request)
     event_map = {
-        'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
-        'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed,
+        "payment_intent.succeeded":
+            handler.handle_payment_intent_succeeded,
+        "payment_intent.payment_failed":
+            handler.handle_payment_intent_payment_failed,
     }
-    event_handler = event_map.get(event['type'], handler.handle_event)
+    event_handler = event_map.get(event["type"], handler.handle_event)
     return event_handler(event)

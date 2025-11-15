@@ -7,6 +7,7 @@ from django.contrib import messages
 def homepege(request):
     return render(request, 'home/home.html')
 
+
 def artwork_search(request):
     q = (request.GET.get("q") or "").strip()
     if not q:

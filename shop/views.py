@@ -19,50 +19,63 @@ def all_artworks(request, category_id=None):
     query = None
     current_categories = None
 
-    if 'category' in request.GET:
-        names = [c.strip() for c in request.GET['category'].split(',') if c.strip()]
+    if "category" in request.GET:
+        names = [
+            c.strip()
+            for c in request.GET["category"].split(",") if c.strip()]
         artworks = artworks.filter(category__name__in=names)
         current_categories = Category.objects.filter(name__in=names)
 
     context = {
-        'artworks': artworks,
-        'search_term': query,
-        'current_categories': current_categories,
-        'SIZE_SURCHARGE': SIZE_SURCHARGE,
-        'categories': categories,
+        "artworks": artworks,
+        "search_term": query,
+        "current_categories": current_categories,
+        "SIZE_SURCHARGE": SIZE_SURCHARGE,
+        "categories": categories,
     }
-    return render(request, 'shop/list.html', context)
+    return render(request, "shop/list.html", context)
 
 
 def artwork_detail(request, artwork_id):
-    """ A view to show individual artwork details """
+    """A view to show individual artwork details"""
     artwork = get_object_or_404(Artwork, pk=artwork_id)
     categories = Category.objects.all().order_by("name")
 
     # Size options
     size_options = []
     for code, label in SIZE_CHOICES:
-        price = (artwork.price + SIZE_SURCHARGE[code]).quantize(Decimal("0.01"))
-        size_options.append({
-            "code": code,       # 'S' | 'M' | 'L'
-            "label": label,     # '640x959'
-            "price": price,     # Decimal
-        })
+        price = (
+            artwork.price + SIZE_SURCHARGE[code]
+        ).quantize(Decimal("0.01"))
+        size_options.append(
+            {
+                "code": code,  # 'S' | 'M' | 'L'
+                "label": label,  # '640x959'
+                "price": price,  # Decimal
+            }
+        )
 
     # Default selection
     default_code = "S" if dict(SIZE_CHOICES).get("S") else SIZE_CHOICES[0][0]
-    default_price = next(opt["price"] for opt in size_options if opt["code"] == default_code)
+    default_price = next(
+        opt["price"] for opt in size_options if opt["code"] == default_code
+    )
 
-    return render(request, "shop/detail.html", {
-        "artwork": artwork,
-        "size_options": size_options,
-        "default_size": default_code,
-        "default_price": default_price,
-        "categories": categories,
-    })
+    return render(
+        request,
+        "shop/detail.html",
+        {
+            "artwork": artwork,
+            "size_options": size_options,
+            "default_size": default_code,
+            "default_price": default_price,
+            "categories": categories,
+        },
+    )
+
 
 def artwork_search(request):
-    """ A view to search for artworks based on a query string """
+    """A view to search for artworks based on a query string"""
     query = request.GET.get("q", "").strip()
 
     artworks = Artwork.objects.select_related("category").order_by(Random())
@@ -71,8 +84,7 @@ def artwork_search(request):
 
     if query:
         artworks = artworks.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query)
+            Q(name__icontains=query) | Q(description__icontains=query)
         )
 
     context = {

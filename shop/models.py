@@ -3,7 +3,6 @@ from decimal import Decimal
 from django.utils import timezone
 
 
-
 SIZE_CHOICES = [
     ("S", "640x959"),
     ("M", "1280x1917"),
@@ -16,13 +15,15 @@ SIZE_SURCHARGE = {
     "L": Decimal("10"),
 }
 
+
 def calc_size_price(base_price: Decimal, size_code: str) -> Decimal:
     return (base_price + SIZE_SURCHARGE[size_code]).quantize(Decimal("0.01"))
 
+
 class Category(models.Model):
     class Meta:
-        verbose_name_plural = 'Categories'
-        
+        verbose_name_plural = "Categories"
+
     name = models.CharField(max_length=100)
     friendly_name = models.CharField(max_length=100, null=True, blank=True)
 
@@ -31,10 +32,14 @@ class Category(models.Model):
 
     def get_friendly_name(self):
         return self.friendly_name
-    
+
 
 class Artwork(models.Model):
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        "Category", null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
     sku = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -56,18 +61,20 @@ class Artwork(models.Model):
         if self.image and getattr(self.image, "url", None):
             return self.image.url
         return None
-    
+
     def save(self, *args, **kwargs):
         is_new = self._state.adding
         super().save(*args, **kwargs)
 
-        # If no digital link yet, auto-fill from image_url, then update only that field
+        # If no digital link yet, auto-fill from image_url
         if not self.digital_file_url:
-            auto = self.image_url or (self.image.url if (self.image and getattr(self.image, "url", None)) else None)
+            auto = self.image_url or (self.image.url if (
+                self.image and getattr(self.image, "url", None)
+                ) else None
+             )
             if auto:
-                Artwork.objects.filter(pk=self.pk).update(digital_file_url=auto)
-
+                Artwork.objects.filter(
+                    pk=self.pk).update(digital_file_url=auto)
 
     def __str__(self):
         return self.name
-    

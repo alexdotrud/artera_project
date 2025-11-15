@@ -2,6 +2,7 @@ from django import forms
 from .models import Profile
 from allauth.account.forms import SignupForm
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -12,8 +13,12 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'address_line_delivery': forms.TextInput(attrs={'class': 'form-control'}),
-            'address_line_living': forms.TextInput(attrs={'class': 'form-control'}),
+            'address_line_delivery': forms.TextInput(
+                attrs={'class': 'form-control'}
+            ),
+            'address_line_living': forms.TextInput(
+                attrs={'class': 'form-control'}
+            ),
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
             'country': forms.TextInput(attrs={'class': 'form-control'}),

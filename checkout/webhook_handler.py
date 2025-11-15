@@ -5,6 +5,7 @@ from shop.models import Artwork
 import stripe
 import json
 
+
 class StripeWH_Handler:
     """Handle Stripe webhooks"""
 
@@ -32,20 +33,24 @@ class StripeWH_Handler:
         try:
             order = Order.objects.get(
                 full_name__iexact=shipping_details.name,
-                    email__iexact=shipping_details.email,
-                    phone_number__iexact=shipping_details.phone,
-                    country__iexact=shipping_details.country,
-                    postcode__iexact=shipping_details.postal_code,
-                    town_or_city__iexact=shipping_details.city,
-                    street_address1__iexact=shipping_details.line1,
-                    street_address2__iexact=shipping_details.line2,
-                    county__iexact=shipping_details.state,
+                email__iexact=shipping_details.email,
+                phone_number__iexact=shipping_details.phone,
+                country__iexact=shipping_details.country,
+                postcode__iexact=shipping_details.postal_code,
+                town_or_city__iexact=shipping_details.city,
+                street_address1__iexact=shipping_details.line1,
+                street_address2__iexact=shipping_details.line2,
+                county__iexact=shipping_details.state,
                 grand_total=grand_total,
             )
             order_exists = True
             return HttpResponse(
-                content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
-                status=200)
+                content=(
+                    f'Webhook received: {event["type"]} | '
+                    'SUCCESS: Verified order already in database'
+                ),
+                status=200,
+            )
         except Order.DoesNotExist:
             try:
                 order = Order.objects.create(
@@ -70,7 +75,7 @@ class StripeWH_Handler:
                         )
                         order_line_item.save()
                     else:
-                        for size, quantity in item_data['items_by_size'].items():
+                        for size, quantity in item_data["items_by_size"].items():
                             order_line_item = OrderItem(
                                 order=order,
                                 product=product,
@@ -83,24 +88,23 @@ class StripeWH_Handler:
                     order.delete()
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
-                    status=500)
-    
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200)
-    
+                    status=500
+                )
+
     def handle_payment_intent_succeeded(self, event):
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
         return HttpResponse(
             content=f'Webhook received: {event["type"]}',
-            status=200)
-    
+            status=200
+        )
+
     def handle_payment_intent_payment_failed(self, event):
         """
         Handle the payment_intent.payment_failed webhook from Stripe
         """
         return HttpResponse(
             content=f'Webhook received: {event["type"]}',
-            status=200)
+            status=200
+        )
