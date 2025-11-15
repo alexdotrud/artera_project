@@ -6,11 +6,11 @@
     <div class="text-center mb-4">
         <strong>Shop by Categories:</strong>
         {% for cat in categories %}
-        <a href="{% url 'by_category' cat.id %}" class="ms-2 text-dark">
+        <a href="{% url 'by_category' cat.id %}" class="ms-2 text-dark" aria-label="Categorie link to sort products">
             {{ cat.friendly_name}}
         </a>
         {% endfor %}
-        <a href="{% url 'all_artworks' %}" class="ms-2 text-dark">
+        <a href="{% url 'all_artworks' %}" class="ms-2 text-dark" aria-label="Link to see all artworks">
             See All
         </a>
     </div>
@@ -34,7 +34,7 @@
         {% for artwork in artworks %}
         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
             <div class="card d-flex justify-content-center">
-                <a href="{% url 'detail' artwork.id %}">
+                <a href="{% url 'detail' artwork.id %}" aria-label="Link to open detailed information">
                     {% if artwork.image %}
                     <img src="{{ artwork.image.url }}" class="card-img-top" alt="{{ artwork.name }}">
                     {% elif artwork.image_url %}
