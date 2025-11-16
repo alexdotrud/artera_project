@@ -381,7 +381,11 @@ header .position-absolute.end-0 {
 
 
 /* Bag */
-.bag .empty {
+.empty-container {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
