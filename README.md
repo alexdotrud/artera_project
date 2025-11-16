@@ -1,8 +1,7 @@
 # **ARTERA**
 
 ![Project preview on multiple screens](documentation/responsive.png)
-
-[View live project here!](https://artera-app-url.com/)
+[View live project here!](https://artera-d6829bf39792.herokuapp.com/)
 
 Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap 5**, **JavaScript**, and **Stripe**. Users can browse artworks, choose sizes with dynamic pricing, purchase securely, manage profiles, and access all purchased files through a personal Digital Library. Artists can also submit custom artwork requests or offer sample work.
 
