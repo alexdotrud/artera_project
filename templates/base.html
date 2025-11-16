@@ -67,7 +67,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- Mobile menu button -->
-                <div class="collapse bg-white border-top d-md-none" id="mobileMenu">
+                <div class="collapse navbar-collapse bg-white border-top d-md-none" id="mobileMenu">
                     <button class="btn btn-link text-dark w-100 text-end px-3 mt-2" type="button"
                         data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-label="Close menu">
                         ✕
@@ -249,9 +249,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Show toasts
             document.querySelectorAll('#toastSource .toast').forEach(function (el) {
                 bootstrap.Toast.getOrCreateInstance(el).show();
             });
+
+            // Lock scroll when mobile menu is open
+            var mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) {
+                mobileMenu.addEventListener('show.bs.collapse', function () {
+                    document.body.classList.add('nav-open');
+                });
+
+                mobileMenu.addEventListener('hidden.bs.collapse', function () {
+                    document.body.classList.remove('nav-open');
+                });
+            }
         });
     </script>
 
