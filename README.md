@@ -15,6 +15,7 @@ Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap
 * [User Stories](#user-stories)
 * [Agile Methods](#agile-methods)
 * [Design Choices](#design-choices)
+* [Project Plan](#project-plan)
 * [Database Schema](#database-schema)
 * [Features](#features)
 * [UX Design](#ux-design)
@@ -211,3 +212,781 @@ This project was planned and developed using Agile methodology to keep developme
 
 ![GitHub Projects Board](documentation/todo-list.png)  
 ![Example User Stories](documentation/task-planning.png)
+
+---
+
+## Design Choices
+
+Artera was designed with a clean, minimal, gallery-style look that puts artwork at the center of the user experience.  
+All layout decisions prioritize clarity, responsiveness, and fast browsing across devices.
+
+---
+
+### **Wireframes**
+The project was planned using **Visily** wireframes to define structure before applying styling.
+
+During the development process, the initial wireframes served as a strong foundation, but the visual direction naturally evolved as the project grew.  
+Some early ideas were simplified or removed to maintain a clean user experience, while several new elements were added once real usage patterns became clear.
+
+**Homepage Wireframes:**
+
+![Homepage Wireframes](documentation/wireframes-homepage.png)
+
+**Artwork Detail Wireframes:**
+
+![Item Details Wireframes](documentation/wireframes-detail.png)
+
+**Shop Page Wireframes:**
+
+![Shop Wireframes](documentation/wireframes-shop.png)
+
+**Design Principles**
+- **Visual hierarchy first** – large artwork previews, clear pricing, structured information blocks  
+- **Consistent spacing & alignment** across desktop, tablet, and mobile  
+- **Minimal color palette** to ensure artwork stands out  
+- **Mobile-first**, then progressively enhanced for larger screens  
+- **Simple interactions** – toasts, dropdowns, small dynamic updates (price changes by size)
+
+---
+
+### Project Plan
+
+The original concept for Artera was to build a clean and modern digital art store where users could browse, purchase, and download high-quality art prints.  
+The goal was to create a **minimal, elegant, and fully functional e-commerce platform** while keeping the architecture flexible enough for future expansion.
+
+Key priorities in the initial plan:
+- Simple, attractive artwork browsing  
+- Dynamic price updates based on artwork size  
+- Session-based shopping bag  
+- Secure checkout using Stripe  
+- Personal Digital Library for downloads  
+- User profile with editable details and avatar upload  
+- Custom artwork request system  
+- Artist offer submission system
+
+---
+
+## Database Schema
+
+The database schema centers around the authenticated **User**, extending outward into the core e-commerce models for artworks, carts, orders, and service submissions.
+
+The structure was designed using **dbdiagram.io** to clearly map out model relationships early in development.
+
+![Artera Database Schema](documentation/diagramm.png)
+
+### Relationships Overview
+
+**One-to-One**
+- User → Profile
+
+**One-to-Many**
+- User → Orders  
+- User → Artwork Requests  
+- User → Artwork Offers  
+- Order → Order Items  
+- Artwork → Order Items  
+
+**Many-to-One**
+- Order Item → Artwork  
+- Order Item → Order  
+- Artwork Request → User  
+- Artwork Offer → User (optional)
+
+---
+
+## Features
+
+### Navigation
+- A clean, fixed navigation bar available on all pages for quick access.  
+- Includes links to **Shop**, **Bag**, **Library**, **Profile**, **Login/Logout/Register** and **Search** depending on authentication state.  
+- Fully responsive — collapses into a compact mobile menu for small screens.  
+- The Artera logo always leads back to the homepage.
+
+![Navbar Desktop](documentation/)  
+![Navbar Mobile](documentation/)
+
+---
+
+### Footer
+- Minimal, clean footer displayed on all pages.  
+- Contains links to essential sections such as **Shop**, **Profile**, **Library**, and **Contact** (if enabled).  
+- Shows social links or brand mentions when needed (Instagram, website).  
+- Fully responsive — collapses gracefully on smaller devices.  
+- Designed to stay unobtrusive so the artwork remains the focus.
+
+![Footer](documentation/)
+
+### Homepage
+- Hero section introducing Artera and highlighting the platform’s purpose: discovering and downloading high-quality digital artwork.  
+- Clean layout showcasing featured artworks and category highlights.  
+- Clear calls to action directing users to **Browse Artworks** or **Sign In / Create Account**.  
+- Designed to feel minimal, gallery-like, and easy to explore.
+
+![Homepage Hero](documentation/)  
+![Homepage Layout](documentation/)
+
+---
+
+### Shop Page
+- Grid-based layout displaying artworks with title, price, and preview image.  
+- Search bar allowing users to look up artworks by keyword.  
+- Category dropdown (string-based categories stored in the artwork model).  
+- Pagination-ready layout with clean spacing and hover effects.
+
+![Shop Page](documentation/)
+
+---
+
+### Artwork Detail Page
+- Large artwork preview with title, description, and base price.  
+- **Dynamic size selector** updates final price instantly based on the surcharge logic.  
+- “Add to Bag” button triggers a toast notification and updates the cart count.  
+- Clean, minimal layout focused on the artwork itself.
+
+![Artwork Detail](documentation/)
+
+---
+
+### Shopping Bag
+- Session-based shopping cart storing:  
+  - Artwork  
+  - Selected size  
+  - Quantity  
+  - Calculated price  
+- Users can update quantities or remove items.  
+- Bag total updates automatically.  
+- Checkout button redirects to the secure Stripe payment page.
+
+![Bag Page](documentation/)
+
+---
+
+### Checkout
+- Stripe PaymentIntent integration for secure payment handling.  
+- Collects delivery details (full name, address, phone, etc.).  
+- Option to save delivery info to Profile for future orders.  
+- On successful payment, Stripe webhook confirms and creates the Order + Order Items.
+
+![Checkout](documentation/)
+
+---
+
+### Digital Library
+- Logged-in users can access a personal library containing all purchased artworks.  
+- Each entry shows artwork title, preview image, size purchased, and download link.  
+- Only the purchasing user (email match) can access their files.
+
+![Library](documentation/)
+
+---
+
+### Profile Page
+- Users can update personal information:  
+  - Full name  
+  - Phone number  
+  - Address (delivery & living)  
+  - City, postal code, country  
+- Avatar upload/remove integrated via Cloudinary.  
+- Profile details auto-populate during checkout when “Save Delivery Info” is enabled.
+
+![Avatar Section](documentation/)  
+![Profile Form](documentation/)
+
+---
+
+### Artwork Requests (Custom Work)
+- Users can submit a **custom artwork request** with:  
+  - Title  
+  - Description  
+  - Reference image  
+- Each request appears in the user’s Library page with a status badge (in review / accepted / rejected).  
+- Admin can update the request status through Django Admin.
+
+![Artwork Request](documentation/)
+
+---
+
+### Artwork Offers (Artist Submissions)
+- Artists can offer their work by submitting:  
+  - Full name  
+  - Email  
+  - Title  
+  - Description  
+  - Sample image  
+  - Optional website/Instagram  
+- Stored in the database and visible in Django Admin for review.
+
+![Artwork Offer](documentation/)
+
+---
+
+### 404 Error Handling (Defensive Design)
+- Friendly error page matching INNER BALANCE branding.  
+- Suggests returning to the homepage.
+
+![Error Page](documentation/)  
+
+---
+
+## UX Design
+The UX strategy for Artera focuses on **simplicity, elegance, and a gallery-like browsing experience**.  
+Every design decision supports clarity, high-quality artwork presentation, and frictionless shopping.
+
+The interface avoids clutter, emphasizes large visuals, and uses subtle interactions to guide the user through browsing, selecting, purchasing, and downloading artwork.
+
+---
+
+### Colors and Theme
+Artera uses a minimal, modern color palette to keep attention on the artwork while maintaining a premium feel.
+
+**Color Scheme:**
+
+
+![Color Scheme](documentation/)
+
+The overall theme is intentionally minimal so that the artwork itself becomes the visual centerpiece.
+
+---
+
+### Fonts
+- **Primary Font:** "Inter", sans-serif — clean, modern, highly readable.  
+- **Secondary Font (Headings or accents if used):** "Playfair Display" or another subtle serif for artistic flair — optional depending on final design.
+
+Typography stays neutral and spacious, creating a refined, gallery-like atmosphere.
+
+---
+
+### Effects and Interactions
+Artera uses lightweight animations and subtle UI feedback to enhance the shopping flow without overwhelming the user.
+
+- **Dynamic Price Updates**
+  - Changing artwork size updates price instantly.
+  - Smooth fade/slide transitions emphasize the update.
+
+- **Toast Notifications**
+  - “Added to Bag” appears as a small toast with fade-in/out animation.
+  - Non-intrusive but clearly visible.
+
+- **Hover Effects**
+  - Artwork cards slightly scale up or brighten on hover.
+  - Buttons darken or lighten subtly to show interactivity.
+
+- **Image Zoom on Detail Page**
+  - Artwork previews enlarge on hover/touch for better viewing.
+
+- **Responsive Layout Adjustments**
+  - On mobile, artwork grids collapse into single-column layouts.
+  - Bag, Library, and Profile forms stack vertically for easy thumb navigation.
+
+- **Stripe Interaction Feedback**
+  - Loading spinners show when redirecting to Stripe.
+  - Clear confirmation and failure states after returning from checkout.
+
+- **Status Badges**
+  - Color-coded labels for artwork request status:
+    - **In Review** – neutral gray  
+    - **Accepted** – green  
+    - **Rejected** – red  
+
+- **Form Validation**
+  - All forms provide immediate error messages (empty fields, invalid email, etc.).
+  - Disabled buttons for incomplete submissions.
+
+- **Avatar Upload Interaction**
+  - User gets a clear preview before saving.
+  - Delete option immediately removes the Cloudinary image.
+
+- **Minimal Modal & Card Effects**
+  - Modals used sparingly (mainly admin or future features).
+  - Cards for Library, Shop, and Requests include soft shadows and rounded edges for clean spacing.
+
+Overall, UI interactions are deliberately **calm, predictable, and performance-friendly**, supporting the platform’s visual identity as a clean digital art marketplace.
+
+---
+
+### Languages  
+- **HTML** — Structures all page templates, including product listings, forms, navigation, and layout components.  
+- **CSS** — Provides styling for the entire site, ensuring a clean, modern gallery look.  
+- **CSS Variables** — Used to maintain consistent colors, spacing, and typography across all pages.  
+- **CSS Flexbox & Grid** — Power the responsive layouts used in the Shop, Bag, Library, and Profile pages.  
+- **JavaScript (Vanilla)** — Handles dynamic price updates, toast notifications, size selection logic, and small frontend interactions.  
+- **jQuery** — Used for quick DOM manipulation, AJAX toasts, and a few Bootstrap-dependent interactions.  
+
+---
+
+### Frameworks & Libraries  
+- **Bootstrap 5** — Provides a responsive grid system and polished UI components (forms, buttons, cards, modals).  
+- **Django** — Core backend framework handling views, routing, templates, models, authentication, and admin.  
+- **Django Allauth** — Manages user authentication, login, registration, and email verification.  
+- **Stripe (Elements + Webhooks)** — Secure payment processing and order confirmation.  
+- **Font Awesome** — Supplies iconography for UI buttons and status badges.  
+- **Google Fonts** — Integrates the typography used across the platform (e.g., Inter).  
+
+---
+
+### Databases  
+- **PostgreSQL ( production )** — Stores all users, artworks, orders, order items, requests, and offers.  
+- **SQLite ( development )** — Lightweight database for local development before deployment.  
+
+---
+
+### Other Tools & Services  
+- **Git** — Version control for tracking changes and managing development.  
+- **GitHub** — Hosts the repository and project board.  
+- **Heroku** — Deployment platform running the live Django application.  
+- **SendGrid** — Sends email verification links and notifications used by Allauth.  
+- **Cloudinary** — Stores and manages user-uploaded avatars and artwork images.  
+- **Stripe Dashboard** — Monitors payments, refunds, and PaymentIntent logs.  
+- **VS Code** — Primary development editor with Django/Git extensions.  
+- **dbdiagram.io** — Used to design and document the final database schema.  
+- **W3C HTML Validator** — Ensures HTML markup quality.  
+- **W3C CSS Validator** — Validates stylesheet quality.  
+- **PEP8CI** — Checks Python code style for PEP 8 compliance.  
+- **Image Optimization Tools** — Used to compress artwork to improve loading performance.  
+
+---
+
+## Testing
+
+Automated and manual testing were performed across the core apps of Artera to ensure stability, correctness, and a smooth user experience.
+
+---
+
+### Automated Tests
+
+Automated tests cover core backend logic, model behavior, and access permissions in the main Django apps.
+
+#### **Shop app**
+
+
+#### **Bag app**
+
+
+#### **Checkout app**
+
+
+#### **Profiles app**
+
+
+#### **Services app (Requests & Offers)**
+
+
+Run all tests with:
+
+```bash
+python manage.py test
+```
+
+---
+
+| **User Stories Testing**                                                   | **Result** | **Status** |
+| -------------------------------------------------------------------------- | ---------- | ---------- |
+| User can sign up, log in, and log out successfully.                        | Pass       | ✅          |
+| Only logged-in users can access Bag, Checkout, Library, and Profile pages. | Pass       | ✅          |
+| User can browse shop, search artworks, and filter by category.             | Pass       | ✅          |
+| Artwork detail page loads correctly with dynamic price change by size.     | Pass       | ✅          |
+| User can add items to Bag and see toast confirmation.                      | Pass       | ✅          |
+| User can update item quantity or remove items from the Bag.                | Pass       | ✅          |
+| Bag total updates correctly with size surcharge included.                  | Pass       | ✅          |
+| Checkout requires all required fields; validation errors appear clearly.   | Pass       | ✅          |
+| Stripe checkout flow completes; user returns to success page.              | Pass       | ✅          |
+| Failed Stripe payment returns user to cancel page.                         | Pass       | ✅          |
+| Successful payment triggers webhook and marks order as **paid**.           | Pass       | ✅          |
+| Library shows only purchased artworks for the logged-in user.              | Pass       | ✅          |
+| Users cannot access downloads of other users.                              | Pass       | ✅          |
+| Profile updates save correctly (address, phone, avatar).                   | Pass       | ✅          |
+| Avatar upload/remove updates Cloudinary as expected.                       | Pass       | ✅          |
+| Users can create Artwork Requests with title, description, and image.      | Pass       | ✅          |
+| Request appears in Library with correct status.                            | Pass       | ✅          |
+| Artists can submit Artwork Offers with sample image.                       | Pass       | ✅          |
+| Admin can change status of Requests in Django Admin.                       | Pass       | ✅          |
+| 404 page displays for non-existent routes.                                 | Pass       | ✅          |
+
+
+| Sign Up / Login / Logout:      |
+| **Test**                       | **Description**                         | **Result** | **Status** |
+| ------------------------------ | --------------------------------------- | ---------- | ---------- |
+| Sign-up with valid data        | Creates user and logs them in.          | Pass       | ✅          |
+| Duplicate username/email       | Shows field error.                      | Pass       | ✅          |
+| Password mismatch              | Shows field error.                      | Pass       | ✅          |
+| Login with valid credentials   | Redirects to homepage.                  | Pass       | ✅          |
+| Login with invalid credentials | Shows error message.                    | Pass       | ✅          |
+| Logout                         | Ends session and redirects to homepage. | Pass       | ✅          |
+
+| Profile:              |  
+| **Test**              | **Description**                          | **Result** | **Status** |
+| --------------------- | ---------------------------------------- | ---------- | ---------- |
+| Update profile fields | Saves address, phone, and personal info. | Pass       | ✅          |
+| Upload avatar         | Cloudinary image is saved and displayed. | Pass       | ✅          |
+| Remove avatar         | Avatar resets to default placeholder.    | Pass       | ✅          |
+| Invalid fields        | Show validation errors.                  | Pass       | ✅          |
+
+| Shop:                   |
+| **Test**                | **Description**                           | **Result** | **Status** |
+| ----------------------- | ----------------------------------------- | ---------- | ---------- |
+| Shop loads all artworks | Thumbnails, titles, and prices appear.    | Pass       | ✅          |
+| Search bar              | Returns correct artwork results.          | Pass       | ✅          |
+| Category filter         | Filters artworks correctly.               | Pass       | ✅          |
+| Artwork detail          | Loads full description and size selector. | Pass       | ✅          |
+| Price updates by size   | Correct surcharge applied.                | Pass       | ✅          |
+
+| Bag:                        |
+| **Test**                    | **Description**                         | **Result** | **Status** |
+| --------------------------- | --------------------------------------- | ---------- | ---------- |
+| Add to bag                  | Adds item with size/qty.                | Pass       | ✅          |
+| Update quantity             | Bag recalculates totals.                | Pass       | ✅          |
+| Remove item                 | Item removed instantly.                 | Pass       | ✅          |
+| Bag persists during session | Items remain until checkout or removal. | Pass       | ✅          |
+
+| Checkout/Stripe              |
+| **Test**                     | **Description**             | **Result** | **Status** |
+| ---------------------------- | --------------------------- | ---------- | ---------- |
+| Required fields validation   | Missing fields show errors. | Pass       | ✅          |
+| Stripe redirect              | Works reliably.             | Pass       | ✅          |
+| Payment success              | Redirects to success page.  | Pass       | ✅          |
+| Webhook updates order status | Marks order as **paid**.    | Pass       | ✅          |
+
+| Library                          |
+| **Test**                         | **Description**                     | **Result** | **Status** |
+| -------------------------------- | ----------------------------------- | ---------- | ---------- |
+| Library loads purchased artworks | Correct items with download links.  | Pass       | ✅          |
+| Unauthorized access              | Users can’t view others’ downloads. | Pass       | ✅          |
+
+---
+
+#### Lighthouse Report
+
+[Lighthouse report](documentation/lighthouse.pdf)
+
+---
+
+### Compatibility
+
+To confirm correct functionality, layout stability, and responsive behavior, Artera was tested across the following browsers:
+
+- **Google Chrome**
+
+![Chrome test](documentation/chrome-test.gif)
+
+- **Mozilla Firefox**
+
+![Mozilla Firefox test](documentation/mozila-test.gif)
+
+- **Microsoft Edge**
+
+![Microsoft Edge test](documentation/edge-test.gif)
+
+All major browsers showed consistent behavior in navigation, checkout flow, responsiveness, and interactive components.
+
+---
+
+### Responsiveness
+
+Artera’s responsiveness was verified using the **Responsive Viewer** extension in Google Chrome, ensuring layouts adapt correctly across mobile, tablet, and desktop breakpoints.
+
+![Homepage](documentation/homepage.png)
+![Shop Page](documentation/overview-page.png)
+![Profile Page](documentation/profile-page.png)
+
+---
+
+### Validator Testing
+
+#### HTML  
+All templates were checked using the W3C HTML Validator.  
+
+[HTML Report](documentation/html-validator.pdf)
+
+#### CSS  
+Validated using the W3C CSS Validator.
+
+![CSS Validation](documentation/css-validation.png)
+
+#### JavaScript  
+Validated using the JS Hint.
+
+![JS Validation](documentation/js-validation.png)
+
+#### Python   
+Python code was validated using **CI Python Linter**.  
+
+[Python Validation Report](documentation/python-validator.pdf)
+
+---
+
+## Bugs
+
+### Solved Bugs
+
+#### Static Files & Asset Loading (Deployment)
+- **Issue:** CSS and images weren’t loading on Heroku, breaking layout and styling.
+- **Cause:** Static files not properly collected and references not wrapped in `{% static %}`.
+- **Fix:** Configured `STATICFILES_DIRS`, ran `collectstatic`, and updated all templates to use Django’s `{% static %}` tag.
+
+---
+
+#### Session Bag Logic Errors
+- **Issue:** Size and quantity updates weren’t reflected after page reload.
+- **Cause:** Session dictionary keys were inconsistent between views and templates.
+- **Fix:** Standardized session key naming and ensured updates triggered a session save event.
+
+---
+
+#### Stripe PaymentIntent Issues
+- **Issue:** Orders were created even when payment failed.
+- **Cause:** Missing webhook validation on `payment_intent.succeeded`.
+- **Fix:** Implemented full webhook validation, ensuring orders are marked *paid* only on successful Stripe confirmation.
+
+---
+
+#### Profile Avatar Errors (Cloudinary)
+- **Issue:** Removing an avatar caused a broken image reference.
+- **Cause:** Cloudinary public_id wasn’t being deleted.
+- **Fix:** Added `cloudinary.uploader.destroy(public_id)` before clearing the avatar field.
+
+---
+
+#### Artwork Request Status not Updating
+- **Issue:** User-facing status badges did not reflect Admin updates.
+- **Fix:** Adjusted queryset to pull fresh status on each page load.
+
+---
+
+#### Incorrect Price Calculation on Artwork Detail Page
+- **Issue:** Changing size sometimes used outdated surcharge values.
+- **Cause:** Missing fallback in JS for empty or incorrect size attributes.
+- **Fix:** Added validation and safe defaults before recalculating.
+
+---
+
+### Unfixed / Known Bugs
+No known unfixed bugs remain in the current version.
+
+## Future Changes
+
+Artera has a strong foundation, but several improvements are planned to expand functionality, enhance user experience, and support business growth. These future features would shift the project from a simple art store into a full digital art marketplace.
+
+### Planned Enhancements
+
+- **Artist Dashboard**  
+  A dedicated dashboard where artists can manage submissions, track offer status, and upload new artwork collections.
+
+- **Admin Analytics Panel**  
+  Sales charts, artwork performance stats, top downloads, and monthly revenue insights.
+
+- **Persistent User Cart**  
+  Replace the session-only bag with a database-backed cart so items stay saved across devices and sessions.
+
+- **Advanced Search & Smart Filtering**  
+  Users will be able to filter by:  
+  - orientation  
+  - color palette  
+  - style (minimalist, vintage, abstract, etc.)  
+  - tags  
+  - price range  
+
+- **Wishlist / Favorites**  
+  Users can bookmark items they want to view or purchase later.
+
+- **Discount Codes & Promotions**  
+  Add support for coupon codes, launch promotions, and limited-time sales.
+
+- **Enhanced Email System**  
+  More transactional emails, including:  
+  - “New artwork available”  
+  - “Your request was updated”  
+  - “Order delivered”  
+  - “Artist offer reviewed”
+
+- **Subscription Model / Membership Tier**  
+  Paid monthly plan for access to exclusive artwork bundles or premium content.
+
+- **Artist Marketplace Expansion**  
+  Curated artists can upload artwork directly, set pricing, and earn commissions.
+
+- **AR (Augmented Reality) Preview (future concept)**  
+  Users can preview selected artwork on a wall using device camera overlays.
+
+- **JavaScript Cleanup & Modularization**  
+  Move remaining inline scripts into dedicated JS modules for cleaner code.
+
+- **Webhook Monitoring & Logging**  
+  Improve Stripe webhook robustness with retries, logging, and dashboard visibility.
+
+---
+
+## Deployment
+
+Artera is deployed on **Heroku**, using manual deployments via the Heroku Dashboard. This method allows predictable, controlled releases without requiring GitHub Actions or CI/CD pipelines.
+
+### Deployment Steps (Heroku)
+
+1. **Create the Heroku App**  
+   Go to Heroku → **New → Create New App**  
+   Choose app name + region (EU recommended).
+
+2. **Add Required Buildpacks**
+   - `heroku/python`
+   - `heroku/nodejs` (required for Stripe Elements)
+
+3. **Connect Repository**
+   - Go to **Deploy** → Select **GitHub**
+   - Connect your repository  
+   - (Optional) Enable Automatic Deploys from the main branch
+
+4. **Add Config Vars (Environment Variables)**
+   In **Settings → Reveal Config Vars**, add:
+
+   - `SECRET_KEY`
+   - `DATABASE_URL`
+   - `STRIPE_PUBLIC_KEY`
+   - `STRIPE_SECRET_KEY`
+   - `STRIPE_WH_SECRET`
+   - `CLOUDINARY_URL`
+   - `HEROKU_APP_URL`
+   - Email credentials (SendGrid)
+   - Any other private keys
+
+5. **Prepare Django for Deployment**
+   Make sure your repository contains:
+   - `Procfile`
+   - `requirements.txt`
+   - `staticfiles` settings configured properly  
+   - `DEBUG = False` in production  
+
+6. **Run Migrations**  
+   - Open the **More > Run Console** option in the top-right corner.  
+   - Run the following commands:  
+
+     ```bash
+     python manage.py makemigrations
+     python manage.py migrate
+     python manage.py createsuperuser
+     python manage.py collectstatic --noinput
+     ``` 
+
+7. **Manually Deploy the App**  
+   - Scroll down to the **Manual Deploy** section and click **Deploy Branch** to deploy your app.  
+
+### Security
+
+Several security measures were implemented to ensure safe development, deployment, and user data handling throughout the Artera platform:
+
+- **Environment Variables**  
+  All sensitive values (`SECRET_KEY`, `STRIPE_SECRET_KEY`, `DATABASE_URL`, `CLOUDINARY_URL`, email credentials, etc.) are stored in **Heroku Config Vars** and never committed to GitHub.
+
+- **Production Safety Settings**  
+  `DEBUG = False` in production prevents sensitive debug output.
+
+- **Allowed Hosts**  
+  Restricted to the Heroku domain and localhost for development.
+
+- **Authentication & Password Security**  
+  Django’s built-in authentication handles password hashing, session security, and CSRF protection.
+
+- **Secure Payments**  
+  Stripe processes all payments externally using HTTPS, and all order confirmations rely on signed, verified webhooks.
+
+- **Form Validation**  
+  Both client-side and server-side validation ensures safe and clean input across all forms (checkout, profile, submissions, etc.).
+
+- **Static & Media Security**  
+  User-uploaded images are stored securely through Cloudinary with generated URLs and backend validation.
+
+---
+
+### Testing the Deployment
+
+After deploying the application to Heroku, all major components were manually tested using the production URL: https://artera-d6829bf39792.herokuapp.com/.
+
+
+The following deployment checks were completed:
+
+- All pages load correctly with no missing static files  
+- Stripe checkout flow works with redirect + webhook confirmation  
+- Cloudinary image uploads and deletions function correctly  
+- Bag/session logic functions as expected  
+- Digital Library downloads only accessible to the purchasing user  
+- All forms validate properly  
+- 404 and other error pages display correctly  
+- No console errors or missing assets in production  
+
+---
+
+## Cloning, Forking and Version Control
+
+### Cloning
+
+To clone the repository:
+
+- On GitHub.com, navigate to the main page of the repository.  
+- Above the list of files, click **Code**.  
+- Copy the URL for the repository.  
+- Type `git clone`, and then paste the URL you copied earlier.  
+- Press **Enter** to create your local clone.  
+- Move into the newly created project directory:  
+  ```bash
+  cd your-repository-name
+  ```
+
+---
+
+### Forking
+
+To fork the repository:
+
+- On GitHub.com, navigate to the main page of the repository.  
+- In the top-right corner of the page, click **Fork**.  
+- Under "Owner," select the dropdown menu and choose where to create the fork.  
+- Click **Create Fork**.  
+- Once created, clone your fork locally.
+
+---
+
+### Version Control
+
+The project was developed using Git for version control and GitHub for remote storage.  
+- Development was done in small, frequent commits to make progress traceable and manageable.  
+- Commit messages were written to be descriptive and meaningful (e.g., *"Fix bug in progress bar update"* instead of *"Update file"*).  
+- Branching was used for new features and bug fixes, which were merged back into the main branch after testing.  
+This ensured clear project history and easier debugging when issues occurred.
+
+---
+
+## Credits
+
+### Technologies & Frameworks
+- **Django** – Main backend framework used to build Artera.  
+- **Bootstrap 5** – Frontend framework for responsive layout and clean UI components.  
+- **PostgreSQL** – Production database used on Heroku.  
+- **SQLite** – Default local development database.  
+- **Heroku** – Hosting and deployment platform for the live application.  
+- **Gunicorn** – WSGI server used in production.  
+- **Cloudinary** – Media storage and optimization for artwork images and avatars.  
+- **Stripe** – Secure payment processing and webhook integration.  
+
+### Tools & Libraries
+- **Font Awesome** – Icons used throughout the user interface.  
+- **Google Fonts** – Typography resources for clean, modern styling.  
+- **dbdiagram.io** – Used to design and visualize the final database schema.  
+- **Coolors** – Generated the color palette for the project.  
+- **Responsive Viewer Chrome Extension** – Checked responsiveness on multiple device sizes.  
+- **Chrome DevTools / Lighthouse** – Performance, accessibility, and SEO testing.  
+- **W3C Validators** – HTML and CSS validation.  
+- **CI Python Linter** – Ensured PEP 8 compliance in Python code.  
+
+### Learning Resources
+- **Django Documentation** – Primary reference for backend architecture.  
+- **Stripe Documentation** – Guidance for payment flows and webhooks.  
+- **Cloudinary Documentation** – Used to implement avatar and artwork image handling.  
+- **Code Institute** – General inspiration for structure, testing approach, and methodology.  
+- **W3Schools** – Quick reference for HTML, CSS, and JavaScript patterns.  
+- **Stack Overflow** – Troubleshooting and solutions for development challenges.  
+- **Master Django & Python for Web Development (YouTube)** – Used to deepen Django understanding.  
+
+### Media & Content
+- **Favicon & Logo** – Created with (https://favicon.io/).  
+- **Placeholder Artwork / Images** – Sourced from royalty-free image libraries (e.g., Pixabay) for testing.  
+- **Text & Documentation** – All content and copywriting created by the project author.  
+
+
