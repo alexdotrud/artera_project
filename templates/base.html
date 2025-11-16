@@ -66,24 +66,7 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!-- Mobile menu button -->
-                <div class="collapse bg-white border-top d-md-none" id="mobileMenu">
-                    <button class="btn btn-link text-dark w-100 text-end px-3 mt-2" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-label="Close menu">
-                        ✕
-                    </button>
-                    <ul class="navbar-nav p-3">
-                        <li><a class="nav-link" href="{% url 'home' %}" aria-label="Link to homepage">Home</a></li>
-                        <li><a class="nav-link" href="{% url 'all_artworks' %}" aria-label="Link to shop">Shop</a></li>
-                        <li><a class="nav-link" href="{% url 'offer' %}"
-                                aria-label="Link to collaboration page">Collaborate</a></li>
-                        <li class="nav-item" id="nav-search">
-                            <a class="nav-link d-flex align-items-center" href="{% url 'artwork_search' %}">
-                                <i class="fas fa-search me-1"></i> Search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+
                 <!-- Logo (always centered) -->
                 <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="{% url 'home' %}"
                     aria-label="Link to homepage">
@@ -190,9 +173,26 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
+        <!-- Mobile menu -->
+        <div class="collapse bg-white border-top d-md-none" id="mobileMenu">
+            <button class="btn btn-link text-dark w-100 text-end px-3 mt-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mobileMenu" aria-label="Close menu">
+                ✕
+            </button>
+            <ul class="navbar-nav p-3">
+                <li><a class="nav-link" href="{% url 'home' %}" aria-label="Link to homepage">Home</a></li>
+                <li><a class="nav-link" href="{% url 'all_artworks' %}" aria-label="Link to shop">Shop</a></li>
+                <li><a class="nav-link" href="{% url 'offer' %}" aria-label="Link to collaboration page">Collaborate</a>
+                </li>
+                <li class="nav-item" id="nav-search">
+                    <a class="nav-link d-flex align-items-center" href="{% url 'artwork_search' %}">
+                        <i class="fas fa-search me-1"></i> Search
+                    </a>
+                </li>
+            </ul>
+        </div>
     </header>
 
     <!-- Messages -->

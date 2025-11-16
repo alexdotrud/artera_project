@@ -31,6 +31,10 @@
 }
 
 /* Basic Styles */
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: var(--primary-font);
     background: var(--bg-color);
@@ -38,6 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 main {
@@ -104,6 +109,35 @@ header .position-absolute.end-0 {
     right: 10px;
 }
 
+#mobileMenu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 64px);
+    background: var(--bg-color);
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem 1.5rem 2.5rem;
+    transform: translateX(100%);
+    transition: transform 0.25s ease-out;
+    z-index: 1050;
+}
+
+#mobileMenu.show {
+    transform: translateX(0);
+}
+
+#mobileMenu.collapsing {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 64px);
+    overflow: hidden;
+    transform: translateX(100%);
+}
+
 #mobileMenu.collapse {
     position: fixed;
     top: 70px;
@@ -135,6 +169,7 @@ header .position-absolute.end-0 {
     font-weight: 600;
     font-size: 14px;
 }
+
 
 /* Home Page Styles */
 .hero-section {
@@ -387,6 +422,7 @@ header .position-absolute.end-0 {
     align-items: center;
     justify-content: center;
     text-align: center;
+    flex-direction: column;
 }
 
 .bag .table {
