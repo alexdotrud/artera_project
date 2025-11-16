@@ -114,6 +114,7 @@ header .position-absolute.end-0 {
     box-shadow: var(--shadow-md);
     padding-bottom: 2rem;
     height: calc(100vh - 64px);
+    max-width: 300px;
 }
 
 #mobileMenu .btn-link {

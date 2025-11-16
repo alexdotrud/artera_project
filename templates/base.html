@@ -67,7 +67,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- Mobile menu button -->
-                <div class="collapse navbar-collapse bg-white border-top d-md-none" id="mobileMenu">
+                <div class="collapse bg-white border-top d-md-none" id="mobileMenu">
                     <button class="btn btn-link text-dark w-100 text-end px-3 mt-2" type="button"
                         data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-label="Close menu">
                         ✕
@@ -77,16 +77,12 @@
                         <li><a class="nav-link" href="{% url 'all_artworks' %}" aria-label="Link to shop">Shop</a></li>
                         <li><a class="nav-link" href="{% url 'offer' %}"
                                 aria-label="Link to collaboration page">Collaborate</a></li>
+                        <li class="nav-item" id="nav-search">
+                            <a class="nav-link d-flex align-items-center" href="{% url 'artwork_search' %}">
+                                <i class="fas fa-search me-1"></i> Search
+                            </a>
+                        </li>
                     </ul>
-
-                    <form class="d-flex px-3 mb-3" method="get" action="{% url 'artwork_search' %}">
-                        <div class="input-group">
-                            <input class="form-control" type="search" name="q" placeholder="Search..."
-                                value="{{ request.GET.q|default:'' }}">
-                            <button class="btn btn-outline-secondary" type="submit"><i
-                                    class="fas fa-search"></i></button>
-                        </div>
-                    </form>
                 </div>
                 <!-- Logo (always centered) -->
                 <a class="navbar-brand position-absolute top-50 start-50 translate-middle" href="{% url 'home' %}"
@@ -253,18 +249,6 @@
             document.querySelectorAll('#toastSource .toast').forEach(function (el) {
                 bootstrap.Toast.getOrCreateInstance(el).show();
             });
-
-            // Lock scroll when mobile menu is open
-            var mobileMenu = document.getElementById('mobileMenu');
-            if (mobileMenu) {
-                mobileMenu.addEventListener('show.bs.collapse', function () {
-                    document.body.classList.add('nav-open');
-                });
-
-                mobileMenu.addEventListener('hidden.bs.collapse', function () {
-                    document.body.classList.remove('nav-open');
-                });
-            }
         });
     </script>
 
