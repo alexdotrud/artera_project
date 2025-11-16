@@ -355,18 +355,28 @@ header .position-absolute.end-0 {
 
 /* Library */
 
-.order-block img {
-    max-height: 300px;
-    max-width: 200px;
-    border: var(--shadow-sm);
+.request-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.request-card,
 .order-card {
     box-shadow: var(--shadow);
     overflow: hidden;
     background: transparent;
     min-height: 80px;
+}
+
+.library .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.library img {
+    max-width: 150px;
+    height: auto;
 }
 
 
@@ -586,12 +596,6 @@ fieldset {
     display: none;
 }
 
-/* Library */
-.library img {
-    max-width: 150px;
-    height: auto;
-}
-
 /* Request Form/ Request Details */
 .services-card {
     height: auto;
@@ -703,7 +707,6 @@ fieldset {
     background: var(--secondary-color);
     border-color: var(--secondary-color);
     box-shadow: var(--shadow-sm);
-    display: focus;
 }
 
 .btn-outline-dark {
@@ -719,7 +722,6 @@ fieldset {
     background: var(--primary-color);
     border-color: var(--primary-color);
     box-shadow: var(--shadow-sm);
-    display: focus;
 }
 
 .btn-danger {
@@ -737,7 +739,6 @@ a {
 a:hover {
     color: var(--secondary-color);
     text-decoration: none;
-    display: focus;
 }
 
 i {
@@ -751,7 +752,6 @@ a:hover i,
 button:hover i,
 i:hover {
     color: var(--secondary-color);
-    display: focus;
 }
 
 @media (min-width: 768px) {
@@ -886,8 +886,27 @@ i:hover {
         margin-top: 0;
     }
 
-    .bag .d-flex {
-        justify-content: flex-end !important;
-        flex-wrap: nowrap;
+    /* Library */
+    .library .order-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .order-line-info {
+        text-align: left;
+    }
+
+    .order-line-actions {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .request-card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
 }

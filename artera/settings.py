@@ -7,7 +7,7 @@ if os.path.isfile('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://artera-d6829bf39792.herokuapp.com",
+    "https://artera-d6829bf39792.herokuapp.com/",
     "https://localhost",
     "https://127.0.0.1",
 ]
