@@ -781,6 +781,17 @@ i:hover {
 
 @media (min-width: 768px) {
 
+    #mobileMenu.collapse {
+        position: static;
+        inset: auto;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        transform: none;
+        height: auto;
+        overflow: visible;
+    }
+
     .shop-cont .card-img-top {
         min-height: 300px;
     }
