@@ -76,9 +76,8 @@
 
     <hr class="my-5">
 
-    <h3 class="mb-3">Your Requests</h3>
-
     {% if requests %}
+    <h3 class="mb-3">Your Requests</h3>
     <div class="row g-3">
         {% for r in requests %}
         <div class="col-12">
@@ -104,8 +103,10 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="text-muted">You haven’t submitted any requests yet.</p>
-    <a href="{% url 'request' %}" class="btn btn-dark btn-sm mt-2">Make a Request</a>
+    <div class="text-center py-5">
+        <p class="text-muted">You haven’t submitted any requests yet.</p>
+        <a href="{% url 'request' %}" class="btn btn-dark mt-2">Make a Request</a>
+    </div>
     {% endif %}
 
 </div>

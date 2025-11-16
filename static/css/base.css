@@ -107,7 +107,6 @@ header .position-absolute.end-0 {
 #mobileMenu.collapse {
     position: fixed;
     top: 70px;
-    /* same as header height */
     left: 0;
     right: 20%;
     background: var(--bg-color);
