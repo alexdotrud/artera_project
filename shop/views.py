@@ -75,17 +75,23 @@ def artwork_detail(request, artwork_id):
 
 
 def artwork_search(request):
-    """A view to search for artworks based on a query string"""
+    """View to search for artworks based on a query string."""
     query = request.GET.get("q", "").strip()
 
-    artworks = Artwork.objects.select_related("category").order_by(Random())
+    # Base queryset
+    artworks = Artwork.objects.select_related("category")
     categories = Category.objects.order_by("name")
     current_categories = None
 
     if query:
         artworks = artworks.filter(
-            Q(name__icontains=query) | Q(description__icontains=query)
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__name__icontains=query)
         )
+
+    # Randomize result order after filtering
+    artworks = artworks.order_by(Random())
 
     context = {
         "artworks": artworks,
