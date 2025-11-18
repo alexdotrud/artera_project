@@ -42,11 +42,10 @@
                     <p class="my-0 small">
                         Size: {% if it.size %}{{ it.size|upper }}{% else %}N/A{% endif %}
                     </p>
-                    <p class="my-0 small text-muted">Qty: 1</p>
                 </div>
                 <div class="col-3 text-end">
                     <p class="my-0 small text-muted">
-                        ${{ it.artwork.price|calc_subtotal:it.quantity|floatformat:2 }}
+                        ${{ it.artwork.price|floatformat:2 }}
                     </p>
                 </div>
             </div>
@@ -56,13 +55,9 @@
 
             <div class="row text-end mt-2">
                 <div class="col-7 offset-2 total-text">
-                    <p class="my-0 text-muted">Subtotal:</p>
-                    <p class="my-0 text-muted">Delivery:</p>
                     <p class="my-0 fw-semibold">Order Total:</p>
                 </div>
                 <div class="col-3">
-                    <p class="my-0 text-muted">${{ total|floatformat:2 }}</p>
-                    <p class="my-0 text-muted">${{ delivery|floatformat:2 }}</p>
                     <p class="my-0 fw-semibold"><strong>${{ grand_total|floatformat:2 }}</strong></p>
                 </div>
             </div>

@@ -78,23 +78,11 @@
                         </tbody>
 
                         <tfoot class="align-bottom">
-                            <tr>
-                                <th colspan="2"></th>
-                                <th class="text-end pt-4">Delivery:</th>
-                                <th class="text-start pt-4">
-                                    {% if delivery > 0 %}
-                                    ${{ delivery|floatformat:2 }}
-                                    {% else %}
-                                    <span class="text-success">Free</span>
-                                    {% endif %}
-                                </th>
-                            </tr>
-                            <tr>
-                                <th colspan="2"></th>
-                                <th class="text-end pb-3 fw-bold">Total:</th>
-                                <th class="text-start pb-3 fw-bold">
-                                    ${{ grand_total|default:total|floatformat:2 }}
-                                </th>
+                            <th colspan="2"></th>
+                            <th class="text-end pb-3 fw-bold">Total:</th>
+                            <th class="text-start pb-3 fw-bold">
+                                ${{ grand_total|default:total|floatformat:2 }}
+                            </th>
                             </tr>
                         </tfoot>
                     </table>

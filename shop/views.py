@@ -3,8 +3,6 @@ from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
 from decimal import Decimal
-from django.utils import timezone
-from datetime import timedelta
 from django.db.models.functions import Random
 
 from .models import Artwork, Category, SIZE_CHOICES, SIZE_SURCHARGE

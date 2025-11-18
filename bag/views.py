@@ -19,9 +19,7 @@ def view_bag(request):
 def add_to_bag(request, item_id):
     """
     Add the specified artwork to the shopping bag.
-    Shape enforced to match context:
-      bag[item_id] = {"sizes": {size_code: 1, ...}}
-    Quantities are fixed at 1 (no increments).
+    Quantities are fixed at 1
     """
     artwork = get_object_or_404(Artwork, pk=item_id)
     redirect_url = request.POST.get("redirect_url") or reverse("view_bag")
@@ -40,12 +38,12 @@ def add_to_bag(request, item_id):
 
     if size in entry["sizes"]:
         messages.info(
-            request, f"{artwork.name} ({size.upper()}) is already in your bag."
+            request, f"{artwork.name} is already in your bag."
         )
     else:
         entry["sizes"][size] = 1
         messages.success(
-            request, f"Added {artwork.name} ({size.upper()}) to your bag."
+            request, f"Added {artwork.name} to your bag."
         )
 
     bag[key] = entry
@@ -80,7 +78,7 @@ def remove_from_bag(request, item_id):
                 bag.pop(key, None)
             messages.success(
                 request,
-                f"Removed {artwork.name} ({size.upper()}) from your bag.",
+                f"Removed {artwork.name} from your bag.",
             )
         else:
             messages.error(request, "That size is not in your bag.")

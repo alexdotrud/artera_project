@@ -25,30 +25,22 @@ def bag_contents(request):
                 product_count += qty
                 bag_items.append({
                     'item_id': item_id,
-                    'quantity': qty,
                     'artwork': artwork,
                     'size': size,
+                    'quantity': qty,
                     'price': unit_price,
                     'lineitem_total': line_total,
                 })
     
     # Delivery
-    if total < getattr(settings, 'FREE_DELIVERY_THRESHOLD', 0):
-        delivery = total * Decimal(getattr(settings, 'STANDARD_DELIVERY_PERCENTAGE', 0) / 100)
-        free_delivery_delta = getattr(settings, 'FREE_DELIVERY_THRESHOLD', 0) - total
-    else:
-        delivery = 0
-        free_delivery_delta = 0
-
-    grand_total = delivery + total
+    delivery = Decimal('0.00')
+    grand_total = total
 
     context = {
         'bag_items': bag_items,
         'total': total,
         'product_count': product_count,
         'delivery': delivery,
-        'free_delivery_delta': free_delivery_delta,
-        'free_delivery_threshold': getattr(settings, 'FREE_DELIVERY_THRESHOLD', 0),
         'grand_total': grand_total,
     }
 
