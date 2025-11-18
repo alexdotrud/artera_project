@@ -764,6 +764,21 @@ fieldset {
     box-shadow: var(--shadow-sm);
 }
 
+.btn-bright {
+    background: rgb(62, 3, 3);
+    color: #fff;
+    border-radius: 8px;
+    border-color: var(--primary-color);
+    letter-spacing: 0.2px;
+}
+
+.btn-bright:hover,
+.btn-bright:focus {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    box-shadow: var(--shadow-sm);
+}
+
 .btn-danger {
     border-color: var(--primary-color);
     border-radius: 8px;

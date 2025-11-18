@@ -764,6 +764,22 @@ fieldset {
     box-shadow: var(--shadow-sm);
 }
 
+.btn-bright {
+    background-color: rgb(62, 3, 3);
+    color: #fff;
+    border-radius: 8px;
+    border-color: var(--primary-color);
+    letter-spacing: 0.2px;
+}
+
+.btn-bright:hover,
+.btn-bright:focus {
+    background-color: var(--muted);
+    border-color: var(--muted);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
 .btn-danger {
     border-color: var(--primary-color);
     border-radius: 8px;
@@ -792,6 +808,7 @@ a:hover i,
 button:hover i,
 i:hover {
     color: var(--secondary-color);
+    transform: translateY(-2px) scale(1.15);
 }
 
 @media (min-width: 768px) {

@@ -98,7 +98,7 @@
                 <p class="mb-4">
                     We keep it simple: fewer, better artworks—thoughtfully produced and easy to love.
                 </p>
-                <a href="" class="btn btn-dark">Explore Prints</a>
+                <a href="{% url 'all_artworks' %}" class="btn btn-dark">Explore Prints</a>
             </div>
         </div>
     </div>
@@ -201,12 +201,13 @@
                 <p class="mb-4">
                     {% if not request.user.is_authenticated %}
                     To begin your custom artwork journey, please
-                    <a href="" class="text-decoration-underline" aria-label="login-link">log
+                    <a href="{% url 'account_login' %}" class="btn btn-bright" aria-label="login-link">log
                         in</a>
                     or
-                    <a href="" class=" text-decoration-underline" aria-label="register-link">register</a>.
+                    <a href="{% url 'account_signup' %}" class="btn btn-bright" aria-label="register-link">register</a>.
                     {% else %}
-                    <a href="" class="btn btn-dark" aria-label="request-form-link">Make a Request</a>
+                    <a href="{% url 'request' %}" class="btn btn-dark" aria-label="request-form-link">Make a
+                        Request</a>
                     {% endif %}
                 </p>
             </div>
