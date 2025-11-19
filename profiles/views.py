@@ -7,6 +7,9 @@ from django.contrib import messages
 from allauth.account.models import EmailAddress
 from django.http import HttpResponseBadRequest
 import cloudinary.uploader
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 
 from checkout.models import OrderItem, Order
@@ -23,10 +26,32 @@ def profile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=profile)
         new_email = (request.POST.get("email") or "").strip()
+        new_username = (request.POST.get("username") or "").strip()
 
         if form.is_valid():
+            # Handle username change
+            if new_username and new_username != request.user.username:
+                validator = UnicodeUsernameValidator()
+                try:
+                    validator(new_username)
+                except ValidationError:
+                    messages.error(
+                        request,
+                        "Invalid username."
+                        "Use letters, numbers and @/./+/-/_ only."
+                    )
+                    return redirect("profile")
+                if User.objects.filter(
+                    username__iexact=new_username
+                ).exclude(id=request.user.id).exists():
+                    messages.error(request, "This username is already taken.")
+                    return redirect("profile")
+                
             with transaction.atomic():
                 form.save()
+                if new_username and new_username != request.user.username:
+                    request.user.username = new_username
+                    request.user.save(update_fields=["username"])
                 if (
                     new_email
                     and new_email.lower()
