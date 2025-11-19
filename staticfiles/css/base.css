@@ -729,6 +729,22 @@ fieldset {
     color: var(--muted);
 }
 
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+}
+
+.newsletter-input {
+    max-width: 160px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.newsletter-btn {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
 /* Custom Button/Link/Icon Styles */
 .btn {
     max-width: 300px;
@@ -764,21 +780,6 @@ fieldset {
     box-shadow: var(--shadow-sm);
 }
 
-.btn-bright {
-    background: rgb(62, 3, 3);
-    color: #fff;
-    border-radius: 8px;
-    border-color: var(--primary-color);
-    letter-spacing: 0.2px;
-}
-
-.btn-bright:hover,
-.btn-bright:focus {
-    background: var(--secondary-color);
-    border-color: var(--secondary-color);
-    box-shadow: var(--shadow-sm);
-}
-
 .btn-danger {
     border-color: var(--primary-color);
     border-radius: 8px;
@@ -807,6 +808,7 @@ a:hover i,
 button:hover i,
 i:hover {
     color: var(--secondary-color);
+    transform: translateY(-2px) scale(1.15);
 }
 
 @media (min-width: 768px) {

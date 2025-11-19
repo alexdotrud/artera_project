@@ -729,6 +729,22 @@ fieldset {
     color: var(--muted);
 }
 
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+}
+
+.newsletter-input {
+    max-width: 160px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.newsletter-btn {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
 /* Custom Button/Link/Icon Styles */
 .btn {
     max-width: 300px;
@@ -761,22 +777,6 @@ fieldset {
     color: #fff;
     background: var(--primary-color);
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-bright {
-    background-color: rgb(62, 3, 3);
-    color: #fff;
-    border-radius: 8px;
-    border-color: var(--primary-color);
-    letter-spacing: 0.2px;
-}
-
-.btn-bright:hover,
-.btn-bright:focus {
-    background-color: var(--muted);
-    border-color: var(--muted);
-    color: #fff;
     box-shadow: var(--shadow-sm);
 }
 

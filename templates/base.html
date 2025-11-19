@@ -223,13 +223,108 @@
                     class="fa-brands fa-linkedin"></i></a>
             <a href="https://github.com/alexdotrud" target="_blank" title="Check my profile on Github"
                 aria-label="Link to my GitHub profile"><i class="fa-brands fa-github"></i></a>
-        </div>
+            <form method="post" action="{% url 'newsletter_subscribe' %}" class="mt-2 newsletter-form">
+                {% csrf_token %}
+                <input type="email" name="email" class="form-control form-control-sm"
+                    placeholder="Sign up for art updates" required>
+                <button type="submit" class="btn btn-dark btn-sm">
+                    Subscribe
+                </button>
+            </form>
+
+            <div class="footer-links mt-2">
+                <p class="small">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">
+                        Terms & Conditions
+                    </a>
+                    |
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">
+                        Privacy Policy
+                    </a>
+                </p>
+            </div>
     </footer>
 
     <div id="loading-overlay" style="display: none;">
         <div class="loading-spinner">
             <i class="fas fa-3x fa-sync-alt fa-spin"></i>
             <p>Processing your payment…</p>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms &amp; Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <h5 class="fw-semibold mb-2">• Digital products</h5>
+                    <p>All artworks on Artera are <strong>digital downloads</strong>. No physical items are shipped.</p>
+
+                    <h5 class="fw-semibold mb-2">• Access to files</h5>
+                    <p>
+                        After purchase, your files are available in your <strong>Library</strong> when you are logged
+                        in.
+                        You are responsible for keeping your account credentials secure.
+                    </p>
+
+                    <h5 class="fw-semibold mb-2">• Personal use only</h5>
+                    <p>
+                        Unless explicitly stated otherwise, artworks are licensed for personal, non-commercial use.
+                        You may print them for yourself or as a gift, but you may not resell, redistribute, or use them
+                        commercially.
+                    </p>
+
+                    <h5 class="fw-semibold mb-2">• Refunds</h5>
+                    <p>
+                        Because our products are digital and instantly available, all sales are generally final.
+                        If you have a technical issue with a file, please contact us and we will do our best to help.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <h5 class="fw-semibold mb-2">• What we collect</h5>
+                    <p>
+                        We collect your name, email address, account details, order history, and basic technical
+                        information
+                        (such as IP address and browser type) when you use Artera.
+                    </p>
+
+                    <h5 class="fw-semibold mb-2">• How we use your data</h5>
+                    <p>
+                        We use this information to manage your account and Library, process orders, send important
+                        account and
+                        order emails, and improve the site.
+                    </p>
+
+                    <h5 class="fw-semibold mb-2">• Third-party services</h5>
+                    <p>
+                        We may use trusted third-party services such as payment processors and email providers.
+                        They only receive the data necessary to perform their function.
+                    </p>
+
+                    <h5 class="fw-semibold mb-2">• Your rights</h5>
+                    <p>
+                        You can request access, correction, or deletion of your personal data where applicable.
+                        If you have questions about your data, please contact us via the email address provided on the
+                        site.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
