@@ -108,6 +108,7 @@ def checkout(request):
             "street_address1": request.POST["street_address1"],
             "street_address2": request.POST["street_address2"],
             "county": request.POST["county"],
+            
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
@@ -221,7 +222,7 @@ def checkout(request):
                 "town_or_city": profile.city or "",
                 "street_address1": profile.address_line_delivery or "",
                 "street_address2": profile.address_line_living or "",
-                "county": "",
+                "county": profile.county,
             }
         order_form = OrderForm(initial=initial)
 

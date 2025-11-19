@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load bag_tools %}
 {% block page_name %}Checkout{% endblock %}
 {% block content %}
 
@@ -18,12 +17,6 @@
         <!-- Order Summary -->
         <div class="col-12 col-lg-6 order-lg-last mb-5">
             <p class="text-muted">Order Summary ({{ product_count }})</p>
-
-            <div class="row">
-                <div class="col-7 offset-2">
-                    <p class="mb-1 mt-0 small text-muted">Item</p>
-                </div>
-            </div>
 
             {% for it in bag_items %}
             <div class="row align-items-center">

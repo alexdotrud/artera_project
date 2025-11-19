@@ -102,20 +102,27 @@
                                     {{ form.address_line_living.errors.0 }}</div>{% endif %}
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">{{ form.city.label }}</label>
                                 {{ form.city }}
                                 {% if form.city.errors %}<div class="text-danger small">{{ form.city.errors.0 }}
                                 </div>
                                 {% endif %}
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.county.label }}</label>
+                                {{ form.county }}
+                                {% if form.county.errors %}<div class="text-danger small">{{ form.county.errors.0 }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label">{{ form.postal_code.label }}</label>
                                 {{ form.postal_code }}
                                 {% if form.postal_code.errors %}<div class="text-danger small">
                                     {{ form.postal_code.errors.0 }}</div>{% endif %}
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="form-label">{{ form.country.label }}</label>
                                 {{ form.country }}
                                 {% if form.country.errors %}<div class="text-danger small">

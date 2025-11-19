@@ -8,7 +8,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = [
             'full_name', 'phone_number', 'address_line_delivery',
-            'address_line_living', 'city', 'postal_code', 'country'
+            'address_line_living', 'city', 'postal_code', 'country', 'county'
         ]
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -22,6 +22,7 @@ class ProfileForm(forms.ModelForm):
             'city': forms.TextInput(attrs={'class': 'form-control'}),
             'postal_code': forms.TextInput(attrs={'class': 'form-control'}),
             'country': forms.TextInput(attrs={'class': 'form-control'}),
+            'county': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'full_name': 'Full Name',
@@ -31,4 +32,5 @@ class ProfileForm(forms.ModelForm):
             'city': 'City',
             'postal_code': 'Postal Code',
             'country': 'Country',
+            'county': 'County'
         }
