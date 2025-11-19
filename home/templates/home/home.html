@@ -120,12 +120,15 @@
                     safe and
                     accessible, you’ll need to be a registered user with an Artera account.
                 </p>
-                <a href="{% url 'all_artworks' %}" class="btn btn-dark">Explore Prints</a>
-                {% if not request.user.is_authenticated %}
-                <a href="{% url 'account_signup' %}" class="btn btn-dark">
-                    Create an Artera account
-                </a>
-                {% endif %}
+                <p class="mb-4">
+                    Want to discover new drops and curated digital collections first?
+                </p>
+                <form method="post" action="{% url 'newsletter_subscribe' %}" class="newsletter-form mt-3">
+                    {% csrf_token %}
+                    <input type="email" name="email" class="newsletter-input" placeholder="Join our newsletter"
+                        required>
+                    <button type="submit" class="btn btn-dark">Join</button>
+                </form>
             </div>
         </div>
     </div>
@@ -228,10 +231,10 @@
                 <p class="mb-4">
                     {% if not request.user.is_authenticated %}
                     To begin your custom artwork journey, please
-                    <a href="{% url 'account_login' %}" aria-label="login-link">log
+                    <a href="{% url 'account_login' %}" aria-label="login-link" class="fw-semibold">log
                         in</a>
                     or
-                    <a href="{% url 'account_signup' %}" aria-label="register-link">register</a>.
+                    <a href="{% url 'account_signup' %}" aria-label="register-link" class="fw-semibold">register</a>.
                     {% else %}
                     <a href="{% url 'request' %}" class="btn btn-dark mt-4" aria-label="request-form-link">Make a
                         Request</a>
