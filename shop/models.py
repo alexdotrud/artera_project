@@ -17,10 +17,12 @@ SIZE_SURCHARGE = {
 
 
 def calc_size_price(base_price: Decimal, size_code: str) -> Decimal:
+    """Calculate price based on size choice."""
     return (base_price + SIZE_SURCHARGE[size_code]).quantize(Decimal("0.01"))
 
 
 class Category(models.Model):
+    """ Artwork category model. """
     class Meta:
         verbose_name_plural = "Categories"
 
@@ -35,6 +37,7 @@ class Category(models.Model):
 
 
 class Artwork(models.Model):
+    """ Model for digital artworks available in the shop. """
     category = models.ForeignKey(
         "Category", null=True,
         blank=True,

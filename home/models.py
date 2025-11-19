@@ -3,6 +3,7 @@ from shop.models import Category
 
 
 class SearchDocument(models.Model):
+    """ Model for search documents used in site search functionality. """
     title = models.CharField(max_length=255)
     content = models.TextField()
     description = models.TextField(blank=True, null=True)

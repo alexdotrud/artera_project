@@ -9,6 +9,7 @@ from shop.models import Artwork
 
 
 class Order(models.Model):
+    """ Model for customer orders. """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True, blank=True,
@@ -88,6 +89,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    """ Model for individual items within an order. """
     order = models.ForeignKey(
         Order,
         null=False,

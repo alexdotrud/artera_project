@@ -6,7 +6,6 @@ from shop.models import Artwork
 
 def bag_contents(request):
     """ Works with the simple bag structure from your views """
-
     bag_items = []
     total = Decimal("0")
     product_count = 0

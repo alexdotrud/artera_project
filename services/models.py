@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 
 
 class ArtworkRequest(models.Model):
+    """ Model for custom artwork requests made by users. """
     STATUS = [
         ("in_review", "In review"),
         ("accepted", "Accepted"),
@@ -32,6 +33,7 @@ class ArtworkRequest(models.Model):
 
 
 class Offer(models.Model):
+    """ Model for artwork offers by artists. """
     full_name = models.CharField(max_length=120)
     email = models.EmailField()
     phone_number = models.CharField(max_length=32, blank=True)

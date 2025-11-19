@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 
 
 class Profile(models.Model):
+    """ Model for user profiles storing additional user information. """
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
