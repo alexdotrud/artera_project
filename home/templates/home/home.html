@@ -15,7 +15,29 @@
             <p class="text-muted mb-4">
                 Explore fresh arrivals and timeless favorites. Download instantly and print with ease.
             </p>
-            <a href="{% url 'all_artworks' %}" class="btn btn-dark">Explore Collection</a>
+            {% if request.user.is_authenticated %}
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mb-2">
+                <a href="{% url 'all_artworks' %}" class="btn btn-dark px-4">
+                    Explore Collection
+                </a>
+                <a href="{% url 'library' %}" class="btn btn-outline-dark px-4">
+                    Go to Your Library
+                </a>
+            </div>
+            {% else %}
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mb-2">
+                <a href="{% url 'account_signup' %}" class="btn btn-dark px-4">
+                    Create An Account
+                </a>
+                <a href="{% url 'all_artworks' %}" class="btn btn-outline-dark px-4">
+                    Browse Artworks
+                </a>
+            </div>
+            <p class="small text-muted mt-4">
+                Already have an account?
+                <a href="{% url 'account_login' %}">Log in</a>
+            </p>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -93,9 +115,17 @@
                     and display with ease.
                 </p>
                 <p class="mb-4">
-                    We keep it simple: fewer, better artworks—thoughtfully produced and easy to love.
+                    Here’s how it works: choose an artwork, complete your purchase, and it appears in your personal
+                    <strong>Library</strong>. From there you can download your files anytime. To keep your downloads
+                    safe and
+                    accessible, you’ll need to be a registered user with an Artera account.
                 </p>
                 <a href="{% url 'all_artworks' %}" class="btn btn-dark">Explore Prints</a>
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'account_signup' %}" class="btn btn-dark">
+                    Create an Artera account
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -198,12 +228,12 @@
                 <p class="mb-4">
                     {% if not request.user.is_authenticated %}
                     To begin your custom artwork journey, please
-                    <a href="{% url 'account_login' %}" class="btn btn-bright" aria-label="login-link">log
+                    <a href="{% url 'account_login' %}" aria-label="login-link">log
                         in</a>
                     or
-                    <a href="{% url 'account_signup' %}" class="btn btn-bright" aria-label="register-link">register</a>.
+                    <a href="{% url 'account_signup' %}" aria-label="register-link">register</a>.
                     {% else %}
-                    <a href="{% url 'request' %}" class="btn btn-dark" aria-label="request-form-link">Make a
+                    <a href="{% url 'request' %}" class="btn btn-dark mt-4" aria-label="request-form-link">Make a
                         Request</a>
                     {% endif %}
                 </p>
