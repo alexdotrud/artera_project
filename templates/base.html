@@ -233,12 +233,48 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-sm">
+                <div class="modal-body">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                    <form method="post" id="deleteConfirmForm">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Show toasts
-            document.querySelectorAll('#toastSource .toast').forEach(function (el) {
+            // Show Toasts
+            document.querySelectorAll('#toastSource .toast').forEach(el => {
                 bootstrap.Toast.getOrCreateInstance(el).show();
             });
+            // Delete Confirmation Modal
+            const deleteModal = document.getElementById('confirmDeleteModal');
+
+            if (deleteModal) {
+                deleteModal.addEventListener('show.bs.modal', event => {
+                    const button = event.relatedTarget;
+                    const actionUrl = button.getAttribute('data-action-url');
+                    const itemLabel = button.getAttribute('data-item-label') || "this item";
+
+                    const form = deleteModal.querySelector('#deleteConfirmForm');
+                    const labelSpan = deleteModal.querySelector('.item-label');
+
+                    form.action = actionUrl;
+                    labelSpan.textContent = itemLabel;
+                });
+            }
+
         });
     </script>
 
