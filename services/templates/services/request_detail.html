@@ -68,7 +68,12 @@
                         <a href="{% url 'request_edit' request_obj.id  %}" class="btn btn-outline-dark">Edit</a>
                         <form method="post" action="{% url 'request_delete' request_obj.id  %}" class="m-0">
                             {% csrf_token %}
-                            <button class="btn btn-danger" type="submit">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal"
+                                data-action-url="{% url 'request_delete' request_obj.id %}"
+                                data-item-label="this artwork request">
+                                Delete Request
+                            </button>
                         </form>
                         <a href="{% url 'all_artworks' %}" class="btn btn-dark" aria-label="Link to shop page">Back to
                             Shop</a>

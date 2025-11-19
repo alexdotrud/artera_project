@@ -30,7 +30,11 @@
                     {% if form.instance.avatar %}
                     <form method="post" action="{% url 'avatar_remove' %}" class="d-grid gap-2">
                         {% csrf_token %}
-                        <button class="btn btn-outline-secondary mx-auto px-4" type="submit">Remove avatar</button>
+                        <button type="button" class="btn btn-outline-secondary mx-auto px-4" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal" data-action-url="{% url 'avatar_remove' %}"
+                            data-item-label="your profile image">
+                            Remove Avatar
+                        </button>
                     </form>
                     {% endif %}
 
