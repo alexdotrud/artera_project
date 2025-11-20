@@ -31,13 +31,12 @@
         </div>
 
         <div class="collapse" id="collabForm">
-            <div class="row d-flex  align-items-center justify-content-center">
+            <div class="row d-flex align-items-center justify-content-center">
                 <div class="col-12 col-lg-10">
                     <div class="services-card p-4 p-md-5">
                         <form method="post" class="row g-3">
                             {% csrf_token %}
                             <h2>Collaboration form</h2>
-                            <hr>
                             <div class="col-md-6">
                                 <label class="form-label">{{ form.full_name.label }}</label>
                                 {{ form.full_name }}

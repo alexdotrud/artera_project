@@ -1,11 +1,11 @@
 # **ARTERA**
 
-![Project preview on multiple screens](documentation/responsive.png)
+![Project preview on multiple screens](documentation/responsive-all-screens.png)
 [View live project here!](https://artera-d6829bf39792.herokuapp.com/)
 
 Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap 5**, **JavaScript**, and **Stripe**. Users can browse artworks, choose sizes with dynamic pricing, purchase securely, manage profiles, and access all purchased files through a personal Digital Library. Artists can also submit custom artwork requests or offer sample work.
 
----
+Card number for payment testing: 4242424242424242
 
 ## Content:
 
@@ -14,9 +14,10 @@ Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap
 * [Developer Goals](#developer-goals)
 * [User Stories](#user-stories)
 * [Agile Methods](#agile-methods)
+* [Buisness Model](#buisness-model)
+* [Web marketing](#web-marketing)
+* [Information Architecture](#information-architecture)
 * [Design Choices](#design-choices)
-* [Project Plan](#project-plan)
-* [Database Schema](#database-schema)
 * [Features](#features)
 * [UX Design](#ux-design)
 * [Technologies Used](#technologies-used)
@@ -27,8 +28,6 @@ Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap
 * [Setup Instructions](#setup-instructions)
 * [Cloning, Forking and Version Control](#cloning-forking-and-version-control)
 * [Credits](#credits)
-
----
 
 ## User Goals
 
@@ -57,8 +56,6 @@ The project aims to:
 * Write clean, maintainable, and scalable code following best practices.
 * Optimize backend and frontend performance for fast rendering and smooth interactions.
 * Create a future‑proof structure that can grow with new features, artwork categories, or business models.
-
----
 
 ## User Stories
 
@@ -114,15 +111,14 @@ As a user, I want to view artwork details and add them to my cart.
 As a user, I want to review my cart and pay securely.  
 
 **Acceptance Criteria:**  
-- Cart lists items with title, price, and remove/update options  
+- Cart lists items with title, price, and remove option 
 - Total price updates automatically  
 - Checkout button redirects to Stripe  
 - Success page after payment  
-- Cancel page after failed/cancelled payment  
 
 ---
 
-### 6. Stripe Payment Confirmation (System)  
+### 6. Stripe Payment Confirmation 
 **User Story:**  
 As the system, I want to confirm payment success so users only access paid items.  
 
@@ -159,9 +155,8 @@ As a logged-in user, I want to update my profile so my information is correct fo
 As an artist, I want to offer my artwork to the platform for review.  
 
 **Acceptance Criteria:**  
-- Form with title, description, category, price, image upload  
-- Submission marked as “pending approval”  
-- Admin can approve or reject the submission  
+- Form with title, description, category, price, image upload
+- After submission redirects to confirmation page
 
 ---
 
@@ -173,7 +168,7 @@ As a customer, I want to request custom artwork tailored to my preferences.
 - Form with title, description, and reference image  
 - Requests linked to user account  
 - Displayed in “My Requests”  
-- Admin/artist can respond with a quote or offer  
+- As default shows stsus - "In review", status will be change by admin if accepted, or rejected.
 
 ---
 
@@ -182,11 +177,10 @@ As a customer, I want to request custom artwork tailored to my preferences.
 As a user, I want to receive email notifications for important actions.  
 
 **Acceptance Criteria:**  
-- Welcome email after registration  
-- Password reset email  
+- Email verification after registering new user 
+- Email verification after changing email on profile page 
 - Order confirmation email after payment  
 
----
 
 ## Agile Methods
 
@@ -213,14 +207,325 @@ This project was planned and developed using Agile methodology to keep developme
 ![GitHub Projects Board](documentation/todo-list.png)  
 ![Example User Stories](documentation/task-planning.png)
 
+
+## Buisness Model
+The Business Model is **B2C**, meaning Artera sells digital art prints directly to individual customers.  
+There is no physical inventory, no shipping, and no logistics. Instead, the focus is on delivering **high-quality downloadable artwork** that users can access instantly through their personal Library.
+
+### A Persona Summary of the Customer
+
+Artera is designed for individuals who want to elevate their personal space with clean, modern digital prints.  
+
+Typical users:
+
+- young professionals decorating apartments,
+- people setting up home offices or creative corners,
+- renters who want flexible, affordable decor,
+- anyone who wants fast, downloadable art rather than waiting for shipping.
+
+These users value:
+
+- simplicity,  
+- modern aesthetics,  
+- instant access,  
+- safe storage in a personal Library,  
+- and a clean, minimal shopping experience.
+
+### A Persona Summary of Artists / Contributors
+
+Artera also serves emerging or independent artists who wish to:
+
+- submit sample work for collaboration,
+- contribute to a curated digital catalog,
+- expand their reach through a premium, minimal brand.
+
+Artist submissions are handled through a dedicated **Artwork Offer** form.
+
+### Strategy Trade-Off
+
+Artera intentionally trades a huge marketplace model for a **highly curated, calmer experience**.
+
+Key trade-offs:
+
+- fewer artworks → stronger identity and easier navigation,
+- randomised print on the shop page - users see nes=w prints every time,
+- digital-only files → no printing, packaging, or shipping costs,
+- minimal UI → fewer distractions, more focus on art,
+- must be logged in → ensures secure, reliable access to purchased files.
+
+This strategy positions Artera as a clean, boutique digital art shop rather than a large cluttered store.
+
+
+## Web Marketing
+
+Artera includes several marketing and engagement features to grow the audience and keep users informed.
+
+### 1. On-Site Communication
+![Artera About Us Section](documentation/about-us.png)
+
+A large part of Artera’s marketing is built directly into the website:
+
+- Messaging clearly explains that all products are **digital downloads**, not physical prints.
+- The **About ARTERA** section outlines how purchases work:
+  - choose an artwork,
+  - purchase securely,
+  - access the files in your **Library**.
+- Calls-to-action guide users to **explore prints** or **create an account**, especially when not authenticated.
+
+This ensures users understand how the platform operates and encourages account creation.
+
+### 2. Newsletter
+
+Artera includes a simple newsletter system that allows visitors to subscribe using their email address.
+
+The newsletter is intended for:
+
+- announcements of new collections,
+- curated drops and seasonal sets,
+- future promotions or discount periods,
+
+Subscription forms appear in the About section.
+
+### 3. Social Media
+
+Because Artera is a visual-first brand, social platforms are essential for building trust and driving users back to the store.
+
+#### **Facebook**
+
+Artera’s Facebook page showcases the brand with a clean, modern aesthetic.  
+It features:
+
+- Branded cover + profile image  
+- A clear, simple “About” section  
+- A team-focused intro post to humanize the brand  
+- Visual posts highlighting new prints  
+- Direct pathways back to the store for browsing, registering, or purchasing  
+
+**Facebook Page Mockup:**  
+![Artera Facebook Mockup](documentation/artera-mockup.png)
+
+### 4. SEO Structure
+
+Artera uses:
+
+- clean URLs,
+- descriptive artwork detail pages,
+- consistent titles and meta structure,
+- text-based categories and searchable descriptions.
+
+## Information Architecture
+
+### Database
+
+- During development, Artera uses **SQLite** as the primary database.
+- In production, the project is configured to use **PostgreSQL** when a `DATABASE_URL` environment variable is available.
+- All core data (users, profiles, artworks, orders, custom requests, offers, newsletter subscriptions) is stored in relational tables with clear foreign-key relationships.
+
 ---
+
+### Entity-Relationship Diagram
+
+The database schema centers around the authenticated **User**, extending outward into the core e-commerce models for artworks, carts, orders, and service submissions.
+
+The structure was designed using **dbdiagram.io** to clearly map out model relationships early in development.
+
+![DB Diagramm](documentation/diagramm.png)
+
+### Model Relationships
+
+- **User → Profile**  
+  One user to one profile
+
+- **User → Order**  
+  One user to many orders
+
+- **Order → OrderItem**  
+  One order to many order items
+
+- **Artwork → OrderItem**  
+  One artwork to many order items
+
+- **User → ArtworkRequest**  
+  One user to many artwork requests
+
+- **User → ArtworkOffer**  
+  One user to many artwork offers
+
+---
+
+### Data Modeling
+
+Below is a summary of the most important models in Artera.
+
+---
+
+### **Profile Model**
+
+A profile is created for each registered user and stores contact details, addresses, and avatar.
+
+| Name                  | Database Key           | Field Type         | Validation / Notes                                    |
+|-----------------------|------------------------|--------------------|------------------------------------------------------|
+| user                  | user                   | OneToOneField      | `User`, `on_delete=models.CASCADE`                   |
+| full name             | full_name              | CharField          | `max_length=100`, `blank=True`                       |
+| phone number          | phone_number           | CharField          | `max_length=20`, `blank=True`                        |
+| delivery address      | address_line_delivery  | CharField          | `max_length=255`, `blank=True`                       |
+| living address        | address_line_living    | CharField          | `max_length=255`, `blank=True`                       |
+| city                  | city                   | CharField          | `max_length=100`, `blank=True`                       |
+| postal code           | postal_code            | CharField          | `max_length=20`, `blank=True`                        |
+| country               | country                | CharField          | `max_length=100`, `blank=True`                       |
+| county / region       | county                 | CharField          | `max_length=100`, `blank=True`                       |
+| avatar                | avatar                 | CloudinaryField    | `blank=True`, `null=True`, stored in `avatars/`      |
+| created at            | created_at             | DateTimeField      | `auto_now_add=True`                                  |
+| updated at            | updated_at             | DateTimeField      | `auto_now=True`                                      |
+
+Additional logic:
+
+- Users can update their **username** and **email** from the profile page.
+- Email changes are verified via **django-allauth** email confirmation.
+- Avatars are stored on **Cloudinary** and physically deleted via `cloudinary.uploader.destroy` when removed.
+
+---
+
+### **Artwork Model**
+
+Represents a single digital artwork available for purchase.
+
+| Name          | Database Key | Field Type      | Validation / Notes                           |
+|---------------|-------------|-----------------|----------------------------------------------|
+| name          | name        | CharField       | Unique name of the artwork                   |
+| description   | description | TextField       | Long-form description of the print           |
+| category      | category    | ForeignKey      | Category model, `on_delete=models.CASCADE`   |
+| price         | price       | DecimalField    | Base price of the artwork                    |
+| image         | image       | CloudinaryField | Main image used across the site              |
+| created at    | created_at  | DateTimeField   | `auto_now_add=True`                          |
+| updated at    | updated_at  | DateTimeField   | `auto_now=True`                              |
+
+Notes:
+
+- Artworks are displayed in a **randomized order** on the shop page to improve discovery.
+- Different print sizes are handled at the view/form level using a set of predefined options.
+
+---
+
+### **Category Model**
+
+Used to group artworks (e.g. Abstract, Minimal, Nature, Typography).
+
+| Name          | Database Key | Field Type   | Validation / Notes                   |
+|---------------|-------------|--------------|--------------------------------------|
+| name          | name        | CharField    | Category name, e.g. “Minimal”        |
+| friendly name | friendly_name | CharField  | Display name for templates (optional) |
+
+Categories are used on the homepage, shop filters, and artwork detail pages.
+
+---
+
+### **Order Model**
+
+Represents a completed checkout. Used to populate the **Library** and to validate downloads.
+
+| Name                 | Database Key   | Field Type      | Validation / Notes                           |
+|----------------------|----------------|-----------------|----------------------------------------------|
+| user                 | user           | ForeignKey      | `User`, `on_delete=models.SET_NULL`, nullable|
+| full name            | full_name      | CharField       | Delivery / billing name                      |
+| email                | email          | EmailField      | Used to link Library and confirmation email  |
+| phone number         | phone_number   | CharField       | Contact number                               |
+| address line 1       | street_address1| CharField       | First address line                           |
+| address line 2       | street_address2| CharField       | Second address line (optional)               |
+| city                 | town_or_city   | CharField       | City / town                                  |
+| county / region      | county         | CharField       | Region / state (optional)                    |
+| country              | country        | CharField       | Country                                      |
+| postcode             | postcode       | CharField       | Postal code                                  |
+| date                 | date           | DateTimeField   | `auto_now_add=True`                          |
+| order number         | order_number   | CharField       | Unique identifier, non-editable              |
+| stripe pid           | stripe_pid     | CharField       | Stripe PaymentIntent ID                      |
+| original bag         | original_bag   | TextField       | JSON snapshot of the bag at checkout         |
+| order total          | order_total    | DecimalField    | Sum of all line items                        |
+| grand total          | grand_total    | DecimalField    | Equal to `order_total` (no delivery cost)    |
+
+Notes:
+
+- Delivery is **always digital**, so there are no shipping fields or delivery calculation logic.
+- Orders are visible in the user’s **Library** after successful Stripe payment.
+
+---
+
+### **OrderItem Model**
+
+Links a single purchased artwork (and size) to an Order.
+
+| Name          | Database Key  | Field Type    | Validation / Notes                         |
+|---------------|---------------|--------------|--------------------------------------------|
+| order         | order         | ForeignKey   | `Order`, `related_name='lineitems'`        |
+| artwork       | artwork       | ForeignKey   | `Artwork`, `on_delete=models.CASCADE`      |
+| artwork size  | artwork_size  | CharField    | Chosen print size (e.g. A4, A3, 50×70 cm)  |
+| quantity      | quantity      | IntegerField | Positive integer, typically `1`            |
+| lineitem total| lineitem_total| DecimalField | Calculated at save time                    |
+
+OrderItem records are used both for **Library display** and for validating download access per line item.
+
+---
+
+### **ArtworkRequest Model**
+
+Stores a customer’s request for a fully custom artwork.
+
+| Name          | Database Key | Field Type      | Validation / Notes                             |
+|---------------|-------------|-----------------|------------------------------------------------|
+| user          | user        | ForeignKey      | `User`, `on_delete=models.CASCADE`             |
+| title         | title       | CharField       | Short title for the request                    |
+| description   | description | TextField       | Details of what the customer wants             |
+| reference image | reference_image | CloudinaryField | Optional visual reference                 |
+| status        | status      | CharField       | Choices: `in_review`, `accepted`, `rejected`   |
+| created at    | created_at  | DateTimeField   | `auto_now_add=True`                            |
+| updated at    | updated_at  | DateTimeField   | `auto_now=True`                                |
+
+Requests are accessible in the user’s **Library** and editable by the user until processed.
+
+---
+
+### **ArtworkOffer Model**
+
+Allows external artists to submit their work or express interest in collaborating.
+
+| Name          | Database Key | Field Type   | Validation / Notes                      |
+|---------------|-------------|-------------|-----------------------------------------|
+| full name     | full_name   | CharField   | Artist’s name                           |
+| email         | email       | EmailField  | Contact email                           |
+| phone number  | phone_number| CharField   | Optional phone contact                  |
+| title         | title       | CharField   | Title of the proposal / sample artwork  |
+| description   | description | TextField   | Description of style / concept          |
+| category      | category    | CharField   | Suggested category (e.g. Minimal, Abstract) |
+| sample image  | sample_image_url | URLField | Link to portfolio or sample image       |
+| created at    | created_at  | DateTimeField | `auto_now_add=True`                    |
+
+The admin uses this model to review potential collaborations and expand the catalog.
+
+---
+
+### **NewsletterSubscription Model**
+
+Stores email addresses of users who opt in to receive art updates and news.
+
+| Name       | Database Key | Field Type   | Validation / Notes                   |
+|------------|-------------|-------------|--------------------------------------|
+| email      | email       | EmailField  | `unique=True`                        |
+| created at | created_at  | DateTimeField | `auto_now_add=True`                |
+| is active  | is_active   | BooleanField | `default=True`                      |
+
+Newsletter signups are available from the homepage and footer.
+
+---
+
+### Bag & Session Data
+
+Artera does **not** store the shopping bag in a database table.  
+
 
 ## Design Choices
 
 Artera was designed with a clean, minimal, gallery-style look that puts artwork at the center of the user experience.  
 All layout decisions prioritize clarity, responsiveness, and fast browsing across devices.
-
----
 
 ### **Wireframes**
 The project was planned using **Visily** wireframes to define structure before applying styling.
@@ -249,51 +554,6 @@ Some early ideas were simplified or removed to maintain a clean user experience,
 
 ---
 
-### Project Plan
-
-The original concept for Artera was to build a clean and modern digital art store where users could browse, purchase, and download high-quality art prints.  
-The goal was to create a **minimal, elegant, and fully functional e-commerce platform** while keeping the architecture flexible enough for future expansion.
-
-Key priorities in the initial plan:
-- Simple, attractive artwork browsing  
-- Dynamic price updates based on artwork size  
-- Session-based shopping bag  
-- Secure checkout using Stripe  
-- Personal Digital Library for downloads  
-- User profile with editable details and avatar upload  
-- Custom artwork request system  
-- Artist offer submission system
-
----
-
-## Database Schema
-
-The database schema centers around the authenticated **User**, extending outward into the core e-commerce models for artworks, carts, orders, and service submissions.
-
-The structure was designed using **dbdiagram.io** to clearly map out model relationships early in development.
-
-![Artera Database Schema](documentation/diagramm.png)
-
-### Relationships Overview
-
-**One-to-One**
-- User → Profile
-
-**One-to-Many**
-- User → Orders  
-- User → Artwork Requests  
-- User → Artwork Offers  
-- Order → Order Items  
-- Artwork → Order Items  
-
-**Many-to-One**
-- Order Item → Artwork  
-- Order Item → Order  
-- Artwork Request → User  
-- Artwork Offer → User (optional)
-
----
-
 ## Features
 
 ### Navigation
@@ -302,8 +562,8 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Fully responsive — collapses into a compact mobile menu for small screens.  
 - The Artera logo always leads back to the homepage.
 
-![Navbar Desktop](documentation/)  
-![Navbar Mobile](documentation/)
+![Navbar Desktop](documentation/nav-desktop.png)  
+![Navbar Mobile](documentation/nav-mobile.png)
 
 ---
 
@@ -311,29 +571,31 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Minimal, clean footer displayed on all pages.  
 - Contains links to essential sections such as **Shop**, **Profile**, **Library**, and **Contact** (if enabled).  
 - Shows social links or brand mentions when needed (Instagram, website).  
-- Fully responsive — collapses gracefully on smaller devices.  
-- Designed to stay unobtrusive so the artwork remains the focus.
+- Includes essential legal links like Terms & Conditions and Privacy Policy for user clarity and trust.
 
-![Footer](documentation/)
+![Footer](documentation/footer.png)
 
 ### Homepage
 - Hero section introducing Artera and highlighting the platform’s purpose: discovering and downloading high-quality digital artwork.  
 - Clean layout showcasing featured artworks and category highlights.  
-- Clear calls to action directing users to **Browse Artworks** or **Sign In / Create Account**.  
+- Clear calls to action directing users to **Browse Artworks**, **Sign In / Create Account** and **Newsletter**.  
 - Designed to feel minimal, gallery-like, and easy to explore.
 
-![Homepage Hero](documentation/)  
-![Homepage Layout](documentation/)
+![Homepage Hero](documentation/homepage.png)  
+![About Section](documentation/about-section.png)
+![Categories List](documentation/categories.png)
+![Request Section](documentation/request-section.png)
+![Bestsellers](documentation/bestsellers.png)
 
 ---
 
 ### Shop Page
 - Grid-based layout displaying artworks with title, price, and preview image.  
 - Search bar allowing users to look up artworks by keyword.  
-- Category dropdown (string-based categories stored in the artwork model).  
-- Pagination-ready layout with clean spacing and hover effects.
+- Category list to filter artworks.  
+- Randomized artwork list to show new print everytime.
 
-![Shop Page](documentation/)
+![Shop Page](documentation/shop.png)
 
 ---
 
@@ -343,7 +605,7 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - “Add to Bag” button triggers a toast notification and updates the cart count.  
 - Clean, minimal layout focused on the artwork itself.
 
-![Artwork Detail](documentation/)
+![Artwork Detail](documentation/artwork-detail.png)
 
 ---
 
@@ -351,13 +613,13 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Session-based shopping cart storing:  
   - Artwork  
   - Selected size  
-  - Quantity  
   - Calculated price  
-- Users can update quantities or remove items.  
+- Users can remove items.  
 - Bag total updates automatically.  
 - Checkout button redirects to the secure Stripe payment page.
 
-![Bag Page](documentation/)
+![Bag Page Desktop](documentation/bag-desktop.png)
+![Bag Page Mobile](documentation/bag-mobile.png)
 
 ---
 
@@ -367,7 +629,17 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Option to save delivery info to Profile for future orders.  
 - On successful payment, Stripe webhook confirms and creates the Order + Order Items.
 
-![Checkout](documentation/)
+![Checkout Desktop](documentation/checkout-desktop.png)
+![Checkout Mobile](documentation/checkout-mobile.png)
+
+---
+
+### Checkout Success (Order Confirmation)
+- Shown immediately after a successful Stripe payment.  
+- Displays a clear thank-you message and the **order number** for reference.    
+- Provides a direct **“Go to Library”** button so users can download their files right away.  
+
+![Checkout Success Page](documentation/order-sucess.png)
 
 ---
 
@@ -375,8 +647,11 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Logged-in users can access a personal library containing all purchased artworks.  
 - Each entry shows artwork title, preview image, size purchased, and download link.  
 - Only the purchasing user (email match) can access their files.
+- Also displays all custom artwork requests submitted by the user.
+- Each request card includes a “Manage” button that opens the full request detail page for status updates and file previews.
 
-![Library](documentation/)
+![Library Desktop](documentation/library-desktop.png)
+![Library Mobile](documentation/libary-mobile.png)
 
 ---
 
@@ -385,16 +660,18 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
   - Full name  
   - Phone number  
   - Address (delivery & living)  
-  - City, postal code, country  
+  - City, postal code, country
+  - Email
+  - Username
 - Avatar upload/remove integrated via Cloudinary.  
 - Profile details auto-populate during checkout when “Save Delivery Info” is enabled.
 
-![Avatar Section](documentation/)  
-![Profile Form](documentation/)
+![Avatar Section](documentation/avatar.png)  
+![Profile Form](documentation/profile-form.png)
 
 ---
 
-### Artwork Requests (Custom Work)
+### Artwork Requests
 - Users can submit a **custom artwork request** with:  
   - Title  
   - Description  
@@ -402,7 +679,21 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Each request appears in the user’s Library page with a status badge (in review / accepted / rejected).  
 - Admin can update the request status through Django Admin.
 
-![Artwork Request](documentation/)
+![Artwork Request](documentation/request.png)
+
+---
+
+### Request Detail (Custom Artwork Requests)
+- Accessible from the **Library** page via the **“Manage Request”** button.  
+- Shows the full details of a single **Artwork Request**, including:  
+  - Title  
+  - Description  
+  - Status badge (In review / Accepted / Rejected)  
+  - Optional reference image (if provided)  
+- Allows users to review the current status of their custom piece and see what they previously submitted.  
+- May include action buttons such as **Edit Request** or **Delete Request** (with confirmation modal) depending on business rules.
+
+![Request Detail Page](documentation/request-detail.png)
 
 ---
 
@@ -416,7 +707,18 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
   - Optional website/Instagram  
 - Stored in the database and visible in Django Admin for review.
 
-![Artwork Offer](documentation/)
+![Artwork Offer Description](documentation/offer-description.png)
+![Artwork Offer Form](documentation/offer-form.png)
+
+---
+
+### Offer Success (Artist Submission Confirmation)
+- Shown after an artist successfully submits an **Artwork Offer** form.  
+- Confirms that the submission was received by the Artera team.  
+- Briefly explains that the work will be reviewed and the artist may be contacted if it fits the collection.  
+- Provides a **Submit Another** and **Browse Artworks** buttons to continue browsing.  
+
+![Offer Success Page](documentation/offer-sucess.png)
 
 ---
 
@@ -424,7 +726,7 @@ The structure was designed using **dbdiagram.io** to clearly map out model relat
 - Friendly error page matching INNER BALANCE branding.  
 - Suggests returning to the homepage.
 
-![Error Page](documentation/)  
+![Error Page](documentation/404-page.png)  
 
 ---
 
@@ -442,15 +744,14 @@ Artera uses a minimal, modern color palette to keep attention on the artwork whi
 **Color Scheme:**
 
 
-![Color Scheme](documentation/)
+![Color Scheme](documentation/color-scheme.png)
 
 The overall theme is intentionally minimal so that the artwork itself becomes the visual centerpiece.
 
 ---
 
 ### Fonts
-- **Primary Font:** "Inter", sans-serif — clean, modern, highly readable.  
-- **Secondary Font (Headings or accents if used):** "Playfair Display" or another subtle serif for artistic flair — optional depending on final design.
+- **Primary Font:** "Cardo", serif - easy readarble, modern; 
 
 Typography stays neutral and spacious, creating a refined, gallery-like atmosphere.
 
@@ -470,9 +771,6 @@ Artera uses lightweight animations and subtle UI feedback to enhance the shoppin
 - **Hover Effects**
   - Artwork cards slightly scale up or brighten on hover.
   - Buttons darken or lighten subtly to show interactivity.
-
-- **Image Zoom on Detail Page**
-  - Artwork previews enlarge on hover/touch for better viewing.
 
 - **Responsive Layout Adjustments**
   - On mobile, artwork grids collapse into single-column layouts.
@@ -496,13 +794,11 @@ Artera uses lightweight animations and subtle UI feedback to enhance the shoppin
   - User gets a clear preview before saving.
   - Delete option immediately removes the Cloudinary image.
 
-- **Minimal Modal & Card Effects**
-  - Modals used sparingly (mainly admin or future features).
-  - Cards for Library, Shop, and Requests include soft shadows and rounded edges for clean spacing.
-
 Overall, UI interactions are deliberately **calm, predictable, and performance-friendly**, supporting the platform’s visual identity as a clean digital art marketplace.
 
 ---
+
+## Technologies Used
 
 ### Languages  
 - **HTML** — Structures all page templates, including product listings, forms, navigation, and layout components.  
