@@ -255,6 +255,17 @@ header .position-absolute.end-0 {
     border-radius: 12px;
 }
 
+.newsletter-input {
+    max-width: 200px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Bestsellers Section */
 
 .bestsellers-section {
@@ -727,22 +738,6 @@ fieldset {
 .footer p,
 .footer a {
     color: var(--muted);
-}
-
-.newsletter-form {
-    display: flex;
-    justify-content: center;
-}
-
-.newsletter-input {
-    max-width: 160px;
-    padding: 4px 8px;
-    font-size: 0.85rem;
-}
-
-.newsletter-btn {
-    padding: 4px 10px;
-    font-size: 0.85rem;
 }
 
 /* Custom Button/Link/Icon Styles */
