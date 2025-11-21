@@ -182,7 +182,7 @@ header .position-absolute.end-0 {
 }
 
 .hero-image {
-    background: url("../images/hero-image.jpg") center center / cover no-repeat;
+    background: url("../images/hero-image.webp") center center / cover no-repeat;
     flex: 0 0 260px;
     min-height: 260px;
 }
