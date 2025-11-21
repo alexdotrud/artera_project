@@ -794,6 +794,14 @@ Artera uses lightweight animations and subtle UI feedback to enhance the shoppin
   - User gets a clear preview before saving.
   - Delete option immediately removes the Cloudinary image.
 
+- **Randomized Artwork Display**
+  - The shop page loads artworks in a randomized order each time.
+  - Helps expose customers to a wider range of designs and increases discovery-driven sales.
+
+- **Modals for Confirmation**
+  - Deleting avatars, requests, or profile data uses Bootstrap confirmation modals.
+  - Prevents accidental actions and provides a consistent interaction pattern across the site.
+
 Overall, UI interactions are deliberately **calm, predictable, and performance-friendly**, supporting the platform’s visual identity as a clean digital art marketplace.
 
 ---
@@ -806,7 +814,8 @@ Overall, UI interactions are deliberately **calm, predictable, and performance-f
 - **CSS Variables** — Used to maintain consistent colors, spacing, and typography across all pages.  
 - **CSS Flexbox & Grid** — Power the responsive layouts used in the Shop, Bag, Library, and Profile pages.  
 - **JavaScript (Vanilla)** — Handles dynamic price updates, toast notifications, size selection logic, and small frontend interactions.  
-- **jQuery** — Used for quick DOM manipulation, AJAX toasts, and a few Bootstrap-dependent interactions.  
+- **jQuery** — Used for quick DOM manipulation, AJAX toasts, and a few Bootstrap-dependent interactions.
+- **Python** — The primary backend language powering all server-side logic, views, URL routing, and integrations.
 
 ---
 
@@ -814,9 +823,11 @@ Overall, UI interactions are deliberately **calm, predictable, and performance-f
 - **Bootstrap 5** — Provides a responsive grid system and polished UI components (forms, buttons, cards, modals).  
 - **Django** — Core backend framework handling views, routing, templates, models, authentication, and admin.  
 - **Django Allauth** — Manages user authentication, login, registration, and email verification.  
-- **Stripe (Elements + Webhooks)** — Secure payment processing and order confirmation.  
+- **Stripe** — Secure payment processing and order confirmation.
+- **Cloudinary** — Handles image storage, optimization, and delivery for artwork files and user avatars.  
 - **Font Awesome** — Supplies iconography for UI buttons and status badges.  
 - **Google Fonts** — Integrates the typography used across the platform (e.g., Inter).  
+- **Pillow** — Image processing for uploaded artwork/avatars.
 
 ---
 
@@ -827,26 +838,23 @@ Overall, UI interactions are deliberately **calm, predictable, and performance-f
 ---
 
 ### Other Tools & Services  
-- **Git** — Version control for tracking changes and managing development.  
-- **GitHub** — Hosts the repository and project board.  
-- **Heroku** — Deployment platform running the live Django application.  
-- **SendGrid** — Sends email verification links and notifications used by Allauth.  
-- **Cloudinary** — Stores and manages user-uploaded avatars and artwork images.  
-- **Stripe Dashboard** — Monitors payments, refunds, and PaymentIntent logs.  
-- **VS Code** — Primary development editor with Django/Git extensions.  
-- **dbdiagram.io** — Used to design and document the final database schema.  
-- **W3C HTML Validator** — Ensures HTML markup quality.  
-- **W3C CSS Validator** — Validates stylesheet quality.  
-- **PEP8CI** — Checks Python code style for PEP 8 compliance.  
-- **Image Optimization Tools** — Used to compress artwork to improve loading performance.  
+- **Git** — Version control used throughout the development process.  
+- **GitHub** — Repository hosting, issues, and project management.  
+- **Render** — Deployment platform hosting the live Artera application.  
+- **SendGrid** — Handles account verification emails and notification messages.  
+- **Stripe Dashboard** — Used to monitor payments, test transactions, and view webhook logs.  
+- **Cloudinary Dashboard** — Manages all artwork files and user avatars stored in the cloud.  
+- **VS Code** — Primary development editor with extensions for Django, Git, and formatting.  
+- **Python Beautifier / Formatter (Black)** — Ensures clean, consistent Python formatting across the project.  
+- **dbdiagram.io** — Used to design and visualize the app’s data architecture.  
+- **W3C HTML Validator** — Ensures semantic and accessible HTML.  
+- **W3C CSS Validator** — Validates stylesheet structure and standards compliance.  
+- **CI Python Linter** — Automated checking of Python syntax and code style.  
+- **Image Optimization Tools** — Used to compress artwork files to improve loading performance across the site. 
 
----
 
 ## Testing
-
 Automated and manual testing were performed across the core apps of Artera to ensure stability, correctness, and a smooth user experience.
-
----
 
 ### Automated Tests
 
@@ -882,7 +890,7 @@ python manage.py test
 | User can browse shop, search artworks, and filter by category.             | Pass       | ✅          |
 | Artwork detail page loads correctly with dynamic price change by size.     | Pass       | ✅          |
 | User can add items to Bag and see toast confirmation.                      | Pass       | ✅          |
-| User can update item quantity or remove items from the Bag.                | Pass       | ✅          |
+| User can remove items from the Bag.                                        | Pass       | ✅          |
 | Bag total updates correctly with size surcharge included.                  | Pass       | ✅          |
 | Checkout requires all required fields; validation errors appear clearly.   | Pass       | ✅          |
 | Stripe checkout flow completes; user returns to success page.              | Pass       | ✅          |
@@ -899,7 +907,7 @@ python manage.py test
 | 404 page displays for non-existent routes.                                 | Pass       | ✅          |
 
 
-| Sign Up / Login / Logout:      |
+
 | **Test**                       | **Description**                         | **Result** | **Status** |
 | ------------------------------ | --------------------------------------- | ---------- | ---------- |
 | Sign-up with valid data        | Creates user and logs them in.          | Pass       | ✅          |
@@ -909,7 +917,7 @@ python manage.py test
 | Login with invalid credentials | Shows error message.                    | Pass       | ✅          |
 | Logout                         | Ends session and redirects to homepage. | Pass       | ✅          |
 
-| Profile:              |  
+
 | **Test**              | **Description**                          | **Result** | **Status** |
 | --------------------- | ---------------------------------------- | ---------- | ---------- |
 | Update profile fields | Saves address, phone, and personal info. | Pass       | ✅          |
@@ -917,7 +925,7 @@ python manage.py test
 | Remove avatar         | Avatar resets to default placeholder.    | Pass       | ✅          |
 | Invalid fields        | Show validation errors.                  | Pass       | ✅          |
 
-| Shop:                   |
+
 | **Test**                | **Description**                           | **Result** | **Status** |
 | ----------------------- | ----------------------------------------- | ---------- | ---------- |
 | Shop loads all artworks | Thumbnails, titles, and prices appear.    | Pass       | ✅          |
@@ -926,7 +934,7 @@ python manage.py test
 | Artwork detail          | Loads full description and size selector. | Pass       | ✅          |
 | Price updates by size   | Correct surcharge applied.                | Pass       | ✅          |
 
-| Bag:                        |
+
 | **Test**                    | **Description**                         | **Result** | **Status** |
 | --------------------------- | --------------------------------------- | ---------- | ---------- |
 | Add to bag                  | Adds item with size/qty.                | Pass       | ✅          |
@@ -934,7 +942,7 @@ python manage.py test
 | Remove item                 | Item removed instantly.                 | Pass       | ✅          |
 | Bag persists during session | Items remain until checkout or removal. | Pass       | ✅          |
 
-| Checkout/Stripe              |
+
 | **Test**                     | **Description**             | **Result** | **Status** |
 | ---------------------------- | --------------------------- | ---------- | ---------- |
 | Required fields validation   | Missing fields show errors. | Pass       | ✅          |
@@ -942,7 +950,7 @@ python manage.py test
 | Payment success              | Redirects to success page.  | Pass       | ✅          |
 | Webhook updates order status | Marks order as **paid**.    | Pass       | ✅          |
 
-| Library                          |
+
 | **Test**                         | **Description**                     | **Result** | **Status** |
 | -------------------------------- | ----------------------------------- | ---------- | ---------- |
 | Library loads purchased artworks | Correct items with download links.  | Pass       | ✅          |

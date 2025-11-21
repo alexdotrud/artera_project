@@ -126,7 +126,7 @@
                 <form method="post" action="{% url 'newsletter_subscribe' %}" class="newsletter-form mt-3">
                     {% csrf_token %}
                     <input type="email" name="email" class="newsletter-input" placeholder="Join our newsletter"
-                        required>
+                        autocomplete="email" required>
                     <button type="submit" class="btn btn-dark">Join</button>
                 </form>
             </div>
