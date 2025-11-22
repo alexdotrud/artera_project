@@ -861,25 +861,16 @@ Automated and manual testing were performed across the core apps of Artera to en
 Automated tests cover core backend logic, model behavior, and access permissions in the main Django apps.
 
 #### **Shop app**
-
+- Basic tests confirm that the artwork list and detail views load correctly, return the expected templates, and display test content. Test with: python manage.py test shop
 
 #### **Bag app**
-
+- Tests check that items can be added to and removed from the bag, and that session data and redirects behave as expected. Test with: python manage.py test bag
 
 #### **Checkout app**
-
+- Lightweight tests ensure the checkout page loads when the bag contains items and that the correct template is used. Test with: python manage.py test checkout
 
 #### **Profiles app**
-
-
-#### **Services app (Requests & Offers)**
-
-
-Run all tests with:
-
-```bash
-python manage.py test
-```
+- Tests verify that profile and library pages enforce authentication, load correctly for logged-in users, and display user-related data. Test with: python manage.py test profiles
 
 ---
 
