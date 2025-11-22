@@ -14,8 +14,8 @@ Card number for payment testing: 4242424242424242
 * [Developer Goals](#developer-goals)
 * [User Stories](#user-stories)
 * [Agile Methods](#agile-methods)
-* [Buisness Model](#buisness-model)
-* [Web marketing](#web-marketing)
+* [Business Model](#business-model)
+* [Web Marketing](#web-marketing)
 * [Information Architecture](#information-architecture)
 * [Design Choices](#design-choices)
 * [Features](#features)
@@ -208,7 +208,7 @@ This project was planned and developed using Agile methodology to keep developme
 ![Example User Stories](documentation/task-planning.png)
 
 
-## Buisness Model
+## Business Model
 The Business Model is **B2C**, meaning Artera sells digital art prints directly to individual customers.  
 There is no physical inventory, no shipping, and no logistics. Instead, the focus is on delivering **high-quality downloadable artwork** that users can access instantly through their personal Library.
 
@@ -329,7 +329,7 @@ The database schema centers around the authenticated **User**, extending outward
 
 The structure was designed using **dbdiagram.io** to clearly map out model relationships early in development.
 
-![DB Diagramm](documentation/diagramm.png)
+![DB Diagram](documentation/diagramm.png)
 
 ### Model Relationships
 
@@ -723,7 +723,7 @@ Some early ideas were simplified or removed to maintain a clean user experience,
 ---
 
 ### 404 Error Handling (Defensive Design)
-- Friendly error page matching INNER BALANCE branding.  
+- Friendly error page matching ARTERA branding.  
 - Suggests returning to the homepage.
 
 ![Error Page](documentation/404-page.png)  
@@ -840,7 +840,7 @@ Overall, UI interactions are deliberately **calm, predictable, and performance-f
 ### Other Tools & Services  
 - **Git** — Version control used throughout the development process.  
 - **GitHub** — Repository hosting, issues, and project management.  
-- **Render** — Deployment platform hosting the live Artera application.  
+- **Heroku** – Deployment platform hosting the live Artera application. 
 - **SendGrid** — Handles account verification emails and notification messages.  
 - **Stripe Dashboard** — Used to monitor payments, test transactions, and view webhook logs.  
 - **Cloudinary Dashboard** — Manages all artwork files and user avatars stored in the cloud.  
@@ -907,7 +907,6 @@ python manage.py test
 | 404 page displays for non-existent routes.                                 | Pass       | ✅          |
 
 
-
 | **Test**                       | **Description**                         | **Result** | **Status** |
 | ------------------------------ | --------------------------------------- | ---------- | ---------- |
 | Sign-up with valid data        | Creates user and logs them in.          | Pass       | ✅          |
@@ -937,8 +936,7 @@ python manage.py test
 
 | **Test**                    | **Description**                         | **Result** | **Status** |
 | --------------------------- | --------------------------------------- | ---------- | ---------- |
-| Add to bag                  | Adds item with size/qty.                | Pass       | ✅          |
-| Update quantity             | Bag recalculates totals.                | Pass       | ✅          |
+| Add to bag                  | Adds item with size/qty=1.              | Pass       | ✅          |
 | Remove item                 | Item removed instantly.                 | Pass       | ✅          |
 | Bag persists during session | Items remain until checkout or removal. | Pass       | ✅          |
 
@@ -951,16 +949,24 @@ python manage.py test
 | Webhook updates order status | Marks order as **paid**.    | Pass       | ✅          |
 
 
-| **Test**                         | **Description**                     | **Result** | **Status** |
-| -------------------------------- | ----------------------------------- | ---------- | ---------- |
-| Library loads purchased artworks | Correct items with download links.  | Pass       | ✅          |
-| Unauthorized access              | Users can’t view others’ downloads. | Pass       | ✅          |
-
+| **Test**                           | **Description**                                  | **Result** | **Status** |
+|------------------------------------|--------------------------------------------------|------------|--------|
+| Library loads purchased artworks   | Correct items with download links.               | Pass       | ✅     |
+| Unauthorized access                | Users can't view others’ downloads.              | Pass       | ✅     |
+| Shows correct artwork previews     | Artwork thumbnail or fallback image loads.       | Pass       | ✅     |
+| Collapsible order sections         | Users can expand/collapse order items.           | Pass       | ✅     |
+| Artwork Request list rendering     | Requests appear under “Your Requests” section.   | Pass       | ✅     |
+| Request status badges              | Shows correct badge (In review / Accepted / Rejected). | Pass | ✅ |
+| Manage Request button              | Button links to the correct request detail page. | Pass       | ✅     |
+| Empty Library state                | Shows correct message + CTA when no orders exist.| Pass       | ✅     |
+| Empty Requests state               | Shows correct message + CTA when no requests exist. | Pass    | ✅ |
 ---
 
 #### Lighthouse Report
 
 [Lighthouse report](documentation/lighthouse.pdf)
+
+Lighthouse classifies these as third-party cookies and reduces the best practices score.
 
 ---
 
@@ -970,15 +976,15 @@ To confirm correct functionality, layout stability, and responsive behavior, Art
 
 - **Google Chrome**
 
-![Chrome test](documentation/chrome-test.gif)
+![Chrome test](documentation/chrome.gif)
 
 - **Mozilla Firefox**
 
-![Mozilla Firefox test](documentation/mozila-test.gif)
+![Mozilla Firefox test](documentation/fireforx.gif)
 
 - **Microsoft Edge**
 
-![Microsoft Edge test](documentation/edge-test.gif)
+![Microsoft Edge test](documentation/microsoft.gif)
 
 All major browsers showed consistent behavior in navigation, checkout flow, responsiveness, and interactive components.
 
@@ -988,9 +994,7 @@ All major browsers showed consistent behavior in navigation, checkout flow, resp
 
 Artera’s responsiveness was verified using the **Responsive Viewer** extension in Google Chrome, ensuring layouts adapt correctly across mobile, tablet, and desktop breakpoints.
 
-![Homepage](documentation/homepage.png)
-![Shop Page](documentation/overview-page.png)
-![Profile Page](documentation/profile-page.png)
+[Responsiveness report](documentation/Responsivness.pdf)
 
 ---
 
@@ -1021,13 +1025,6 @@ Python code was validated using **CI Python Linter**.
 ## Bugs
 
 ### Solved Bugs
-
-#### Static Files & Asset Loading (Deployment)
-- **Issue:** CSS and images weren’t loading on Heroku, breaking layout and styling.
-- **Cause:** Static files not properly collected and references not wrapped in `{% static %}`.
-- **Fix:** Configured `STATICFILES_DIRS`, ran `collectstatic`, and updated all templates to use Django’s `{% static %}` tag.
-
----
 
 #### Session Bag Logic Errors
 - **Issue:** Size and quantity updates weren’t reflected after page reload.
@@ -1064,13 +1061,14 @@ Python code was validated using **CI Python Linter**.
 ---
 
 ### Unfixed / Known Bugs
-No known unfixed bugs remain in the current version.
+- **Email deliverability issue:** Some transactional emails (including verification emails) are currently landing in spam.
 
+- **Inline CSS in email templates:** All custom email templates rely on inline styles because external CSS files were not being applied.
 ## Future Changes
 
 Artera has a strong foundation, but several improvements are planned to expand functionality, enhance user experience, and support business growth. These future features would shift the project from a simple art store into a full digital art marketplace.
 
-### Planned Enhancements
+## Future Changes
 
 - **Artist Dashboard**  
   A dedicated dashboard where artists can manage submissions, track offer status, and upload new artwork collections.
@@ -1078,8 +1076,6 @@ Artera has a strong foundation, but several improvements are planned to expand f
 - **Admin Analytics Panel**  
   Sales charts, artwork performance stats, top downloads, and monthly revenue insights.
 
-- **Persistent User Cart**  
-  Replace the session-only bag with a database-backed cart so items stay saved across devices and sessions.
 
 - **Advanced Search & Smart Filtering**  
   Users will be able to filter by:  
@@ -1095,27 +1091,8 @@ Artera has a strong foundation, but several improvements are planned to expand f
 - **Discount Codes & Promotions**  
   Add support for coupon codes, launch promotions, and limited-time sales.
 
-- **Enhanced Email System**  
-  More transactional emails, including:  
-  - “New artwork available”  
-  - “Your request was updated”  
-  - “Order delivered”  
-  - “Artist offer reviewed”
-
-- **Subscription Model / Membership Tier**  
-  Paid monthly plan for access to exclusive artwork bundles or premium content.
-
-- **Artist Marketplace Expansion**  
-  Curated artists can upload artwork directly, set pricing, and earn commissions.
-
-- **AR (Augmented Reality) Preview (future concept)**  
-  Users can preview selected artwork on a wall using device camera overlays.
-
-- **JavaScript Cleanup & Modularization**  
-  Move remaining inline scripts into dedicated JS modules for cleaner code.
-
-- **Webhook Monitoring & Logging**  
-  Improve Stripe webhook robustness with retries, logging, and dashboard visibility.
+- **User Reviews & Ratings**  
+  Customers will be able to leave reviews on purchased artworks. Reviews will display the user's profile image (from their profile avatar), rating, and comment to build trust and showcase authentic buyer feedback.
 
 ---
 
@@ -1251,23 +1228,13 @@ To fork the repository:
 
 The project was developed using Git for version control and GitHub for remote storage.  
 - Development was done in small, frequent commits to make progress traceable and manageable.  
-- Commit messages were written to be descriptive and meaningful (e.g., *"Fix bug in progress bar update"* instead of *"Update file"*).  
+- Commit messages were written to be descriptive and meaningful.  
 - Branching was used for new features and bug fixes, which were merged back into the main branch after testing.  
 This ensured clear project history and easier debugging when issues occurred.
 
 ---
 
 ## Credits
-
-### Technologies & Frameworks
-- **Django** – Main backend framework used to build Artera.  
-- **Bootstrap 5** – Frontend framework for responsive layout and clean UI components.  
-- **PostgreSQL** – Production database used on Heroku.  
-- **SQLite** – Default local development database.  
-- **Heroku** – Hosting and deployment platform for the live application.  
-- **Gunicorn** – WSGI server used in production.  
-- **Cloudinary** – Media storage and optimization for artwork images and avatars.  
-- **Stripe** – Secure payment processing and webhook integration.  
 
 ### Tools & Libraries
 - **Font Awesome** – Icons used throughout the user interface.  
@@ -1277,7 +1244,10 @@ This ensured clear project history and easier debugging when issues occurred.
 - **Responsive Viewer Chrome Extension** – Checked responsiveness on multiple device sizes.  
 - **Chrome DevTools / Lighthouse** – Performance, accessibility, and SEO testing.  
 - **W3C Validators** – HTML and CSS validation.  
-- **CI Python Linter** – Ensured PEP 8 compliance in Python code.  
+- **CI Python Linter** – Ensured PEP 8 compliance for cleaner backend code.  
+- **ImageResizer.com** – Resized and optimized images for performance and documentation.  
+- **iLovePDF** – Converted PowerPoint assets into PDF format.  
+- **PowerPoint** – Used to create presentation visuals included in documentation.
 
 ### Learning Resources
 - **Django Documentation** – Primary reference for backend architecture.  
@@ -1289,8 +1259,8 @@ This ensured clear project history and easier debugging when issues occurred.
 - **Master Django & Python for Web Development (YouTube)** – Used to deepen Django understanding.  
 
 ### Media & Content
-- **Favicon & Logo** – Created with (https://favicon.io/).  
-- **Placeholder Artwork / Images** – Sourced from royalty-free image libraries (e.g., Pixabay) for testing.  
+- **Favicon & Logo** – Created with (https://favicon.io/).   
 - **Text & Documentation** – All content and copywriting created by the project author.  
-
-
+- **Artwork / Placeholder Images** – Sourced from royalty-free libraries such as **Pexels** and **Pixabay**.  
+- **Favicon & Logo** – Generated using **favicon.io**.  
+- **README Screenshots** – Captured with **Responsive Viewer** and optimized with **ImageResizer.com**.  
