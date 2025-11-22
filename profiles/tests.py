@@ -41,7 +41,6 @@ class ProfileViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "profiles/profile.html")
 
-
     def test_library_redirects_if_not_logged_in(self):
         """Library view should redirect anonymous users to login."""
         response = self.client.get(self.library_url)
