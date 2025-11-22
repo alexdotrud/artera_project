@@ -667,6 +667,13 @@ fieldset {
     height: auto;
 }
 
+.req-wrapper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
 /* Offer Request/ Offer Success */
 
 .services {
