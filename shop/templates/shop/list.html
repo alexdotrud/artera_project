@@ -18,7 +18,7 @@
     </div>
 
     <!-- Search + sort bar -->
-    <form class="d-flex justify-content-center mb-4" method="get">
+    <form class="d-flex justify-content-center mb-4" method="get" action="{% url 'artwork_search' %}">
         <div class="input-group w-50">
             <input class="form-control" type="search" name="q" value="{{ search_term|default:'' }}"
                 placeholder="Search artworks..." aria-label="Search artworks">

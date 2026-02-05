@@ -7,6 +7,8 @@ Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap
 
 Card number for payment testing: 4242424242424242
 
+[Resumbittion fixes](#resubmition-fixes).
+
 ## Content:
 
 * [User Goals](#user-goals)
@@ -28,6 +30,27 @@ Card number for payment testing: 4242424242424242
 * [Setup Instructions](#setup-instructions)
 * [Cloning, Forking and Version Control](#cloning-forking-and-version-control)
 * [Credits](#credits)
+
+## Resubmition fixes
+### Authentication & Email Verification
+
+#### Issue  
+User authentication was failing during deployment with an `SMTPServerDisconnected` error. Even with correct credentials, the login process crashed when attempting to send emails.
+
+#### Cause  
+The project uses **Django Allauth**, which needs a working email backend for authentication and verification. An expired **SendGrid SMTP API key** caused the SMTP connection to close unexpectedly, blocking the authentication flow. I used trial version for the SendGrid which sadly expired before the project was assessed.
+
+#### Solution  
+- Bought a SendGrid subscription for the API key to work 
+- Verified the SMTP connection 
+- Confirmed successful email delivery for authentication and verification
+
+#### Result  
+- Login and registration function correctly  
+- Email verification is sent and received  
+- Authentication no longer fails due to SMTP errors  
+
+This was a production-level configuration issue rather than a problem with the authentication logic itself.
 
 ## User Goals
 
