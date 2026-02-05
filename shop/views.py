@@ -83,7 +83,7 @@ def artwork_search(request):
 
     if query:
         artworks = artworks.filter(
-            Q(title__icontains=query) |
+            Q(name__icontains=query) |
             Q(description__icontains=query) |
             Q(category__name__icontains=query)
         )
