@@ -7,7 +7,7 @@ Artera is a digital art e‑commerce platform built with **Django**, **Bootstrap
 
 Card number for payment testing: 4242424242424242
 
-[Resumbittion fixes](#resubmition-fixes).
+[Resubmission fixes](#resubmission-fixes)
 
 ## Content:
 
@@ -31,7 +31,7 @@ Card number for payment testing: 4242424242424242
 * [Cloning, Forking and Version Control](#cloning-forking-and-version-control)
 * [Credits](#credits)
 
-## Resubmition fixes
+## Resubmission fixes
 ### Authentication & Email Verification
 
 #### Issue  
